@@ -7,35 +7,29 @@ import Grid from '@mui/material/Grid';
 
 
 export async function getStaticProps() {
- 
-  const [response1, response2, response3] = await Promise.all([
-    fetch('http://localhost:3000/api/monthlyCPI'),
-    fetch('http://localhost:3000/api/topIncreaseMonthly'),
-    fetch('http://localhost:3000/api/topIncreaseYearly'),
+  const [dataGraph, dataBottom, dataBottom2] = await Promise.all([
+    fetch('http://localhost:3000/api/monthlyCPI').then((res) => res.json()),
+    fetch('http://localhost:3000/api/topIncreaseMonthly').then((res) => res.json()),
+    fetch('http://localhost:3000/api/topIncreaseYearly').then((res) => res.json()),
   ]);
 
-  const [ dataGraph, dataBottom, dataBottom2 ] = await Promise.all( [ response1.json(), response2.json(), response3.json() ]);
+  const fetchTimeSeries = async (name) => {
+    const timeSeries = await fetch(`http://localhost:3000/api/timeseries/${name.seriesid}`).then((res) => res.json());
+    return { ...name, timeseries: timeSeries };
+  };
 
-  for (let i = 0; i < dataBottom.name.length; i++){
-    let timeSeries = await fetch(`http://localhost:3000/api/timeseries/${dataBottom.name[i].seriesid}`);
-    let timeSeriesJson = await timeSeries.json();
-    dataBottom.name[i].timeseries = timeSeriesJson;
-  }
-
-  for (let i = 0; i < dataBottom2.name.length; i++){
-    let timeSeries = await fetch(`http://localhost:3000/api/timeseries/${dataBottom2.name[i].seriesid}`);
-    let timeSeriesJson = await timeSeries.json();
-    dataBottom2.name[i].timeseries = timeSeriesJson;
-  }
+  const dataBottomWithTimeSeries = await Promise.all(dataBottom.name.map(fetchTimeSeries));
+  const dataBottom2WithTimeSeries = await Promise.all(dataBottom2.name.map(fetchTimeSeries));
 
   return {
-      props: { 
-        graphData: dataGraph.name, 
-        dataBottom : dataBottom.name,
-        dataBottom2 : dataBottom2.name 
-      },
+    props: {
+      graphData: dataGraph.name,
+      dataBottom: dataBottomWithTimeSeries,
+      dataBottom2: dataBottom2WithTimeSeries,
+    },
   };
 }
+
 
 export default function Home({ graphData, dataBottom, dataBottom2 }) {
 
@@ -43,10 +37,11 @@ export default function Home({ graphData, dataBottom, dataBottom2 }) {
     <DLayout>
       <Box sx={styles.chartPanel}>
       <div style={{
-                        textAlign : 'left',
+                        textAlign : 'center',
                         padding : '0.5%',
                         backgroundColor : colors.secondary,
-
+                        color: 'white',
+                        fontSize: '22px'
                     }}>
                         <b>Consumer Price Index | </b> <small>Monthly base 2017</small>
          </div>
@@ -61,10 +56,10 @@ export default function Home({ graphData, dataBottom, dataBottom2 }) {
       </Box>
       <Grid container spacing={2}>
       <Grid item xs={12} md={6} >
-        <FiveCard data={dataBottom} dataChart={graphData} />
+        <FiveCard data={dataBottom} heading="Top monthly gainers"/>
       </Grid>
       <Grid item xs={12} md={6}>
-        <FiveCard data={dataBottom2} dataChart={graphData}/>
+        <FiveCard data={dataBottom2} heading="Top yearly risers"/>
       </Grid>
       </Grid>
     </DLayout>

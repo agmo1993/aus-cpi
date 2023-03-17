@@ -8,38 +8,30 @@ import TableRow from '@mui/material/TableRow';
 import colors from 'styles/colors';
 import LineChart from './LineChartIcon';
 
-function createData(
-  name,
-  calories,
-  fat,
-  carbs,
-  protein
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
-export default function FiveCard({ data, dataChart }) {
+export default function FiveCard({ data, heading }) {
   return (
     <TableContainer sx={{ backgroundColor : 'white', marginLeft : '10%', maxWidth: '80%' }}>
+        <div style={{
+                        textAlign : 'center',
+                        padding : '0.5%',
+                        backgroundColor : colors.secondary,
+                        color: 'white',
+                        fontSize: '20px'
+                    }}>
+                        <b>{heading}</b>
+        </div>
       <Table aria-label="simple table">
         <TableBody>
           {data.map((row) => (
             <TableRow
               key={row.seriesid}
             >
-              <TableCell align="center">
+              <TableCell align="center" sx={styles.tableCell}>
                 {row.item}
               </TableCell>
-              <TableCell align="center"><LineChart data={row.timeseries}/></TableCell>
-              <TableCell align="center">{parseFloat(row.percentage_change).toFixed(1)}</TableCell>
+              <TableCell sx={styles.tableCell} align="center"><LineChart data={row.timeseries}/></TableCell>
+              <TableCell sx={styles.tableCell} align="center">{row.current_value}</TableCell>
+              <TableCell sx={styles.tableCell} align="center">{parseFloat(row.percentage_change).toFixed(1)}%</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -47,3 +39,12 @@ export default function FiveCard({ data, dataChart }) {
     </TableContainer>
   );
 }
+
+
+const styles = {
+    tableCell : {
+      padding : '2.5px',
+      color: colors.danger
+    }
+  }
+  

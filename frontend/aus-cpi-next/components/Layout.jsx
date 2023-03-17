@@ -17,6 +17,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
+import packageJson from 'package.json';
 
 /*
 * A component to layout of the application
@@ -60,7 +61,7 @@ export default function DLayout({ children, version }) {
                 <ListItemIcon>
                     <DraftsIcon />
                 </ListItemIcon>
-                <ListItemText primary="By Category" />
+                <ListItemText primary="Category" />
                 </ListItemButton>
             </ListItem>
             <Divider />
@@ -69,7 +70,7 @@ export default function DLayout({ children, version }) {
                 <ListItemIcon>
                     <DraftsIcon />
                 </ListItemIcon>
-                <ListItemText primary="By City" />
+                <ListItemText primary="City" />
                 </ListItemButton>
             </ListItem>
             <Divider />
@@ -84,7 +85,7 @@ export default function DLayout({ children, version }) {
             </List>
         </nav>
         <div sx={styles.navBarItemBottom}>
-            v{version}
+            v {packageJson.version}
         </div>
         </Box>
         <div
@@ -160,7 +161,7 @@ const styles = {
     },
     navBarItemBottom : {
         height : '30px',
-        width : '70px',
+        width : '200px',
         position : ['fixed', 'fixed', 'fixed', 'fixed', 'fixed'],
         bottom : 0,
         right : [0, 0, 0, null, null],

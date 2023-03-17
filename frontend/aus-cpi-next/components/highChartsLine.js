@@ -64,6 +64,16 @@ function HighChartsLine({ data, xaxis, yaxis, chartTitle, height, marginTop }) {
         xAxis: {
             categories: data.map( e => e[xaxis])
             },
+        plotOptions: {
+            line: {
+                marker: {
+                fillColor: colors.primary, // Set the fill color of the markers to red
+                lineColor: colors.danger, // Set the line color of the markers to black
+                lineWidth: 1, // Set the line width of the markers to 1
+                radius: 2 // Set the radius of the markers to 4
+                }
+            }
+            },
         series: [{
             data: data.map( e => parseFloat(e[yaxis])),
             color: colors.secondary
