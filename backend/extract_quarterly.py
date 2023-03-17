@@ -24,7 +24,12 @@ df_lookup = df_lookup.drop(index=[0, 1369, 1370])
 df_lookup = df_lookup.loc[:, ['Data Item Description', 'Series ID']]
 df_lookup[['Item', 'Location']] = df_lookup['Data Item Description'].str.split(';', expand=True).drop(columns=[0,3])
 df_lookup = df_lookup[['Item', 'Location', 'Series ID']]
+df_lookup.Location = df_lookup.Location.str.strip()
+df_lookup.Item = df_lookup.Item.str.strip()
 df_lookup.reset_index()
+
+# dump the csv of lookup to disk
+df_lookup.to_csv('./data/aus_cpi_lookup_quarterly.csv', index=False)
 
 # see the flat cpi tabl
 df_flat_cpi = pd.DataFrame({'Date': [], 'Series ID': [], 'CPI Value': []})

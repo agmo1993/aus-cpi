@@ -1,0 +1,1369 @@
+Item,Location,Series ID
+Food and non-alcoholic beverages,Sydney,A2325851W
+Bread and cereal products,Sydney,A2326166T
+Bread,Sydney,A2327021W
+Cakes and biscuits,Sydney,A2327066A
+Breakfast cereals,Sydney,A2327111A
+Other cereal products,Sydney,A2327156F
+Meat and seafoods,Sydney,A2326211T
+Beef and veal,Sydney,A2327201F
+Pork,Sydney,A3603903T
+Lamb and goat,Sydney,A2327246K
+Poultry,Sydney,A2327336R
+Other meats,Sydney,A2327426V
+Fish and other seafood,Sydney,A2327471F
+Dairy and related products,Sydney,A2326121L
+Milk,Sydney,A2326886R
+Cheese,Sydney,A2326931R
+Ice cream and other dairy products,Sydney,A2326976V
+Fruit and vegetables,Sydney,A2330846X
+Fruit,Sydney,A2330891K
+Vegetables,Sydney,A2330936C
+Food products n.e.c.,Sydney,A3603943K
+Eggs,Sydney,A2327606C
+"Jams, honey and spreads",Sydney,A2327651R
+Food additives and condiments,Sydney,A2329451J
+Oils and fats,Sydney,A2329496L
+Snacks and confectionery,Sydney,A2331701C
+Other food products n.e.c.,Sydney,A2327741V
+Non-alcoholic beverages,Sydney,A3603983C
+"Coffee, tea and cocoa",Sydney,A2327696V
+"Waters, soft drinks and juices",Sydney,A2331746J
+Meals out and take away foods,Sydney,A2326256W
+Restaurant meals,Sydney,A2327516X
+Take away and fast foods,Sydney,A2327561K
+Alcohol and tobacco,Sydney,A2326076L
+Alcoholic beverages,Sydney,A2326706V
+Spirits,Sydney,A2328911T
+Wine,Sydney,A2328866T
+Beer,Sydney,A2328821L
+Tobacco,Sydney,A2326751F
+Tobacco,Sydney,A2328956W
+Clothing and footwear,Sydney,A2325896A
+Garments,Sydney,A3604023L
+Garments for men,Sydney,A2329541L
+Garments for women,Sydney,A2329676W
+Garments for infants and children,Sydney,A2329721W
+Footwear,Sydney,A2326346A
+Footwear for men,Sydney,A2327876C
+Footwear for women,Sydney,A2327921C
+Footwear for infants and children,Sydney,A2327966J
+Accessories and clothing services,Sydney,A2329766A
+Accessories,Sydney,A2329811A
+"Cleaning, repair and hire of clothing and footwear",Sydney,A2328011K
+Housing,Sydney,A2325941A
+Rents,Sydney,A2331836L
+Rents,Sydney,A2326391L
+New dwelling purchase by owner-occupiers,Sydney,A3604223F
+New dwelling purchase by owner-occupiers,Sydney,A2329901F
+Other housing,Sydney,A3603573L
+Maintenance and repair of the dwelling,Sydney,A2328056R
+Property rates and charges,Sydney,A2329946K
+Utilities,Sydney,A2326481T
+Water and sewerage,Sydney,A2329856F
+Electricity,Sydney,A2328101R
+Gas and other household fuels,Sydney,A2331881X
+"Furnishings, household equipment and services",Sydney,A2325986F
+Furniture and furnishings,Sydney,A3604143F
+Furniture,Sydney,A2328146V
+Carpets and other floor coverings,Sydney,A3604183X
+Household textiles,Sydney,A3604063F
+Household textiles,Sydney,A3604103L
+"Household appliances, utensils and tools",Sydney,A2329991W
+Major household appliances,Sydney,A2328236X
+Small electric household appliances,Sydney,A2330981R
+"Glassware, tableware and household utensils",Sydney,A2331026K
+Tools and equipment for house and garden,Sydney,A2328281K
+Non-durable household products,Sydney,A2330036W
+Cleaning and maintenance products,Sydney,A2328326C
+Personal care products,Sydney,A2329181V
+Other non-durable household products,Sydney,A2330081J
+Domestic and household services,Sydney,A2330126A
+Child care,Sydney,A2331566X
+Hairdressing and personal grooming services,Sydney,A2329226L
+Other household services,Sydney,A2331656C
+Health,Sydney,A2331071W
+"Medical products, appliances and equipment",Sydney,A3603613V
+Pharmaceutical products,Sydney,A2329136J
+Therapeutic appliances and equipment,Sydney,A2329046C
+"Medical, dental and hospital services",Sydney,A3603653L
+Medical and hospital services,Sydney,A2329001X
+Dental services,Sydney,A2329091R
+Transport,Sydney,A2326031J
+Private motoring,Sydney,A2326616R
+Motor vehicles,Sydney,A2328551X
+Spare parts and accessories for motor vehicles,Sydney,A2328686J
+Automotive fuel,Sydney,A2328596C
+Maintenance and repair of motor vehicles,Sydney,A2328731J
+Other services in respect of motor vehicles,Sydney,A2328641C
+Urban transport fares,Sydney,A2326661A
+Urban transport fares,Sydney,A2328776L
+Communication,Sydney,A2331161A
+Communication,Sydney,A2326571W
+Postal services,Sydney,A2328461V
+Telecommunication equipment and services,Sydney,A2328506L
+Recreation and culture,Sydney,A2331206V
+"Audio, visual and computing equipment and services",Sydney,A3603813L
+"Audio, visual and computing equipment",Sydney,A2329271X
+"Audio, visual and computing media and services",Sydney,A3603693F
+"Newspapers, books and stationery",Sydney,A3603733L
+Books,Sydney,A2330171L
+"Newspapers, magazines and stationery",Sydney,A3603773F
+Holiday travel and accommodation,Sydney,A2326841K
+Domestic holiday travel and accommodation,Sydney,A2329316T
+International holiday travel and accommodation,Sydney,A2329361C
+"Other recreation, sport and culture",Sydney,A2331341K
+"Equipment for sports, camping and open-air recreation",Sydney,A2330306K
+"Games, toys and hobbies",Sydney,A2330351W
+Pets and related products,Sydney,A2328416J
+Veterinary and other services for pets,Sydney,A2328371R
+Sports participation,Sydney,A2330396A
+"Other recreational, sporting and cultural services",Sydney,A2330441A
+Education,Sydney,A2331386R
+Education,Sydney,A2329406W
+Preschool and primary education,Sydney,A2331431R
+Secondary education,Sydney,A2331476V
+Tertiary education,Sydney,A2331521V
+Insurance and financial services,Sydney,A2332556L
+Insurance,Sydney,A3602793W
+Insurance,Sydney,A3602838R
+Financial services,Sydney,A3603893X
+Deposit and loan facilities (direct charges),Sydney,A3603853F
+Other financial services,Sydney,A2332736W
+All groups CPI,Sydney,A2325806K
+Tradables,Sydney,A2330486F
+Non-tradables,Sydney,A2330531F
+"All groups, goods component",Sydney,A2330576K
+"All groups, services component",Sydney,A2330666R
+All groups CPI including deposit and loan facilities (indirect charges),Sydney,A3604318W
+All groups CPI excluding Food and non-alcoholic beverages,Sydney,A2332061K
+All groups CPI excluding Alcohol and tobacco,Sydney,A2332106C
+All groups CPI excluding Clothing and footwear,Sydney,A2332151R
+All groups CPI excluding Housing,Sydney,A2332196V
+"All groups CPI excluding Furnishings, household equipment and services",Sydney,A2332241V
+All groups CPI excluding Health,Sydney,A2332286X
+All groups CPI excluding Transport,Sydney,A2332331X
+All groups CPI excluding Communication,Sydney,A2332376C
+All groups CPI excluding Recreation and culture,Sydney,A2332421C
+All groups CPI excluding Education,Sydney,A2332466J
+All groups CPI excluding Insurance and financial services,Sydney,A2332601L
+All groups CPI excluding Housing and Insurance and financial services,Sydney,A2332646T
+All groups CPI excluding Medical and hospital services,Sydney,A2332511J
+All groups CPI excluding food and energy,Sydney,A3604278R
+All groups CPI excluding 'volatile items',Sydney,A2330801V
+Food and non-alcoholic beverages,Melbourne,A2325856J
+Bread and cereal products,Melbourne,A2326171K
+Bread,Melbourne,A2327026J
+Cakes and biscuits,Melbourne,A2327071V
+Breakfast cereals,Melbourne,A2327116L
+Other cereal products,Melbourne,A2327161X
+Meat and seafoods,Melbourne,A2326216C
+Beef and veal,Melbourne,A2327206T
+Pork,Melbourne,A3603908C
+Lamb and goat,Melbourne,A2327251C
+Poultry,Melbourne,A2327341J
+Other meats,Melbourne,A2327431L
+Fish and other seafood,Melbourne,A2327476T
+Dairy and related products,Melbourne,A2326126X
+Milk,Melbourne,A2326891J
+Cheese,Melbourne,A2326936A
+Ice cream and other dairy products,Melbourne,A2326981L
+Fruit and vegetables,Melbourne,A2330851T
+Fruit,Melbourne,A2330896W
+Vegetables,Melbourne,A2330941W
+Food products n.e.c.,Melbourne,A3603948W
+Eggs,Melbourne,A2327611W
+"Jams, honey and spreads",Melbourne,A2327656A
+Food additives and condiments,Melbourne,A2329456V
+Oils and fats,Melbourne,A2329501V
+Snacks and confectionery,Melbourne,A2331706R
+Other food products n.e.c.,Melbourne,A2327746F
+Non-alcoholic beverages,Melbourne,A3603988R
+"Coffee, tea and cocoa",Melbourne,A2327701A
+"Waters, soft drinks and juices",Melbourne,A2331751A
+Meals out and take away foods,Melbourne,A2326261R
+Restaurant meals,Melbourne,A2327521T
+Take away and fast foods,Melbourne,A2327566W
+Alcohol and tobacco,Melbourne,A2326081F
+Alcoholic beverages,Melbourne,A2326711L
+Spirits,Melbourne,A2328916C
+Wine,Melbourne,A2328871K
+Beer,Melbourne,A2328826X
+Tobacco,Melbourne,A2326756T
+Tobacco,Melbourne,A2328961R
+Clothing and footwear,Melbourne,A2325901J
+Garments,Melbourne,A3604028X
+Garments for men,Melbourne,A2329546X
+Garments for women,Melbourne,A2329681R
+Garments for infants and children,Melbourne,A2329726J
+Footwear,Melbourne,A2326351V
+Footwear for men,Melbourne,A2327881W
+Footwear for women,Melbourne,A2327926R
+Footwear for infants and children,Melbourne,A2327971A
+Accessories and clothing services,Melbourne,A2329771V
+Accessories,Melbourne,A2329816L
+"Cleaning, repair and hire of clothing and footwear",Melbourne,A2328016W
+Housing,Melbourne,A2325946L
+Rents,Melbourne,A2331841F
+Rents,Melbourne,A2326396X
+New dwelling purchase by owner-occupiers,Melbourne,A3604228T
+New dwelling purchase by owner-occupiers,Melbourne,A2329906T
+Other housing,Melbourne,A3603578X
+Maintenance and repair of the dwelling,Melbourne,A2328061J
+Property rates and charges,Melbourne,A2329951C
+Utilities,Melbourne,A2326486C
+Water and sewerage,Melbourne,A2329861X
+Electricity,Melbourne,A2328106A
+Gas and other household fuels,Melbourne,A2331886K
+"Furnishings, household equipment and services",Melbourne,A2325991X
+Furniture and furnishings,Melbourne,A3604148T
+Furniture,Melbourne,A2328151L
+Carpets and other floor coverings,Melbourne,A3604188K
+Household textiles,Melbourne,A3604068T
+Household textiles,Melbourne,A3604108X
+"Household appliances, utensils and tools",Melbourne,A2329996J
+Major household appliances,Melbourne,A2328241T
+Small electric household appliances,Melbourne,A2330986A
+"Glassware, tableware and household utensils",Melbourne,A2331031C
+Tools and equipment for house and garden,Melbourne,A2328286W
+Non-durable household products,Melbourne,A2330041R
+Cleaning and maintenance products,Melbourne,A2328331W
+Personal care products,Melbourne,A2329186F
+Other non-durable household products,Melbourne,A2330086V
+Domestic and household services,Melbourne,A2330131V
+Child care,Melbourne,A2331571T
+Hairdressing and personal grooming services,Melbourne,A2329231F
+Other household services,Melbourne,A2331661W
+Health,Melbourne,A2331076J
+"Medical products, appliances and equipment",Melbourne,A3603618F
+Pharmaceutical products,Melbourne,A2329141A
+Therapeutic appliances and equipment,Melbourne,A2329051W
+"Medical, dental and hospital services",Melbourne,A3603658X
+Medical and hospital services,Melbourne,A2329006K
+Dental services,Melbourne,A2329096A
+Transport,Melbourne,A2326036V
+Private motoring,Melbourne,A2326621J
+Motor vehicles,Melbourne,A2328556K
+Spare parts and accessories for motor vehicles,Melbourne,A2328691A
+Automotive fuel,Melbourne,A2328601K
+Maintenance and repair of motor vehicles,Melbourne,A2328736V
+Other services in respect of motor vehicles,Melbourne,A2328646R
+Urban transport fares,Melbourne,A2326666L
+Urban transport fares,Melbourne,A2328781F
+Communication,Melbourne,A2331166L
+Communication,Melbourne,A2326576J
+Postal services,Melbourne,A2328466F
+Telecommunication equipment and services,Melbourne,A2328511F
+Recreation and culture,Melbourne,A2331211L
+"Audio, visual and computing equipment and services",Melbourne,A3603818X
+"Audio, visual and computing equipment",Melbourne,A2329276K
+"Audio, visual and computing media and services",Melbourne,A3603698T
+"Newspapers, books and stationery",Melbourne,A3603738X
+Books,Melbourne,A2330176X
+"Newspapers, magazines and stationery",Melbourne,A3603778T
+Holiday travel and accommodation,Melbourne,A2326846W
+Domestic holiday travel and accommodation,Melbourne,A2329321K
+International holiday travel and accommodation,Melbourne,A2329366R
+"Other recreation, sport and culture",Melbourne,A2331346W
+"Equipment for sports, camping and open-air recreation",Melbourne,A2330311C
+"Games, toys and hobbies",Melbourne,A2330356J
+Pets and related products,Melbourne,A2328421A
+Veterinary and other services for pets,Melbourne,A2328376A
+Sports participation,Melbourne,A2330401J
+"Other recreational, sporting and cultural services",Melbourne,A2330446L
+Education,Melbourne,A2331391J
+Education,Melbourne,A2329411R
+Preschool and primary education,Melbourne,A2331436A
+Secondary education,Melbourne,A2331481L
+Tertiary education,Melbourne,A2331526F
+Insurance and financial services,Melbourne,A2332561F
+Insurance,Melbourne,A3602798J
+Insurance,Melbourne,A3602843J
+Financial services,Melbourne,A3603898K
+Deposit and loan facilities (direct charges),Melbourne,A3603858T
+Other financial services,Melbourne,A2332741R
+All groups CPI,Melbourne,A2325811C
+Tradables,Melbourne,A2330491X
+Non-tradables,Melbourne,A2330536T
+"All groups, goods component",Melbourne,A2330581C
+"All groups, services component",Melbourne,A2330671J
+All groups CPI including deposit and loan facilities (indirect charges),Melbourne,A3604323R
+All groups CPI excluding Food and non-alcoholic beverages,Melbourne,A2332066W
+All groups CPI excluding Alcohol and tobacco,Melbourne,A2332111W
+All groups CPI excluding Clothing and footwear,Melbourne,A2332156A
+All groups CPI excluding Housing,Melbourne,A2332201A
+"All groups CPI excluding Furnishings, household equipment and services",Melbourne,A2332246F
+All groups CPI excluding Health,Melbourne,A2332291T
+All groups CPI excluding Transport,Melbourne,A2332336K
+All groups CPI excluding Communication,Melbourne,A2332381W
+All groups CPI excluding Recreation and culture,Melbourne,A2332426R
+All groups CPI excluding Education,Melbourne,A2332471A
+All groups CPI excluding Insurance and financial services,Melbourne,A2332606X
+All groups CPI excluding Housing and Insurance and financial services,Melbourne,A2332651K
+All groups CPI excluding Medical and hospital services,Melbourne,A2332516V
+All groups CPI excluding food and energy,Melbourne,A3604283J
+All groups CPI excluding 'volatile items',Melbourne,A2330806F
+Food and non-alcoholic beverages,Brisbane,A2325861A
+Bread and cereal products,Brisbane,A2326176W
+Bread,Brisbane,A2327031A
+Cakes and biscuits,Brisbane,A2327076F
+Breakfast cereals,Brisbane,A2327121F
+Other cereal products,Brisbane,A2327166K
+Meat and seafoods,Brisbane,A2326221W
+Beef and veal,Brisbane,A2327211K
+Pork,Brisbane,A3603913W
+Lamb and goat,Brisbane,A2327256R
+Poultry,Brisbane,A2327346V
+Other meats,Brisbane,A2327436X
+Fish and other seafood,Brisbane,A2327481K
+Dairy and related products,Brisbane,A2326131T
+Milk,Brisbane,A2326896V
+Cheese,Brisbane,A2326941V
+Ice cream and other dairy products,Brisbane,A2326986X
+Fruit and vegetables,Brisbane,A2330856C
+Fruit,Brisbane,A2330901C
+Vegetables,Brisbane,A2330946J
+Food products n.e.c.,Brisbane,A3603953R
+Eggs,Brisbane,A2327616J
+"Jams, honey and spreads",Brisbane,A2327661V
+Food additives and condiments,Brisbane,A2329461L
+Oils and fats,Brisbane,A2329506F
+Snacks and confectionery,Brisbane,A2331711J
+Other food products n.e.c.,Brisbane,A2327751X
+Non-alcoholic beverages,Brisbane,A3603993J
+"Coffee, tea and cocoa",Brisbane,A2327706L
+"Waters, soft drinks and juices",Brisbane,A2331756L
+Meals out and take away foods,Brisbane,A2326266A
+Restaurant meals,Brisbane,A2327526C
+Take away and fast foods,Brisbane,A2327571R
+Alcohol and tobacco,Brisbane,A2326086T
+Alcoholic beverages,Brisbane,A2326716X
+Spirits,Brisbane,A2328921W
+Wine,Brisbane,A2328876W
+Beer,Brisbane,A2328831T
+Tobacco,Brisbane,A2326761K
+Tobacco,Brisbane,A2328966A
+Clothing and footwear,Brisbane,A2325906V
+Garments,Brisbane,A3604033T
+Garments for men,Brisbane,A2329551T
+Garments for women,Brisbane,A2329686A
+Garments for infants and children,Brisbane,A2329731A
+Footwear,Brisbane,A2326356F
+Footwear for men,Brisbane,A2327886J
+Footwear for women,Brisbane,A2327931J
+Footwear for infants and children,Brisbane,A2327976L
+Accessories and clothing services,Brisbane,A2329776F
+Accessories,Brisbane,A2329821F
+"Cleaning, repair and hire of clothing and footwear",Brisbane,A2328021R
+Housing,Brisbane,A2325951F
+Rents,Brisbane,A2331846T
+Rents,Brisbane,A2326401F
+New dwelling purchase by owner-occupiers,Brisbane,A3604233K
+New dwelling purchase by owner-occupiers,Brisbane,A2329911K
+Other housing,Brisbane,A3603583T
+Maintenance and repair of the dwelling,Brisbane,A2328066V
+Property rates and charges,Brisbane,A2329956R
+Utilities,Brisbane,A2326491W
+Water and sewerage,Brisbane,A2329866K
+Electricity,Brisbane,A2328111V
+Gas and other household fuels,Brisbane,A2331891C
+"Furnishings, household equipment and services",Brisbane,A2325996K
+Furniture and furnishings,Brisbane,A3604153K
+Furniture,Brisbane,A2328156X
+Carpets and other floor coverings,Brisbane,A3604193C
+Household textiles,Brisbane,A3604073K
+Household textiles,Brisbane,A3604113T
+"Household appliances, utensils and tools",Brisbane,A2330001W
+Major household appliances,Brisbane,A2328246C
+Small electric household appliances,Brisbane,A2330991V
+"Glassware, tableware and household utensils",Brisbane,A2331036R
+Tools and equipment for house and garden,Brisbane,A2328291R
+Non-durable household products,Brisbane,A2330046A
+Cleaning and maintenance products,Brisbane,A2328336J
+Personal care products,Brisbane,A2329191X
+Other non-durable household products,Brisbane,A2330091L
+Domestic and household services,Brisbane,A2330136F
+Child care,Brisbane,A2331576C
+Hairdressing and personal grooming services,Brisbane,A2329236T
+Other household services,Brisbane,A2331666J
+Health,Brisbane,A2331081A
+"Medical products, appliances and equipment",Brisbane,A3603623X
+Pharmaceutical products,Brisbane,A2329146L
+Therapeutic appliances and equipment,Brisbane,A2329056J
+"Medical, dental and hospital services",Brisbane,A3603663T
+Medical and hospital services,Brisbane,A2329011C
+Dental services,Brisbane,A2329101J
+Transport,Brisbane,A2326041L
+Private motoring,Brisbane,A2326626V
+Motor vehicles,Brisbane,A2328561C
+Spare parts and accessories for motor vehicles,Brisbane,A2328696L
+Automotive fuel,Brisbane,A2328606W
+Maintenance and repair of motor vehicles,Brisbane,A2328741L
+Other services in respect of motor vehicles,Brisbane,A2328651J
+Urban transport fares,Brisbane,A2326671F
+Urban transport fares,Brisbane,A2328786T
+Communication,Brisbane,A2331171F
+Communication,Brisbane,A2326581A
+Postal services,Brisbane,A2328471X
+Telecommunication equipment and services,Brisbane,A2328516T
+Recreation and culture,Brisbane,A2331216X
+"Audio, visual and computing equipment and services",Brisbane,A3603823T
+"Audio, visual and computing equipment",Brisbane,A2329281C
+"Audio, visual and computing media and services",Brisbane,A3603703X
+"Newspapers, books and stationery",Brisbane,A3603743T
+Books,Brisbane,A2330181T
+"Newspapers, magazines and stationery",Brisbane,A3603783K
+Holiday travel and accommodation,Brisbane,A2326851R
+Domestic holiday travel and accommodation,Brisbane,A2329326W
+International holiday travel and accommodation,Brisbane,A2329371J
+"Other recreation, sport and culture",Brisbane,A2331351R
+"Equipment for sports, camping and open-air recreation",Brisbane,A2330316R
+"Games, toys and hobbies",Brisbane,A2330361A
+Pets and related products,Brisbane,A2328426L
+Veterinary and other services for pets,Brisbane,A2328381V
+Sports participation,Brisbane,A2330406V
+"Other recreational, sporting and cultural services",Brisbane,A2330451F
+Education,Brisbane,A2331396V
+Education,Brisbane,A2329416A
+Preschool and primary education,Brisbane,A2331441V
+Secondary education,Brisbane,A2331486X
+Tertiary education,Brisbane,A2331531X
+Insurance and financial services,Brisbane,A2332566T
+Insurance,Brisbane,A3602803R
+Insurance,Brisbane,A3602848V
+Financial services,Brisbane,A3604248A
+Deposit and loan facilities (direct charges),Brisbane,A3603863K
+Other financial services,Brisbane,A2332746A
+All groups CPI,Brisbane,A2325816R
+Tradables,Brisbane,A2330496K
+Non-tradables,Brisbane,A2330541K
+"All groups, goods component",Brisbane,A2330586R
+"All groups, services component",Brisbane,A2330676V
+All groups CPI including deposit and loan facilities (indirect charges),Brisbane,A3604328A
+All groups CPI excluding Food and non-alcoholic beverages,Brisbane,A2332071R
+All groups CPI excluding Alcohol and tobacco,Brisbane,A2332116J
+All groups CPI excluding Clothing and footwear,Brisbane,A2332161V
+All groups CPI excluding Housing,Brisbane,A2332206L
+"All groups CPI excluding Furnishings, household equipment and services",Brisbane,A2332251X
+All groups CPI excluding Health,Brisbane,A2332296C
+All groups CPI excluding Transport,Brisbane,A2332341C
+All groups CPI excluding Communication,Brisbane,A2332386J
+All groups CPI excluding Recreation and culture,Brisbane,A2332431J
+All groups CPI excluding Education,Brisbane,A2332476L
+All groups CPI excluding Insurance and financial services,Brisbane,A2332611T
+All groups CPI excluding Housing and Insurance and financial services,Brisbane,A2332656W
+All groups CPI excluding Medical and hospital services,Brisbane,A2332521L
+All groups CPI excluding food and energy,Brisbane,A3604288V
+All groups CPI excluding 'volatile items',Brisbane,A2330811X
+Food and non-alcoholic beverages,Adelaide,A2325866L
+Bread and cereal products,Adelaide,A2326181R
+Bread,Adelaide,A2327036L
+Cakes and biscuits,Adelaide,A2327081X
+Breakfast cereals,Adelaide,A2327126T
+Other cereal products,Adelaide,A2327171C
+Meat and seafoods,Adelaide,A2326226J
+Beef and veal,Adelaide,A2327216W
+Pork,Adelaide,A3603918J
+Lamb and goat,Adelaide,A2327261J
+Poultry,Adelaide,A2327351L
+Other meats,Adelaide,A2327441T
+Fish and other seafood,Adelaide,A2327486W
+Dairy and related products,Adelaide,A2326136C
+Milk,Adelaide,A2326901A
+Cheese,Adelaide,A2326946F
+Ice cream and other dairy products,Adelaide,A2326991T
+Fruit and vegetables,Adelaide,A2330861W
+Fruit,Adelaide,A2330906R
+Vegetables,Adelaide,A2330951A
+Food products n.e.c.,Adelaide,A3603958A
+Eggs,Adelaide,A2327621A
+"Jams, honey and spreads",Adelaide,A2327666F
+Food additives and condiments,Adelaide,A2329466X
+Oils and fats,Adelaide,A2329511X
+Snacks and confectionery,Adelaide,A2331716V
+Other food products n.e.c.,Adelaide,A2327756K
+Non-alcoholic beverages,Adelaide,A3603998V
+"Coffee, tea and cocoa",Adelaide,A2327711F
+"Waters, soft drinks and juices",Adelaide,A2331761F
+Meals out and take away foods,Adelaide,A2326271V
+Restaurant meals,Adelaide,A2327531W
+Take away and fast foods,Adelaide,A2327576A
+Alcohol and tobacco,Adelaide,A2326091K
+Alcoholic beverages,Adelaide,A2326721T
+Spirits,Adelaide,A2328926J
+Wine,Adelaide,A2328881R
+Beer,Adelaide,A2328836C
+Tobacco,Adelaide,A2326766W
+Tobacco,Adelaide,A2328971V
+Clothing and footwear,Adelaide,A2325911L
+Garments,Adelaide,A3604038C
+Garments for men,Adelaide,A2329556C
+Garments for women,Adelaide,A2329691V
+Garments for infants and children,Adelaide,A2329736L
+Footwear,Adelaide,A2326361X
+Footwear for men,Adelaide,A2327891A
+Footwear for women,Adelaide,A2327936V
+Footwear for infants and children,Adelaide,A2327981F
+Accessories and clothing services,Adelaide,A2329781X
+Accessories,Adelaide,A2329826T
+"Cleaning, repair and hire of clothing and footwear",Adelaide,A2328026A
+Housing,Adelaide,A2325956T
+Rents,Adelaide,A2331851K
+Rents,Adelaide,A2326406T
+New dwelling purchase by owner-occupiers,Adelaide,A3604238W
+New dwelling purchase by owner-occupiers,Adelaide,A2329916W
+Other housing,Adelaide,A3603588C
+Maintenance and repair of the dwelling,Adelaide,A2328071L
+Property rates and charges,Adelaide,A2329961J
+Utilities,Adelaide,A2326496J
+Water and sewerage,Adelaide,A2329871C
+Electricity,Adelaide,A2328116F
+Gas and other household fuels,Adelaide,A2331896R
+"Furnishings, household equipment and services",Adelaide,A2326001V
+Furniture and furnishings,Adelaide,A3604158W
+Furniture,Adelaide,A2328161T
+Carpets and other floor coverings,Adelaide,A3604198R
+Household textiles,Adelaide,A3604078W
+Household textiles,Adelaide,A3604118C
+"Household appliances, utensils and tools",Adelaide,A2330006J
+Major household appliances,Adelaide,A2328251W
+Small electric household appliances,Adelaide,A2330996F
+"Glassware, tableware and household utensils",Adelaide,A2331041J
+Tools and equipment for house and garden,Adelaide,A2328296A
+Non-durable household products,Adelaide,A2330051V
+Cleaning and maintenance products,Adelaide,A2328341A
+Personal care products,Adelaide,A2329196K
+Other non-durable household products,Adelaide,A2330096X
+Domestic and household services,Adelaide,A2330141X
+Child care,Adelaide,A2331581W
+Hairdressing and personal grooming services,Adelaide,A2329241K
+Other household services,Adelaide,A2331671A
+Health,Adelaide,A2331086L
+"Medical products, appliances and equipment",Adelaide,A3603628K
+Pharmaceutical products,Adelaide,A2329151F
+Therapeutic appliances and equipment,Adelaide,A2329061A
+"Medical, dental and hospital services",Adelaide,A3603668C
+Medical and hospital services,Adelaide,A2329016R
+Dental services,Adelaide,A2329106V
+Transport,Adelaide,A2326046X
+Private motoring,Adelaide,A2326631L
+Motor vehicles,Adelaide,A2328566R
+Spare parts and accessories for motor vehicles,Adelaide,A2328701V
+Automotive fuel,Adelaide,A2328611R
+Maintenance and repair of motor vehicles,Adelaide,A2328746X
+Other services in respect of motor vehicles,Adelaide,A2328656V
+Urban transport fares,Adelaide,A2326676T
+Urban transport fares,Adelaide,A2328791K
+Communication,Adelaide,A2331176T
+Communication,Adelaide,A2326586L
+Postal services,Adelaide,A2328476K
+Telecommunication equipment and services,Adelaide,A2328521K
+Recreation and culture,Adelaide,A2331221T
+"Audio, visual and computing equipment and services",Adelaide,A3603828C
+"Audio, visual and computing equipment",Adelaide,A2329286R
+"Audio, visual and computing media and services",Adelaide,A3603708K
+"Newspapers, books and stationery",Adelaide,A3603748C
+Books,Adelaide,A2330186C
+"Newspapers, magazines and stationery",Adelaide,A3603788W
+Holiday travel and accommodation,Adelaide,A2326856A
+Domestic holiday travel and accommodation,Adelaide,A2329331R
+International holiday travel and accommodation,Adelaide,A2329376V
+"Other recreation, sport and culture",Adelaide,A2331356A
+"Equipment for sports, camping and open-air recreation",Adelaide,A2330321J
+"Games, toys and hobbies",Adelaide,A2330366L
+Pets and related products,Adelaide,A2328431F
+Veterinary and other services for pets,Adelaide,A2328386F
+Sports participation,Adelaide,A2330411L
+"Other recreational, sporting and cultural services",Adelaide,A2330456T
+Education,Adelaide,A2331401A
+Education,Adelaide,A2329421V
+Preschool and primary education,Adelaide,A2331446F
+Secondary education,Adelaide,A2331491T
+Tertiary education,Adelaide,A2331536K
+Insurance and financial services,Adelaide,A2332571K
+Insurance,Adelaide,A3602808A
+Insurance,Adelaide,A3602853L
+Financial services,Adelaide,A3604253V
+Deposit and loan facilities (direct charges),Adelaide,A3603868W
+Other financial services,Adelaide,A2332751V
+All groups CPI,Adelaide,A2325821J
+Tradables,Adelaide,A2330501T
+Non-tradables,Adelaide,A2330546W
+"All groups, goods component",Adelaide,A2330591J
+"All groups, services component",Adelaide,A2330681L
+All groups CPI including deposit and loan facilities (indirect charges),Adelaide,A3604333V
+All groups CPI excluding Food and non-alcoholic beverages,Adelaide,A2332076A
+All groups CPI excluding Alcohol and tobacco,Adelaide,A2332121A
+All groups CPI excluding Clothing and footwear,Adelaide,A2332166F
+All groups CPI excluding Housing,Adelaide,A2332211F
+"All groups CPI excluding Furnishings, household equipment and services",Adelaide,A2332256K
+All groups CPI excluding Health,Adelaide,A2332301K
+All groups CPI excluding Transport,Adelaide,A2332346R
+All groups CPI excluding Communication,Adelaide,A2332391A
+All groups CPI excluding Recreation and culture,Adelaide,A2332436V
+All groups CPI excluding Education,Adelaide,A2332481F
+All groups CPI excluding Insurance and financial services,Adelaide,A2332616C
+All groups CPI excluding Housing and Insurance and financial services,Adelaide,A2332661R
+All groups CPI excluding Medical and hospital services,Adelaide,A2332526X
+All groups CPI excluding food and energy,Adelaide,A3604293L
+All groups CPI excluding 'volatile items',Adelaide,A2330816K
+Food and non-alcoholic beverages,Perth,A2325871F
+Bread and cereal products,Perth,A2326186A
+Bread,Perth,A2327041F
+Cakes and biscuits,Perth,A2327086K
+Breakfast cereals,Perth,A2327131K
+Other cereal products,Perth,A2327176R
+Meat and seafoods,Perth,A2326231A
+Beef and veal,Perth,A2327221R
+Pork,Perth,A3603923A
+Lamb and goat,Perth,A2327266V
+Poultry,Perth,A2327356X
+Other meats,Perth,A2327446C
+Fish and other seafood,Perth,A2327491R
+Dairy and related products,Perth,A2326141W
+Milk,Perth,A2326906L
+Cheese,Perth,A2326951X
+Ice cream and other dairy products,Perth,A2326996C
+Fruit and vegetables,Perth,A2330866J
+Fruit,Perth,A2330911J
+Vegetables,Perth,A2330956L
+Food products n.e.c.,Perth,A3603963V
+Eggs,Perth,A2327626L
+"Jams, honey and spreads",Perth,A2327671X
+Food additives and condiments,Perth,A2329471T
+Oils and fats,Perth,A2329516K
+Snacks and confectionery,Perth,A2331721L
+Other food products n.e.c.,Perth,A2327761C
+Non-alcoholic beverages,Perth,A3604003C
+"Coffee, tea and cocoa",Perth,A2327716T
+"Waters, soft drinks and juices",Perth,A2331766T
+Meals out and take away foods,Perth,A2326276F
+Restaurant meals,Perth,A2327536J
+Take away and fast foods,Perth,A2327581V
+Alcohol and tobacco,Perth,A2326096W
+Alcoholic beverages,Perth,A2326726C
+Spirits,Perth,A2328931A
+Wine,Perth,A2328886A
+Beer,Perth,A2328841W
+Tobacco,Perth,A2326771R
+Tobacco,Perth,A2328976F
+Clothing and footwear,Perth,A2325916X
+Garments,Perth,A3604043W
+Garments for men,Perth,A2329561W
+Garments for women,Perth,A2329696F
+Garments for infants and children,Perth,A2329741F
+Footwear,Perth,A2326366K
+Footwear for men,Perth,A2327896L
+Footwear for women,Perth,A2327941L
+Footwear for infants and children,Perth,A2327986T
+Accessories and clothing services,Perth,A2329786K
+Accessories,Perth,A2329831K
+"Cleaning, repair and hire of clothing and footwear",Perth,A2328031V
+Housing,Perth,A2325961K
+Rents,Perth,A2331856W
+Rents,Perth,A2326411K
+New dwelling purchase by owner-occupiers,Perth,A3604243R
+New dwelling purchase by owner-occupiers,Perth,A2329921R
+Other housing,Perth,A3603593W
+Maintenance and repair of the dwelling,Perth,A2328076X
+Property rates and charges,Perth,A2329966V
+Utilities,Perth,A2326501R
+Water and sewerage,Perth,A2329876R
+Electricity,Perth,A2328121X
+Gas and other household fuels,Perth,A2331901W
+"Furnishings, household equipment and services",Perth,A2326006F
+Furniture and furnishings,Perth,A3604163R
+Furniture,Perth,A2328166C
+Carpets and other floor coverings,Perth,A3604203W
+Household textiles,Perth,A3604083R
+Household textiles,Perth,A3604123W
+"Household appliances, utensils and tools",Perth,A2330011A
+Major household appliances,Perth,A2328256J
+Small electric household appliances,Perth,A2331001R
+"Glassware, tableware and household utensils",Perth,A2331046V
+Tools and equipment for house and garden,Perth,A2328301J
+Non-durable household products,Perth,A2330056F
+Cleaning and maintenance products,Perth,A2328346L
+Personal care products,Perth,A2329201T
+Other non-durable household products,Perth,A2330101F
+Domestic and household services,Perth,A2330146K
+Child care,Perth,A2331586J
+Hairdressing and personal grooming services,Perth,A2329246W
+Other household services,Perth,A2331676L
+Health,Perth,A2331091F
+"Medical products, appliances and equipment",Perth,A3603633C
+Pharmaceutical products,Perth,A2329156T
+Therapeutic appliances and equipment,Perth,A2329066L
+"Medical, dental and hospital services",Perth,A3603673W
+Medical and hospital services,Perth,A2329021J
+Dental services,Perth,A2329111L
+Transport,Perth,A2326051T
+Private motoring,Perth,A2326636X
+Motor vehicles,Perth,A2328571J
+Spare parts and accessories for motor vehicles,Perth,A2328706F
+Automotive fuel,Perth,A2328616A
+Maintenance and repair of motor vehicles,Perth,A2328751T
+Other services in respect of motor vehicles,Perth,A2328661L
+Urban transport fares,Perth,A2326681K
+Urban transport fares,Perth,A2328796W
+Communication,Perth,A2331181K
+Communication,Perth,A2326591F
+Postal services,Perth,A2328481C
+Telecommunication equipment and services,Perth,A2328526W
+Recreation and culture,Perth,A2331226C
+"Audio, visual and computing equipment and services",Perth,A3603833W
+"Audio, visual and computing equipment",Perth,A2329291J
+"Audio, visual and computing media and services",Perth,A3603713C
+"Newspapers, books and stationery",Perth,A3603753W
+Books,Perth,A2330191W
+"Newspapers, magazines and stationery",Perth,A3603793R
+Holiday travel and accommodation,Perth,A2326861V
+Domestic holiday travel and accommodation,Perth,A2329336A
+International holiday travel and accommodation,Perth,A2329381L
+"Other recreation, sport and culture",Perth,A2331361V
+"Equipment for sports, camping and open-air recreation",Perth,A2330326V
+"Games, toys and hobbies",Perth,A2330371F
+Pets and related products,Perth,A2328436T
+Veterinary and other services for pets,Perth,A2328391X
+Sports participation,Perth,A2330416X
+"Other recreational, sporting and cultural services",Perth,A2330461K
+Education,Perth,A2331406L
+Education,Perth,A2329426F
+Preschool and primary education,Perth,A2331451X
+Secondary education,Perth,A2331496C
+Tertiary education,Perth,A2331541C
+Insurance and financial services,Perth,A2332576W
+Insurance,Perth,A3602813V
+Insurance,Perth,A3602858X
+Financial services,Perth,A3604258F
+Deposit and loan facilities (direct charges),Perth,A3603873R
+Other financial services,Perth,A2332756F
+All groups CPI,Perth,A2325826V
+Tradables,Perth,A2330506C
+Non-tradables,Perth,A2330551R
+"All groups, goods component",Perth,A2330596V
+"All groups, services component",Perth,A2330686X
+All groups CPI including deposit and loan facilities (indirect charges),Perth,A3604338F
+All groups CPI excluding Food and non-alcoholic beverages,Perth,A2332081V
+All groups CPI excluding Alcohol and tobacco,Perth,A2332126L
+All groups CPI excluding Clothing and footwear,Perth,A2332171X
+All groups CPI excluding Housing,Perth,A2332216T
+"All groups CPI excluding Furnishings, household equipment and services",Perth,A2332261C
+All groups CPI excluding Health,Perth,A2332306W
+All groups CPI excluding Transport,Perth,A2332351J
+All groups CPI excluding Communication,Perth,A2332396L
+All groups CPI excluding Recreation and culture,Perth,A2332441L
+All groups CPI excluding Education,Perth,A2332486T
+All groups CPI excluding Insurance and financial services,Perth,A2332621W
+All groups CPI excluding Housing and Insurance and financial services,Perth,A2332666A
+All groups CPI excluding Medical and hospital services,Perth,A2332531T
+All groups CPI excluding food and energy,Perth,A3604298X
+All groups CPI excluding 'volatile items',Perth,A2330821C
+Food and non-alcoholic beverages,Hobart,A2325876T
+Bread and cereal products,Hobart,A2326191V
+Bread,Hobart,A2327046T
+Cakes and biscuits,Hobart,A2327091C
+Breakfast cereals,Hobart,A2327136W
+Other cereal products,Hobart,A2327181J
+Meat and seafoods,Hobart,A2326236L
+Beef and veal,Hobart,A2327226A
+Pork,Hobart,A3603928L
+Lamb and goat,Hobart,A2327271L
+Poultry,Hobart,A2327361T
+Other meats,Hobart,A2327451W
+Fish and other seafood,Hobart,A2327496A
+Dairy and related products,Hobart,A2326146J
+Milk,Hobart,A2326911F
+Cheese,Hobart,A2326956K
+Ice cream and other dairy products,Hobart,A2327001L
+Fruit and vegetables,Hobart,A2330871A
+Fruit,Hobart,A2330916V
+Vegetables,Hobart,A2330961F
+Food products n.e.c.,Hobart,A3603968F
+Eggs,Hobart,A2327631F
+"Jams, honey and spreads",Hobart,A2327676K
+Food additives and condiments,Hobart,A2329476C
+Oils and fats,Hobart,A2329521C
+Snacks and confectionery,Hobart,A2331726X
+Other food products n.e.c.,Hobart,A2327766R
+Non-alcoholic beverages,Hobart,A3604008R
+"Coffee, tea and cocoa",Hobart,A2327721K
+"Waters, soft drinks and juices",Hobart,A2331771K
+Meals out and take away foods,Hobart,A2326281X
+Restaurant meals,Hobart,A2327541A
+Take away and fast foods,Hobart,A2327586F
+Alcohol and tobacco,Hobart,A2326101C
+Alcoholic beverages,Hobart,A2326731W
+Spirits,Hobart,A2328936L
+Wine,Hobart,A2328891V
+Beer,Hobart,A2328846J
+Tobacco,Hobart,A2326776A
+Tobacco,Hobart,A2328981X
+Clothing and footwear,Hobart,A2325921T
+Garments,Hobart,A3604048J
+Garments for men,Hobart,A2329566J
+Garments for women,Hobart,A2329701L
+Garments for infants and children,Hobart,A2329746T
+Footwear,Hobart,A2326371C
+Footwear for men,Hobart,A2327901V
+Footwear for women,Hobart,A2327946X
+Footwear for infants and children,Hobart,A2327991K
+Accessories and clothing services,Hobart,A2329791C
+Accessories,Hobart,A2329836W
+"Cleaning, repair and hire of clothing and footwear",Hobart,A2328036F
+Housing,Hobart,A2325966W
+Rents,Hobart,A2331861R
+Rents,Hobart,A2326416W
+New dwelling purchase by owner-occupiers,Hobart,A3603558R
+New dwelling purchase by owner-occupiers,Hobart,A2329926A
+Other housing,Hobart,A3603598J
+Maintenance and repair of the dwelling,Hobart,A2328081T
+Property rates and charges,Hobart,A2329971L
+Utilities,Hobart,A2326506A
+Water and sewerage,Hobart,A2329881J
+Electricity,Hobart,A2328126K
+Gas and other household fuels,Hobart,A2331906J
+"Furnishings, household equipment and services",Hobart,A2326011X
+Furniture and furnishings,Hobart,A3604168A
+Furniture,Hobart,A2328171W
+Carpets and other floor coverings,Hobart,A3604208J
+Household textiles,Hobart,A3604088A
+Household textiles,Hobart,A3604128J
+"Household appliances, utensils and tools",Hobart,A2330016L
+Major household appliances,Hobart,A2328261A
+Small electric household appliances,Hobart,A2331006A
+"Glassware, tableware and household utensils",Hobart,A2331051L
+Tools and equipment for house and garden,Hobart,A2328306V
+Non-durable household products,Hobart,A2330061X
+Cleaning and maintenance products,Hobart,A2328351F
+Personal care products,Hobart,A2329206C
+Other non-durable household products,Hobart,A2330106T
+Domestic and household services,Hobart,A2330151C
+Child care,Hobart,A2331591A
+Hairdressing and personal grooming services,Hobart,A2329251R
+Other household services,Hobart,A2331681F
+Health,Hobart,A2331096T
+"Medical products, appliances and equipment",Hobart,A3603638R
+Pharmaceutical products,Hobart,A2329161K
+Therapeutic appliances and equipment,Hobart,A2329071F
+"Medical, dental and hospital services",Hobart,A3603678J
+Medical and hospital services,Hobart,A2329026V
+Dental services,Hobart,A2329116X
+Transport,Hobart,A2326056C
+Private motoring,Hobart,A2326641T
+Motor vehicles,Hobart,A2328576V
+Spare parts and accessories for motor vehicles,Hobart,A2328711X
+Automotive fuel,Hobart,A2328621V
+Maintenance and repair of motor vehicles,Hobart,A2328756C
+Other services in respect of motor vehicles,Hobart,A2328666X
+Urban transport fares,Hobart,A2326686W
+Urban transport fares,Hobart,A2328801C
+Communication,Hobart,A2331186W
+Communication,Hobart,A2326596T
+Postal services,Hobart,A2328486R
+Telecommunication equipment and services,Hobart,A2328531R
+Recreation and culture,Hobart,A2331231W
+"Audio, visual and computing equipment and services",Hobart,A3603838J
+"Audio, visual and computing equipment",Hobart,A2329296V
+"Audio, visual and computing media and services",Hobart,A3603718R
+"Newspapers, books and stationery",Hobart,A3603758J
+Books,Hobart,A2330196J
+"Newspapers, magazines and stationery",Hobart,A3603798A
+Holiday travel and accommodation,Hobart,A2326866F
+Domestic holiday travel and accommodation,Hobart,A2329341V
+International holiday travel and accommodation,Hobart,A2329386X
+"Other recreation, sport and culture",Hobart,A2331366F
+"Equipment for sports, camping and open-air recreation",Hobart,A2330331L
+"Games, toys and hobbies",Hobart,A2330376T
+Pets and related products,Hobart,A2328441K
+Veterinary and other services for pets,Hobart,A2328396K
+Sports participation,Hobart,A2330421T
+"Other recreational, sporting and cultural services",Hobart,A2330466W
+Education,Hobart,A2331411F
+Education,Hobart,A2329431X
+Preschool and primary education,Hobart,A2331456K
+Secondary education,Hobart,A2331501K
+Tertiary education,Hobart,A2331546R
+Insurance and financial services,Hobart,A2332581R
+Insurance,Hobart,A3602818F
+Insurance,Hobart,A3602863T
+Financial services,Hobart,A3604263X
+Deposit and loan facilities (direct charges),Hobart,A3603878A
+Other financial services,Hobart,A2332761X
+All groups CPI,Hobart,A2325831L
+Tradables,Hobart,A2330511W
+Non-tradables,Hobart,A2330556A
+"All groups, goods component",Hobart,A2330601A
+"All groups, services component",Hobart,A2330691T
+All groups CPI including deposit and loan facilities (indirect charges),Hobart,A3604343X
+All groups CPI excluding Food and non-alcoholic beverages,Hobart,A2332086F
+All groups CPI excluding Alcohol and tobacco,Hobart,A2332131F
+All groups CPI excluding Clothing and footwear,Hobart,A2332176K
+All groups CPI excluding Housing,Hobart,A2332221K
+"All groups CPI excluding Furnishings, household equipment and services",Hobart,A2332266R
+All groups CPI excluding Health,Hobart,A2332311R
+All groups CPI excluding Transport,Hobart,A2332356V
+All groups CPI excluding Communication,Hobart,A2332401V
+All groups CPI excluding Recreation and culture,Hobart,A2332446X
+All groups CPI excluding Education,Hobart,A2332491K
+All groups CPI excluding Insurance and financial services,Hobart,A2332626J
+All groups CPI excluding Housing and Insurance and financial services,Hobart,A2332671V
+All groups CPI excluding Medical and hospital services,Hobart,A2332536C
+All groups CPI excluding food and energy,Hobart,A3604303F
+All groups CPI excluding 'volatile items',Hobart,A2330826R
+Food and non-alcoholic beverages,Darwin,A2325881K
+Bread and cereal products,Darwin,A2326196F
+Bread,Darwin,A2327051K
+Cakes and biscuits,Darwin,A2327096R
+Breakfast cereals,Darwin,A2327141R
+Other cereal products,Darwin,A2327186V
+Meat and seafoods,Darwin,A2326241F
+Beef and veal,Darwin,A2327231V
+Pork,Darwin,A3603933F
+Lamb and goat,Darwin,A2327276X
+Poultry,Darwin,A2327366C
+Other meats,Darwin,A2327456J
+Fish and other seafood,Darwin,A2327501J
+Dairy and related products,Darwin,A2326151A
+Milk,Darwin,A2326916T
+Cheese,Darwin,A2326961C
+Ice cream and other dairy products,Darwin,A2327006X
+Fruit and vegetables,Darwin,A2330876L
+Fruit,Darwin,A2330921L
+Vegetables,Darwin,A2330966T
+Food products n.e.c.,Darwin,A3603973X
+Eggs,Darwin,A2327636T
+"Jams, honey and spreads",Darwin,A2327681C
+Food additives and condiments,Darwin,A2329481W
+Oils and fats,Darwin,A2329526R
+Snacks and confectionery,Darwin,A2331731T
+Other food products n.e.c.,Darwin,A2327771J
+Non-alcoholic beverages,Darwin,A3604013J
+"Coffee, tea and cocoa",Darwin,A2327726W
+"Waters, soft drinks and juices",Darwin,A2331776W
+Meals out and take away foods,Darwin,A2326286K
+Restaurant meals,Darwin,A2327546L
+Take away and fast foods,Darwin,A2327591X
+Alcohol and tobacco,Darwin,A2326106R
+Alcoholic beverages,Darwin,A2326736J
+Spirits,Darwin,A2328941F
+Wine,Darwin,A2328896F
+Beer,Darwin,A2328851A
+Tobacco,Darwin,A2326781V
+Tobacco,Darwin,A2328986K
+Clothing and footwear,Darwin,A2325926C
+Garments,Darwin,A3604053A
+Garments for men,Darwin,A2329571A
+Garments for women,Darwin,A2329706X
+Garments for infants and children,Darwin,A2329751K
+Footwear,Darwin,A2326376R
+Footwear for men,Darwin,A2327906F
+Footwear for women,Darwin,A2327951T
+Footwear for infants and children,Darwin,A2327996W
+Accessories and clothing services,Darwin,A2329796R
+Accessories,Darwin,A2329841R
+"Cleaning, repair and hire of clothing and footwear",Darwin,A2328041X
+Housing,Darwin,A2325971R
+Rents,Darwin,A2331866A
+Rents,Darwin,A2326421R
+New dwelling purchase by owner-occupiers,Darwin,A3603563J
+New dwelling purchase by owner-occupiers,Darwin,A2329931V
+Other housing,Darwin,A3603603R
+Maintenance and repair of the dwelling,Darwin,A2328086C
+Property rates and charges,Darwin,A2329976X
+Utilities,Darwin,A2326511V
+Water and sewerage,Darwin,A2329886V
+Electricity,Darwin,A2328131C
+Gas and other household fuels,Darwin,A2331911A
+"Furnishings, household equipment and services",Darwin,A2326016K
+Furniture and furnishings,Darwin,A3604173V
+Furniture,Darwin,A2328176J
+Carpets and other floor coverings,Darwin,A3604213A
+Household textiles,Darwin,A3604093V
+Household textiles,Darwin,A3604133A
+"Household appliances, utensils and tools",Darwin,A2330021F
+Major household appliances,Darwin,A2328266L
+Small electric household appliances,Darwin,A2331011V
+"Glassware, tableware and household utensils",Darwin,A2331056X
+Tools and equipment for house and garden,Darwin,A2328311L
+Non-durable household products,Darwin,A2330066K
+Cleaning and maintenance products,Darwin,A2328356T
+Personal care products,Darwin,A2329211W
+Other non-durable household products,Darwin,A2330111K
+Domestic and household services,Darwin,A2330156R
+Child care,Darwin,A2331596L
+Hairdressing and personal grooming services,Darwin,A2329256A
+Other household services,Darwin,A2331686T
+Health,Darwin,A2331101X
+"Medical products, appliances and equipment",Darwin,A3603643J
+Pharmaceutical products,Darwin,A2329166W
+Therapeutic appliances and equipment,Darwin,A2329076T
+"Medical, dental and hospital services",Darwin,A3603683A
+Medical and hospital services,Darwin,A2329031L
+Dental services,Darwin,A2329121T
+Transport,Darwin,A2326061W
+Private motoring,Darwin,A2326646C
+Motor vehicles,Darwin,A2328581L
+Spare parts and accessories for motor vehicles,Darwin,A2328716K
+Automotive fuel,Darwin,A2328626F
+Maintenance and repair of motor vehicles,Darwin,A2328761W
+Other services in respect of motor vehicles,Darwin,A2328671T
+Urban transport fares,Darwin,A2326691R
+Urban transport fares,Darwin,A2328806R
+Communication,Darwin,A2331191R
+Communication,Darwin,A2326601X
+Postal services,Darwin,A2328491J
+Telecommunication equipment and services,Darwin,A2328536A
+Recreation and culture,Darwin,A2331236J
+"Audio, visual and computing equipment and services",Darwin,A3603843A
+"Audio, visual and computing equipment",Darwin,A2329301A
+"Audio, visual and computing media and services",Darwin,A3603723J
+"Newspapers, books and stationery",Darwin,A3603763A
+Books,Darwin,A2330201R
+"Newspapers, magazines and stationery",Darwin,A3603803J
+Holiday travel and accommodation,Darwin,A2326871X
+Domestic holiday travel and accommodation,Darwin,A2329346F
+International holiday travel and accommodation,Darwin,A2329391T
+"Other recreation, sport and culture",Darwin,A2331371X
+"Equipment for sports, camping and open-air recreation",Darwin,A2330336X
+"Games, toys and hobbies",Darwin,A2330381K
+Pets and related products,Darwin,A2328446W
+Veterinary and other services for pets,Darwin,A2328401T
+Sports participation,Darwin,A2330426C
+"Other recreational, sporting and cultural services",Darwin,A2330471R
+Education,Darwin,A2331416T
+Education,Darwin,A2329436K
+Preschool and primary education,Darwin,A2331461C
+Secondary education,Darwin,A2331506W
+Tertiary education,Darwin,A2331551J
+Insurance and financial services,Darwin,A2332586A
+Insurance,Darwin,A3602823X
+Insurance,Darwin,A3602868C
+Financial services,Darwin,A3604268K
+Deposit and loan facilities (direct charges),Darwin,A3603883V
+Other financial services,Darwin,A2332766K
+All groups CPI,Darwin,A2325836X
+Tradables,Darwin,A2330516J
+Non-tradables,Darwin,A2330561V
+"All groups, goods component",Darwin,A2330606L
+"All groups, services component",Darwin,A2330696C
+All groups CPI including deposit and loan facilities (indirect charges),Darwin,A3604348K
+All groups CPI excluding Food and non-alcoholic beverages,Darwin,A2332091X
+All groups CPI excluding Alcohol and tobacco,Darwin,A2332136T
+All groups CPI excluding Clothing and footwear,Darwin,A2332181C
+All groups CPI excluding Housing,Darwin,A2332226W
+"All groups CPI excluding Furnishings, household equipment and services",Darwin,A2332271J
+All groups CPI excluding Health,Darwin,A2332316A
+All groups CPI excluding Transport,Darwin,A2332361L
+All groups CPI excluding Communication,Darwin,A2332406F
+All groups CPI excluding Recreation and culture,Darwin,A2332451T
+All groups CPI excluding Education,Darwin,A2332496W
+All groups CPI excluding Insurance and financial services,Darwin,A2332631A
+All groups CPI excluding Housing and Insurance and financial services,Darwin,A2332676F
+All groups CPI excluding Medical and hospital services,Darwin,A2332541W
+All groups CPI excluding food and energy,Darwin,A3604308T
+All groups CPI excluding 'volatile items',Darwin,A2330831J
+Food and non-alcoholic beverages,Canberra,A2325886W
+Bread and cereal products,Canberra,A2326201L
+Bread,Canberra,A2327056W
+Cakes and biscuits,Canberra,A2327101W
+Breakfast cereals,Canberra,A2327146A
+Other cereal products,Canberra,A2327191L
+Meat and seafoods,Canberra,A2326246T
+Beef and veal,Canberra,A2327236F
+Pork,Canberra,A3603938T
+Lamb and goat,Canberra,A2327281T
+Poultry,Canberra,A2327371W
+Other meats,Canberra,A2327461A
+Fish and other seafood,Canberra,A2327506V
+Dairy and related products,Canberra,A2326156L
+Milk,Canberra,A2326921K
+Cheese,Canberra,A2326966R
+Ice cream and other dairy products,Canberra,A2327011T
+Fruit and vegetables,Canberra,A2330881F
+Fruit,Canberra,A2330926X
+Vegetables,Canberra,A2330971K
+Food products n.e.c.,Canberra,A3603978K
+Eggs,Canberra,A2327641K
+"Jams, honey and spreads",Canberra,A2327686R
+Food additives and condiments,Canberra,A2329486J
+Oils and fats,Canberra,A2329531J
+Snacks and confectionery,Canberra,A2331736C
+Other food products n.e.c.,Canberra,A2327776V
+Non-alcoholic beverages,Canberra,A3604018V
+"Coffee, tea and cocoa",Canberra,A2327731R
+"Waters, soft drinks and juices",Canberra,A2331781R
+Meals out and take away foods,Canberra,A2326291C
+Restaurant meals,Canberra,A2327551F
+Take away and fast foods,Canberra,A2327596K
+Alcohol and tobacco,Canberra,A2326111J
+Alcoholic beverages,Canberra,A2326741A
+Spirits,Canberra,A2328946T
+Wine,Canberra,A2328901L
+Beer,Canberra,A2328856L
+Tobacco,Canberra,A2326786F
+Tobacco,Canberra,A2328991C
+Clothing and footwear,Canberra,A2325931W
+Garments,Canberra,A3604058L
+Garments for men,Canberra,A2329576L
+Garments for women,Canberra,A2329711T
+Garments for infants and children,Canberra,A2329756W
+Footwear,Canberra,A2326381J
+Footwear for men,Canberra,A2327911X
+Footwear for women,Canberra,A2327956C
+Footwear for infants and children,Canberra,A2328001F
+Accessories and clothing services,Canberra,A2329801W
+Accessories,Canberra,A2329846A
+"Cleaning, repair and hire of clothing and footwear",Canberra,A2328046K
+Housing,Canberra,A2325976A
+Rents,Canberra,A2331871V
+Rents,Canberra,A2326426A
+New dwelling purchase by owner-occupiers,Canberra,A3603568V
+New dwelling purchase by owner-occupiers,Canberra,A2329936F
+Other housing,Canberra,A3603608A
+Maintenance and repair of the dwelling,Canberra,A2328091W
+Property rates and charges,Canberra,A2329981T
+Utilities,Canberra,A2326516F
+Water and sewerage,Canberra,A2329891L
+Electricity,Canberra,A2328136R
+Gas and other household fuels,Canberra,A2331916L
+"Furnishings, household equipment and services",Canberra,A2326021C
+Furniture and furnishings,Canberra,A3604178F
+Furniture,Canberra,A2328181A
+Carpets and other floor coverings,Canberra,A3604218L
+Household textiles,Canberra,A3604098F
+Household textiles,Canberra,A3604138L
+"Household appliances, utensils and tools",Canberra,A2330026T
+Major household appliances,Canberra,A2328271F
+Small electric household appliances,Canberra,A2331016F
+"Glassware, tableware and household utensils",Canberra,A2331061T
+Tools and equipment for house and garden,Canberra,A2328316X
+Non-durable household products,Canberra,A2330071C
+Cleaning and maintenance products,Canberra,A2328361K
+Personal care products,Canberra,A2329216J
+Other non-durable household products,Canberra,A2330116W
+Domestic and household services,Canberra,A2330161J
+Child care,Canberra,A2331601V
+Hairdressing and personal grooming services,Canberra,A2329261V
+Other household services,Canberra,A2331691K
+Health,Canberra,A2331106K
+"Medical products, appliances and equipment",Canberra,A3603648V
+Pharmaceutical products,Canberra,A2329171R
+Therapeutic appliances and equipment,Canberra,A2329081K
+"Medical, dental and hospital services",Canberra,A3603688L
+Medical and hospital services,Canberra,A2329036X
+Dental services,Canberra,A2329126C
+Transport,Canberra,A2326066J
+Private motoring,Canberra,A2326651W
+Motor vehicles,Canberra,A2328586X
+Spare parts and accessories for motor vehicles,Canberra,A2328721C
+Automotive fuel,Canberra,A2328631X
+Maintenance and repair of motor vehicles,Canberra,A2328766J
+Other services in respect of motor vehicles,Canberra,A2328676C
+Urban transport fares,Canberra,A2326696A
+Urban transport fares,Canberra,A2328811J
+Communication,Canberra,A2331196A
+Communication,Canberra,A2326606K
+Postal services,Canberra,A2328496V
+Telecommunication equipment and services,Canberra,A2328541V
+Recreation and culture,Canberra,A2331241A
+"Audio, visual and computing equipment and services",Canberra,A3603848L
+"Audio, visual and computing equipment",Canberra,A2329306L
+"Audio, visual and computing media and services",Canberra,A3603728V
+"Newspapers, books and stationery",Canberra,A3603768L
+Books,Canberra,A2330206A
+"Newspapers, magazines and stationery",Canberra,A3603808V
+Holiday travel and accommodation,Canberra,A2326876K
+Domestic holiday travel and accommodation,Canberra,A2329351X
+International holiday travel and accommodation,Canberra,A2329396C
+"Other recreation, sport and culture",Canberra,A2331376K
+"Equipment for sports, camping and open-air recreation",Canberra,A2330341T
+"Games, toys and hobbies",Canberra,A2330386W
+Pets and related products,Canberra,A2328451R
+Veterinary and other services for pets,Canberra,A2328406C
+Sports participation,Canberra,A2330431W
+"Other recreational, sporting and cultural services",Canberra,A2330476A
+Education,Canberra,A2331421K
+Education,Canberra,A2329441C
+Preschool and primary education,Canberra,A2331466R
+Secondary education,Canberra,A2331511R
+Tertiary education,Canberra,A2331556V
+Insurance and financial services,Canberra,A2332591V
+Insurance,Canberra,A3602828K
+Insurance,Canberra,A3602873W
+Financial services,Canberra,A3604273C
+Deposit and loan facilities (direct charges),Canberra,A3603888F
+Other financial services,Canberra,A2332771C
+All groups CPI,Canberra,A2325841T
+Tradables,Canberra,A2330521A
+Non-tradables,Canberra,A2330566F
+"All groups, goods component",Canberra,A2330611F
+"All groups, services component",Canberra,A2330701K
+All groups CPI including deposit and loan facilities (indirect charges),Canberra,A3604353C
+All groups CPI excluding Food and non-alcoholic beverages,Canberra,A2332096K
+All groups CPI excluding Alcohol and tobacco,Canberra,A2332141K
+All groups CPI excluding Clothing and footwear,Canberra,A2332186R
+All groups CPI excluding Housing,Canberra,A2332231R
+"All groups CPI excluding Furnishings, household equipment and services",Canberra,A2332276V
+All groups CPI excluding Health,Canberra,A2332321V
+All groups CPI excluding Transport,Canberra,A2332366X
+All groups CPI excluding Communication,Canberra,A2332411X
+All groups CPI excluding Recreation and culture,Canberra,A2332456C
+All groups CPI excluding Education,Canberra,A2332501C
+All groups CPI excluding Insurance and financial services,Canberra,A2332636L
+All groups CPI excluding Housing and Insurance and financial services,Canberra,A2332681X
+All groups CPI excluding Medical and hospital services,Canberra,A2332546J
+All groups CPI excluding food and energy,Canberra,A3604313K
+All groups CPI excluding 'volatile items',Canberra,A2330836V
+Food and non-alcoholic beverages,Australia,A2325891R
+Bread and cereal products,Australia,A2326206X
+Bread,Australia,A2327061R
+Cakes and biscuits,Australia,A2327106J
+Breakfast cereals,Australia,A2327151V
+Other cereal products,Australia,A2327196X
+Meat and seafoods,Australia,A2326251K
+Beef and veal,Australia,A2327241X
+Pork,Australia,A3604358R
+Lamb and goat,Australia,A2327286C
+Poultry,Australia,A2327376J
+Other meats,Australia,A2327466L
+Fish and other seafood,Australia,A2327511L
+Dairy and related products,Australia,A2326161F
+Milk,Australia,A2326926W
+Cheese,Australia,A2326971J
+Ice cream and other dairy products,Australia,A2327016C
+Fruit and vegetables,Australia,A2330886T
+Fruit,Australia,A2330931T
+Vegetables,Australia,A2330976W
+Food products n.e.c.,Australia,A3604363J
+Eggs,Australia,A2327646W
+"Jams, honey and spreads",Australia,A2327691J
+Food additives and condiments,Australia,A2329491A
+Oils and fats,Australia,A2329536V
+Snacks and confectionery,Australia,A2331741W
+Other food products n.e.c.,Australia,A2327781L
+Non-alcoholic beverages,Australia,A3604418F
+"Coffee, tea and cocoa",Australia,A2327736A
+"Waters, soft drinks and juices",Australia,A2331786A
+Meals out and take away foods,Australia,A2326296R
+Restaurant meals,Australia,A2327556T
+Take away and fast foods,Australia,A2327601T
+Alcohol and tobacco,Australia,A2326116V
+Alcoholic beverages,Australia,A2326746L
+Spirits,Australia,A2328951K
+Wine,Australia,A2328906X
+Beer,Australia,A2328861F
+Tobacco,Australia,A2326791X
+Tobacco,Australia,A2328996R
+Clothing and footwear,Australia,A2325936J
+Garments,Australia,A3604368V
+Garments for men,Australia,A2329581F
+Garments for women,Australia,A2329716C
+Garments for infants and children,Australia,A2329761R
+Footwear,Australia,A2326386V
+Footwear for men,Australia,A2327916K
+Footwear for women,Australia,A2327961W
+Footwear for infants and children,Australia,A2328006T
+Accessories and clothing services,Australia,A2329806J
+Accessories,Australia,A2329851V
+"Cleaning, repair and hire of clothing and footwear",Australia,A2328051C
+Housing,Australia,A2325981V
+Rents,Australia,A2331876F
+Rents,Australia,A2326431V
+New dwelling purchase by owner-occupiers,Australia,A3604373L
+New dwelling purchase by owner-occupiers,Australia,A2329941X
+Other housing,Australia,A3604413V
+Maintenance and repair of the dwelling,Australia,A2328096J
+Property rates and charges,Australia,A2329986C
+Utilities,Australia,A2326521X
+Water and sewerage,Australia,A2329896X
+Electricity,Australia,A2328141J
+Gas and other household fuels,Australia,A2331921F
+"Furnishings, household equipment and services",Australia,A2326026R
+Furniture and furnishings,Australia,A3604403R
+Furniture,Australia,A2328186L
+Carpets and other floor coverings,Australia,A3604433C
+Household textiles,Australia,A3604428K
+Household textiles,Australia,A3604383T
+"Household appliances, utensils and tools",Australia,A2330031K
+Major household appliances,Australia,A2328276T
+Small electric household appliances,Australia,A2331021X
+"Glassware, tableware and household utensils",Australia,A2331066C
+Tools and equipment for house and garden,Australia,A2328321T
+Non-durable household products,Australia,A2330076R
+Cleaning and maintenance products,Australia,A2328366W
+Personal care products,Australia,A2329221A
+Other non-durable household products,Australia,A2330121R
+Domestic and household services,Australia,A2330166V
+Child care,Australia,A2331606F
+Hairdressing and personal grooming services,Australia,A2329266F
+Other household services,Australia,A2331696W
+Health,Australia,A2331111C
+"Medical products, appliances and equipment",Australia,A3604438R
+Pharmaceutical products,Australia,A2329176A
+Therapeutic appliances and equipment,Australia,A2329086W
+"Medical, dental and hospital services",Australia,A3604388C
+Medical and hospital services,Australia,A2329041T
+Dental services,Australia,A2329131W
+Transport,Australia,A2326071A
+Private motoring,Australia,A2326656J
+Motor vehicles,Australia,A2328591T
+Spare parts and accessories for motor vehicles,Australia,A2328726R
+Automotive fuel,Australia,A2328636K
+Maintenance and repair of motor vehicles,Australia,A2328771A
+Other services in respect of motor vehicles,Australia,A2328681W
+Urban transport fares,Australia,A2326701J
+Urban transport fares,Australia,A2328816V
+Communication,Australia,A2331201J
+Communication,Australia,A2326611C
+Postal services,Australia,A2328501A
+Telecommunication equipment and services,Australia,A2328546F
+Recreation and culture,Australia,A2331246L
+"Audio, visual and computing equipment and services",Australia,A3604423X
+"Audio, visual and computing equipment",Australia,A2329311F
+"Audio, visual and computing media and services",Australia,A3604443J
+"Newspapers, books and stationery",Australia,A3604408A
+Books,Australia,A2330211V
+"Newspapers, magazines and stationery",Australia,A3604393W
+Holiday travel and accommodation,Australia,A2326881C
+Domestic holiday travel and accommodation,Australia,A2329356K
+International holiday travel and accommodation,Australia,A2329401K
+"Other recreation, sport and culture",Australia,A2331381C
+"Equipment for sports, camping and open-air recreation",Australia,A2330346C
+"Games, toys and hobbies",Australia,A2330391R
+Pets and related products,Australia,A2328456A
+Veterinary and other services for pets,Australia,A2328411W
+Sports participation,Australia,A2330436J
+"Other recreational, sporting and cultural services",Australia,A2330481V
+Education,Australia,A2331426W
+Education,Australia,A2329446R
+Preschool and primary education,Australia,A2331471J
+Secondary education,Australia,A2331516A
+Tertiary education,Australia,A2331561L
+Insurance and financial services,Australia,A2332596F
+Insurance,Australia,A3602833C
+Insurance,Australia,A3602878J
+Financial services,Australia,A3604453L
+Deposit and loan facilities (direct charges),Australia,A3604448V
+Other financial services,Australia,A2332776R
+All groups CPI,Australia,A2325846C
+Tradables,Australia,A2330526L
+Non-tradables,Australia,A2330571X
+"All groups, goods component",Australia,A2330616T
+"All groups, services component",Australia,A2330706W
+All groups CPI including deposit and loan facilities (indirect charges),Australia,A3604398J
+All groups CPI excluding Food and non-alcoholic beverages,Australia,A2332101T
+All groups CPI excluding Alcohol and tobacco,Australia,A2332146W
+All groups CPI excluding Clothing and footwear,Australia,A2332191J
+All groups CPI excluding Housing,Australia,A2332236A
+"All groups CPI excluding Furnishings, household equipment and services",Australia,A2332281L
+All groups CPI excluding Health,Australia,A2332326F
+All groups CPI excluding Transport,Australia,A2332371T
+All groups CPI excluding Communication,Australia,A2332416K
+All groups CPI excluding Recreation and culture,Australia,A2332461W
+All groups CPI excluding Education,Australia,A2332506R
+All groups CPI excluding Insurance and financial services,Australia,A2332641F
+All groups CPI excluding Housing and Insurance and financial services,Australia,A2332686K
+All groups CPI excluding Medical and hospital services,Australia,A2332551A
+All groups CPI excluding food and energy,Australia,A3604378X
+All groups CPI excluding 'volatile items',Australia,A2330841L
