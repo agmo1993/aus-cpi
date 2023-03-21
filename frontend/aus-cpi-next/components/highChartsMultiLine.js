@@ -6,7 +6,6 @@ import linePlotColors from 'styles/linePlotColors';
 
 function HighChartsMultiLine({ data, xaxis, yaxis, chartTitle, height, marginTop }) { 
     var colorsList = Object.keys(linePlotColors).map((key) => linePlotColors[key]);
-    
     const options = {
         title: {
             text: chartTitle,

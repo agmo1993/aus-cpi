@@ -9,31 +9,31 @@ import HighChartsMultiLine from 'components/highChartsMultiLine';
 
 
 export async function getStaticProps() {
-  const monthlyCategories = await Promise.resolve(
-    fetch('http://localhost:3000/api/lookupMonthly').then((res) => res.json()),
+  const quarterlyCategories = await Promise.resolve(
+    fetch('http://localhost:3000/api/lookupQuarterly').then((res) => res.json()),
   );
 
   const firstData = await Promise.resolve(
-    fetch(`http://localhost:3000/api/timeseries/${monthlyCategories[0].seriesid}`).then((res) => res.json()),
+    fetch(`http://localhost:3000/api/timeseriesqtl/${quarterlyCategories[0].seriesid}`).then((res) => res.json()),
   );
 
   return {
     props: {
-      monthlyCategories: monthlyCategories,
-      firstData : firstData
+        quarterlyCategories: quarterlyCategories,
+        firstData : firstData
     },
   };
 }
 
-export default function Category({ monthlyCategories, firstData }){
-    const fixedOptions = [monthlyCategories[0]];
+export default function City({ quarterlyCategories, firstData }){
+    const fixedOptions = [quarterlyCategories[0]];
     const [value, setValue] = useState([...fixedOptions]);
     const [prevValue, setPrevValue] = useState(null);
     const [chartData, setChartData] = useState([firstData]);
 
     useEffect(() => {
       const fetchData = async () => {
-        const response = await fetch(`http://localhost:3000/api/timeseries/${value[value.length - 1].seriesid}`);
+        const response = await fetch(`http://localhost:3000/api/timeseriesqtl/${value[value.length - 1].seriesid}`);
         const data = await response.json();
         setChartData([...chartData, data])
       };
@@ -41,7 +41,6 @@ export default function Category({ monthlyCategories, firstData }){
       if (value) {
         if (prevValue && prevValue.length > value.length){
             setChartData(chartData.slice(0, -1));
-
         }
         else {
           fetchData();
@@ -59,7 +58,7 @@ export default function Category({ monthlyCategories, firstData }){
                         color: 'white',
                         fontSize: '22px'
                     }}>
-                        <b>Plot and compare CPI by category</b>
+                        <b>Plot and compare CPI by Category and City</b>
             </div>
             <Autocomplete
                 multiple
@@ -72,12 +71,12 @@ export default function Category({ monthlyCategories, firstData }){
                     ...newValue.filter((option) => fixedOptions.indexOf(option) === -1),
                     ]);
                 }}
-                options={monthlyCategories}
-                getOptionLabel={(option) => option.item}
+                options={quarterlyCategories}
+                getOptionLabel={(option) => `${option.city} - ${option.item}`}
                 renderTags={(tagValue, getTagProps) =>
                     tagValue.map((option, index) => (
                     <Chip
-                        label={option.item}
+                        label={`${option.city} - ${option.item}`}
                         {...getTagProps({ index })}
                         disabled={fixedOptions.indexOf(option) !== -1}
                         sx={{
@@ -95,7 +94,7 @@ export default function Category({ monthlyCategories, firstData }){
                 renderInput={(params) => (
                     <TextField 
                       {...params} 
-                      label="CPI categories" 
+                      label="CPI categories"
                       InputLabelProps={{
                         style: { color: 'white' },
                         }}

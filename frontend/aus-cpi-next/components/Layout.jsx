@@ -1,10 +1,9 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx } from 'theme-ui';
-import { useState } from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import TimelineIcon from '@mui/icons-material/Timeline';
-import Tooltip from '@mui/material/Tooltip';
+import Link from 'next/link'
 import TextsmsIcon from '@mui/icons-material/Textsms';
 import TopicIcon from '@mui/icons-material/Topic';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
@@ -15,9 +14,12 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
-import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import packageJson from 'package.json';
+import Image from 'next/image';
+import CategoryIcon from '@mui/icons-material/Category';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import InfoIcon from '@mui/icons-material/Info';
 
 /*
 * A component to layout of the application
@@ -45,41 +47,53 @@ export default function DLayout({ children, version }) {
         }}
         >
         <Box sx={styles.navBar}>
+        <Image
+            src="/images/logo.png"
+            alt="AusCPI"
+            width={180}
+            height={180}
+        />
         <nav aria-label="main mailbox folders">
             <List>
+            <Link href="/">
             <ListItem disablePadding>
                 <ListItemButton>
                 <ListItemIcon>
-                    <InboxIcon />
+                    <HomeIcon />
                 </ListItemIcon>
                 <ListItemText primary="Home" />
                 </ListItemButton>
             </ListItem>
+            </Link>
             <Divider />
+            <Link href="/category">
             <ListItem disablePadding>
                 <ListItemButton>
                 <ListItemIcon>
-                    <DraftsIcon />
+                    <CategoryIcon />
                 </ListItemIcon>
                 <ListItemText primary="Category" />
                 </ListItemButton>
             </ListItem>
+            </Link>
             <Divider />
+            <Link href="/city">
             <ListItem disablePadding>
                 <ListItemButton>
                 <ListItemIcon>
-                    <DraftsIcon />
+                    <LocationCityIcon />
                 </ListItemIcon>
                 <ListItemText primary="City" />
                 </ListItemButton>
             </ListItem>
+            </Link>
             <Divider />
             <ListItem disablePadding>
                 <ListItemButton>
                 <ListItemIcon>
-                    <DraftsIcon />
+                    <InfoIcon />
                 </ListItemIcon>
-                <ListItemText primary="Drafts" />
+                <ListItemText primary="About" />
                 </ListItemButton>
             </ListItem>
             </List>
@@ -102,25 +116,19 @@ export default function DLayout({ children, version }) {
                 />
             </div>
             <div sx={styles.navBarTab}>
-                <TimelineIcon
+                <CategoryIcon
                     fontSize="large"
                     style={{ margin : '22.5%', color : 'black' }}
                 />
             </div>
             <div sx={styles.navBarTab}>
-                <TextsmsIcon
+                <LocationCityIcon
                     fontSize="large"
                     style={{ margin : '22.5%', color : 'black'  }}
                 />
             </div>
             <div sx={styles.navBarTab}>
-                <TopicIcon
-                    fontSize="large"
-                    style={{ margin : '22.5%', color : 'black'  }}
-                />
-            </div>
-            <div sx={styles.navBarTab}>
-                <FindInPageIcon
+                <InfoIcon
                     fontSize="large"
                     style={{ margin : '22.5%', color : 'black'  }}
                 />
@@ -132,11 +140,11 @@ export default function DLayout({ children, version }) {
 
 const styles = {
     navBar : {
-        width : '200px',
+        width : '180px',
         display: ['none', 'none', 'none', 'block', 'block'],
         position: 'fixed',
         left : 0,
-        backgroundColor: 'white',
+        backgroundColor: '#f4f6f9',
         height: '100vh',
         top: 0,
         zIndex : 3
@@ -150,18 +158,18 @@ const styles = {
     },
     navBarItem : {
         height : '70px',
-        width : ['20vw', '20vw', '20vw', '70px', '70px'],
+        width : ['25vw', '25vw', '25vw', '70px', '70px'],
     },
     navBarTab : {
         height : '70px',
-        width : ['20vw', '20vw', '20vw', '70px', '70px'],
+        width : ['25vw', '25vw', '25vw', '70px', '70px'],
         display: 'flex',
         justifyContent : 'center',
         alignItems : 'center'
     },
     navBarItemBottom : {
         height : '30px',
-        width : '200px',
+        width : '180px',
         position : ['fixed', 'fixed', 'fixed', 'fixed', 'fixed'],
         bottom : 0,
         right : [0, 0, 0, null, null],

@@ -1,13 +1,4 @@
-const { Pool, Client, types } = require('pg');
-
-const connectionString = 'postgresql://postgres:postgres@localhost:5432/auscpidb'
- 
-const client = new Client({
-  connectionString,
-})
-
-client.connect()
-
+import client from 'utils/dbClient';
 
 export default async function handler(req, res) {
 
