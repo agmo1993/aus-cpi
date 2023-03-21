@@ -1,4 +1,4 @@
-import client from 'utils/dbClient';
+import client from "utils/dbClient";
 
 export default async function handler(req, res) {
   const data = await client.query(`
@@ -7,5 +7,5 @@ export default async function handler(req, res) {
     order by publish_date desc, percentage_change desc limit 5;
   `);
 
-  res.status(200).json({ name: data.rows })
+  res.status(200).json({ name: data.rows });
 }
