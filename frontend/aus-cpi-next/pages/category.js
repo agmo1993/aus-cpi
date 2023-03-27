@@ -6,15 +6,19 @@ import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "components/highChartsMultiLine";
+import Button from '@mui/material/Button';
+import HeatCorrelation from "@/components/heatMap";
 
 export async function getStaticProps() {
   const monthlyCategories = await Promise.resolve(
-    fetch("http://localhost:3000/api/lookupMonthly").then((res) => res.json())
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/lookupMonthly`).then((res) =>
+      res.json()
+    )
   );
 
   const firstData = await Promise.resolve(
     fetch(
-      `http://localhost:3000/api/timeseries/${monthlyCategories[0].seriesid}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/timeseries/${monthlyCategories[0].seriesid}`
     ).then((res) => res.json())
   );
 
@@ -31,22 +35,36 @@ export default function Category({ monthlyCategories, firstData }) {
   const [value, setValue] = useState([...fixedOptions]);
   const [prevValue, setPrevValue] = useState(null);
   const [chartData, setChartData] = useState([firstData]);
+  const [correlateOn, setcorrelateOn] = useState(false);
+  const [heatData, setHeatData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:3000/api/timeseries/${
+        `${process.env.NEXT_PUBLIC_API_URL}/api/timeseries/${
           value[value.length - 1].seriesid
         }`
       );
       const data = await response.json();
       setChartData([...chartData, data]);
+
+      const heatData = await Promise.resolve(fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/correlate`, {
+        method: 'POST',
+        body: JSON.stringify([...chartData, data]),
+        headers: {
+          'Content-Type': 'application/json'
+        }}).then( res => res.json()));
+      
+      setHeatData(heatData);
     };
 
     if (value) {
       if (prevValue && prevValue.length > value.length) {
         setChartData(chartData.slice(0, -1));
-      } else {
+        if (value.length === 1){
+          setcorrelateOn(false);
+        }
+      } else if (value.length > 1) {
         fetchData();
       }
     }
@@ -86,6 +104,7 @@ export default function Category({ monthlyCategories, firstData }) {
               <Chip
                 label={option.item}
                 {...getTagProps({ index })}
+                key={option.item}
                 disabled={fixedOptions.indexOf(option) !== -1}
                 sx={{
                   backgroundColor: "white",
@@ -109,14 +128,33 @@ export default function Category({ monthlyCategories, firstData }) {
             />
           )}
         />
-        <HighChartsMultiLine
-          data={chartData}
-          xaxis="publish_date"
-          yaxis="cpi_value"
-          chartTitle={null}
-          height={580}
-          marginTop={30}
-        />
+        <Box display="flex" justifyContent="right" alignItems="right" sx={styles.correlateButton}>
+        {
+          value.length > 1 && 
+            <Button 
+              variant="contained" 
+              color="success"
+              onClick={() => {
+                setcorrelateOn(true);
+              }}
+            >
+              Correlate
+            </Button>
+        }
+        </Box>
+        {
+          !correlateOn ?
+            <HighChartsMultiLine
+              data={chartData}
+              xaxis="publish_date"
+              yaxis="cpi_value"
+              chartTitle={null}
+              height={550}
+              marginTop={30}
+            /> 
+            : <HeatCorrelation chartData={heatData}/>
+        }
+
       </Box>
     </DLayout>
   );
@@ -128,4 +166,9 @@ const styles = {
     height: ["320px", "320px", "320px", "90vh", "90vh"],
     margin: "40px",
   },
+  correlateButton : {
+    height : '3vh',
+    marginTop : '5px',
+    marginRight : '5px'
+  }
 };

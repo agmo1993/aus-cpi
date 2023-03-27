@@ -9,12 +9,14 @@ import HighChartsMultiLine from "components/highChartsMultiLine";
 
 export async function getStaticProps() {
   const quarterlyCategories = await Promise.resolve(
-    fetch("http://localhost:3000/api/lookupQuarterly").then((res) => res.json())
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/lookupQuarterly`).then(
+      (res) => res.json()
+    )
   );
 
   const firstData = await Promise.resolve(
     fetch(
-      `http://localhost:3000/api/timeseriesqtl/${quarterlyCategories[0].seriesid}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/timeseriesqtl/${quarterlyCategories[0].seriesid}`
     ).then((res) => res.json())
   );
 
@@ -35,7 +37,7 @@ export default function City({ quarterlyCategories, firstData }) {
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
-        `http://localhost:3000/api/timeseriesqtl/${
+        `${process.env.NEXT_PUBLIC_API_URL}/api/timeseriesqtl/${
           value[value.length - 1].seriesid
         }`
       );
@@ -86,6 +88,7 @@ export default function City({ quarterlyCategories, firstData }) {
               <Chip
                 label={`${option.city} - ${option.item}`}
                 {...getTagProps({ index })}
+                key={option.item}
                 disabled={fixedOptions.indexOf(option) !== -1}
                 sx={{
                   backgroundColor: "white",

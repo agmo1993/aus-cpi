@@ -7,18 +7,20 @@ import Grid from "@mui/material/Grid";
 
 export async function getStaticProps() {
   const [dataGraph, dataBottom, dataBottom2] = await Promise.all([
-    fetch("http://localhost:3000/api/monthlyCPI").then((res) => res.json()),
-    fetch("http://localhost:3000/api/topIncreaseMonthly").then((res) =>
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/monthlyCPI`).then((res) =>
       res.json()
     ),
-    fetch("http://localhost:3000/api/topIncreaseYearly").then((res) =>
-      res.json()
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/topIncreaseMonthly`).then(
+      (res) => res.json()
+    ),
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/topIncreaseYearly`).then(
+      (res) => res.json()
     ),
   ]);
 
   const fetchTimeSeries = async (name) => {
     const timeSeries = await fetch(
-      `http://localhost:3000/api/timeseries/${name.seriesid}`
+      `${process.env.NEXT_PUBLIC_API_URL}/api/timeseries/${name.seriesid}`
     ).then((res) => res.json());
     return { ...name, timeseries: timeSeries };
   };
