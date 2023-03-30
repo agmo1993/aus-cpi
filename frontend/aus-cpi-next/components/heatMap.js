@@ -4,6 +4,7 @@ import colors from "styles/colors";
 import Box from "@mui/material/Box";
 import { min } from "underscore";
 
+
 const data = [
   {
     group: "A",
@@ -514,6 +515,7 @@ const HeatCorrelation = ({ chartData }) => {
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
+    svg.selectAll("*").remove();
 
     var corrValues = chartData.data.map( x => x.corr);
 
@@ -526,23 +528,41 @@ const HeatCorrelation = ({ chartData }) => {
       .domain(myGroups)
       .padding(0.01);
 
-    svg.append("g")
+    var xAxis = svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
+
+    xAxis.selectAll("path")
+      .style("stroke", colors.secondary)
+      .style("stroke-width", "3")
+
+    xAxis.selectAll("text")
+      .style("font-size", "11px")
+      .style("color", colors.secondary);
 
     // Build X scales and axis:
     var y = d3.scaleBand()
       .range([ height, 0 ])
       .domain(myVars)
       .padding(0.01);
-    svg.append("g")
+    
+    var yAxis = svg.append("g")
       .attr("transform", "translate(" + width + ",0)")
       .call(d3.axisRight(y));
 
+    yAxis.selectAll("path")
+      .style("stroke", colors.secondary)
+      .style("stroke-width", "3")
+    
+    yAxis.selectAll("text")
+      .style("font-size", "14px")
+      .style("color", colors.secondary);
+
+
     // Build color scale
-    var myColor = d3.scaleSqrt()
-      .range(["white", "#7596AD"])
-      .domain([Math.min(...corrValues) - 0.3 ,Math.max(...corrValues)]);
+    var myColor = d3.scaleLinear()
+      .range(["#f7fcf0", "#00441b"])
+      .domain([Math.min(...corrValues) ,Math.max(...corrValues)]);
 
     svg.selectAll()
       .data(chartData.data, function(d) {return d.itemX+':'+d.itemY;})
@@ -563,7 +583,7 @@ const HeatCorrelation = ({ chartData }) => {
       .on("mouseover", function (event, d) {
         // Show tooltip on mouseover
         d3.select(this)
-          .attr("stroke", "black")
+          .attr("stroke", colors.secondary)
           .attr("stroke-width", 2);
         d3.select("#tooltip")
           .style("opacity", 1)
@@ -584,10 +604,10 @@ const HeatCorrelation = ({ chartData }) => {
           .style("opacity", 0);
       });
 
-  }, []);
+  }, [ chartData ]);
 
   return <Box display="flex" justifyContent="center" alignItems="center" id="box">
-            <svg ref={svgRef} width={width+100} height={height+60}></svg>
+            <svg ref={svgRef} width={width+200} height={height+60}></svg>
             <div id="tooltip" style={{ opacity: 0, position: "absolute" }} />
           </Box>;
 };
