@@ -3,23 +3,14 @@ import Box from "@mui/material/Box";
 import colors from "styles/colors";
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Image from "next/image";
 
 
 const contributors = [
     {
-      name: 'John Doe',
+      name: 'Abdul Rehman Mohammad',
       role: 'Software Engineer',
-      avatarUrl: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Jane Smith',
-      role: 'UI/UX Designer',
-      avatarUrl: 'https://via.placeholder.com/150',
-    },
-    {
-      name: 'Bob Johnson',
-      role: 'Product Manager',
-      avatarUrl: 'https://via.placeholder.com/150',
+      avatarUrl: '/images/arm.jpeg',
     },
 ];
 
@@ -29,10 +20,14 @@ export default function About(){
             <Box sx={styles.chartPanel}>
             <Box sx={styles.section}>
                 <Typography variant="h4">
-                Heading
+                About
                 </Typography>
                 <Typography variant="body1">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed feugiat, nisi eu convallis luctus, ex lorem mollis sapien, eget euismod elit ipsum a augue. Duis at leo scelerisque, faucibus nulla vel, interdum sem. Donec hendrerit, urna vitae imperdiet tempus, tortor velit fringilla enim, ac suscipit ipsum nibh ac arcu. Nulla facilisi. Mauris at tristique quam. Donec sit amet ipsum lacinia, molestie lacus sed, imperdiet nulla. Sed pretium purus vel erat interdum, ut venenatis turpis rhoncus.
+                    AusCPI is a powerful dashboard that offers users a range of tools to analyze and visualize consumer price index (CPI) data from the Australian Bureau of Statistics. The dashboard is designed to help users monitor and explore trends in the prices of various goods and services, including housing, healthcare, education, transportation, and food. With its user-friendly interface and interactive data visualization tools, AusCPI provides a convenient and accessible platform for anyone interested in understanding the state of Australia's economy. By presenting CPI data in an easy-to-understand format, AusCPI allows users to gain valuable insights and make informed decisions based on the latest economic trends.                
+                </Typography>
+                <br />
+                <Typography variant="body1">
+                    Interpreting macroeconomic data from the ABS is daunting, but it's crucial for people to understand. The data shapes economic policies and impacts the cost of living. The CPI measures inflation, affecting spending, investment, and borrowing decisions. A basic understanding of macroeconomic data is necessary to make informed decisions that impact daily lives.
                 </Typography>
             </Box>
             <Box sx={styles.section}>
@@ -43,7 +38,7 @@ export default function About(){
                 {contributors.map((contributor) => (
                     <Grid item xs={12} sm={4} key={contributor.name}>
                     <div>
-                        <img src={contributor.avatarUrl} alt={contributor.name} />
+                        <Image src={contributor.avatarUrl} alt={contributor.name} width={160} height={200} />
                         <Typography variant="h6">
                         {contributor.name}
                         </Typography>
@@ -67,6 +62,6 @@ const styles = {
       margin: "40px",
     },
     section : {
-        padding : '5%',
+        padding : '2%',
     }
 };

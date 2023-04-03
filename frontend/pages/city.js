@@ -10,7 +10,7 @@ import HeatCorrelation from "@/components/heatMap";
 import Button from '@mui/material/Button';
 
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const quarterlyCategories = await Promise.resolve(
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/lookupQuarterly`).then(
       (res) => res.json()

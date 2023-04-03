@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import colors from "styles/colors";
 import Box from "@mui/material/Box";
 import { min } from "underscore";
+import { chart } from "highcharts";
 
 
 const data = [
@@ -537,9 +538,14 @@ const HeatCorrelation = ({ chartData }) => {
       .style("stroke-width", "3")
 
     xAxis.selectAll("text")
-      .style("font-size", "11px")
-      .style("color", colors.secondary);
-
+      .style("font-size", "12px")
+      .style("color", colors.secondary)
+      .style("opacity", function(){
+        if (myGroups.length > 2) {
+          return "0";
+        }
+      });
+    
     // Build X scales and axis:
     var y = d3.scaleBand()
       .range([ height, 0 ])
@@ -555,9 +561,20 @@ const HeatCorrelation = ({ chartData }) => {
       .style("stroke-width", "3")
     
     yAxis.selectAll("text")
-      .style("font-size", "14px")
-      .style("color", colors.secondary);
+      .style("font-size", "12px")
+      .style("color", colors.secondary)
+      .style("opacity", function(){
+        if (myGroups.length > 2) {
+          return "0";
+        }
+      });
 
+    svg.selectAll(".tick")
+      .style("opacity", function(){
+        if (myGroups.length > 2) {
+          return "0";
+        }
+      });
 
     // Build color scale
     var myColor = d3.scaleLinear()
@@ -581,27 +598,33 @@ const HeatCorrelation = ({ chartData }) => {
         }
       } )
       .on("mouseover", function (event, d) {
-        // Show tooltip on mouseover
-        d3.select(this)
-          .attr("stroke", colors.secondary)
-          .attr("stroke-width", 2);
-        d3.select("#tooltip")
-          .style("opacity", 1)
-          .style("background-color", "white")
-          .style("border", "solid")
-          .style("border-width", "2px")
-          .style("border-radius", "5px")
-          .style("padding", "5px")
-          .html(`Value: ${d.corr}`)
-          .style("left", `${event.pageX}px`)
-          .style("top", `${event.pageY}px`);
+        if (d.corr !== 1) {
+          // Show tooltip on mouseover
+          d3.select(this)
+            .attr("stroke", colors.secondary)
+            .attr("stroke-width", 2);
+          d3.select("#tooltip")
+            .style("opacity", 1)
+            .style("background-color", colors.primary)
+            .style("border", "solid")
+            .style("border-color", colors.secondary)
+            .style("border-width", "2px")
+            .style("border-radius", "1px")
+            .style("padding", "5px")
+            .html(`${d.itemX} & ${d.itemY}</br>Pearson Correlation: ${d.corr.toFixed(2)}`)
+            .style("font-size", "12px")
+            .style("left", `${event.pageX}px`)
+            .style("top", `${event.pageY}px`);
+        }
       })
-      .on("mouseout", function () {
-        // Hide tooltip on mouseout
-        d3.select(this)
-          .attr("stroke", "none");
-        d3.select("#tooltip")
-          .style("opacity", 0);
+      .on("mouseout", function (event, d) {
+        if (d.corr !== 1) {
+          // Hide tooltip on mouseout
+          d3.select(this)
+            .attr("stroke", "none");
+          d3.select("#tooltip")
+            .style("opacity", 0);
+        }
       });
 
   }, [ chartData ]);

@@ -2,6 +2,7 @@ import React from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import linePlotColors from "styles/linePlotColors";
+import colors from "styles/colors";
 
 function HighChartsMultiLine({
   data,
@@ -50,7 +51,7 @@ function HighChartsMultiLine({
     plotOptions: {
       line: {
         marker: {
-          fillColor: colorsList[0], // Set the fill color of the markers to red
+          fillColor: colors.primary, // Set the fill color of the markers to red
           lineWidth: 1, // Set the line width of the markers to 1
           radius: 2, // Set the radius of the markers to 4
         },

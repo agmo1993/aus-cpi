@@ -83,6 +83,7 @@ export default function DLayout({ children, version }) {
                 </ListItem>
               </Link>
               <Divider />
+              <Link href="/about">
               <ListItem disablePadding>
                 <ListItemButton>
                   <ListItemIcon>
@@ -91,6 +92,7 @@ export default function DLayout({ children, version }) {
                   <ListItemText primary="About" />
                 </ListItemButton>
               </ListItem>
+              </Link>
             </List>
           </nav>
           <div sx={styles.navBarItemBottom}>v {packageJson.version}</div>

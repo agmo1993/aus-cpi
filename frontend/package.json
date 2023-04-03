@@ -24,7 +24,8 @@
     "pg": "^8.10.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "theme-ui": "^0.15.5"
+    "theme-ui": "^0.15.5",
+    "validator": "^13.9.0"
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.8.0"
