@@ -104,27 +104,13 @@ npm run dev
 
 3. Open http://localhost:3000 in your browser
 
-## Testing
+## Testing (TODO)
 
 Todo : Explain how to run the automated tests for this system
 
-### Unit Tests
+### Unit Tests (TODO)
 
-```
-cd backend
-python -m unittest discover tests
-```
-
-### Integration Tests
-
-```
-cd backend
-pytest
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
+### Integration Tests (TODO)
 
 ## Built With
 
