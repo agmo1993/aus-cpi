@@ -1,14 +1,12 @@
-# Project Name
+# AusCPI
 
-[Project description]
+A web application for visualizing and analyzing consumer price index data from the Australian Bureau of Statistics - AusCPI Dashboard.
 
 ## Table of Contents
 
 - [Getting Started](#getting-started)
 - [Development](#development)
 - [Testing](#testing)
-- [Deployment](#deployment)
-- [Built With](#built-with)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -18,10 +16,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-- Python [version]
-- Node.js [version]
-- Docker [>=20.10.17] 
-- Sqitch [version]
+- Python [v3.8.9]
+- Node.js [v16.17.1]
+- Docker [>=v20.10.17] 
+- Sqitch [v1.3.1]
 
 ### Installing
 
@@ -111,12 +109,6 @@ Todo : Explain how to run the automated tests for this system
 ### Unit Tests (TODO)
 
 ### Integration Tests (TODO)
-
-## Built With
-
-- Python [version] - Backend language
-- Next.js [version] - Frontend framework
-- PostgreSQL [version] - Database
 
 ## Contributing
 
