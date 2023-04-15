@@ -26,7 +26,7 @@ These instructions will get you a copy of the project up and running on your loc
 1. Clone the repo
 
 ```
-git clone [repository url]
+git clone https://github.com/agmo1993/aus-cpi.git
 ```
 
 2. Install the backend dependencies
@@ -116,6 +116,6 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## License
 
-This project is licensed under the [LICENSE NAME] License - see the [LICENSE.md](LICENSE.md) file for details.
+This project is licensed under the MIT License.
 
 
