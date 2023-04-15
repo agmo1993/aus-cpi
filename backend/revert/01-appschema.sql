@@ -2,8 +2,8 @@
 
 BEGIN;
 
-DROP TABLE auscpi.cpi_index;
-DROP TABLE auscpi.cpi_index_monthly;
+DROP TABLE auscpi.cpi_index CASCADE;
+DROP TABLE auscpi.cpi_index_monthly CASCADE;
 
 DROP SCHEMA auscpi;
 

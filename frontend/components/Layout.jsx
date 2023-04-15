@@ -84,14 +84,14 @@ export default function DLayout({ children, version }) {
               </Link>
               <Divider />
               <Link href="/about">
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <InfoIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="About" />
-                </ListItemButton>
-              </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton>
+                    <ListItemIcon>
+                      <InfoIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="About" />
+                  </ListItemButton>
+                </ListItem>
               </Link>
             </List>
           </nav>

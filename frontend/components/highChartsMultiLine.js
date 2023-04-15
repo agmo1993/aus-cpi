@@ -3,6 +3,7 @@ import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import linePlotColors from "styles/linePlotColors";
 import colors from "styles/colors";
+import Box from "@mui/material/Box";
 
 function HighChartsMultiLine({
   data,
@@ -64,9 +65,9 @@ function HighChartsMultiLine({
     })),
   };
   return (
-    <div>
+    <Box position="absolute" zIndex={1} style={{ width: "80vw" }}>
       <HighchartsReact highcharts={Highcharts} options={options} />
-    </div>
+    </Box>
   );
 }
 export default HighChartsMultiLine;

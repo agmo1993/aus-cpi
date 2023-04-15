@@ -30,13 +30,15 @@ def main():
     # Insert the rows into the table
     for index, row in df.iterrows():
         try:
+            cur = conn.cursor()
             cur.execute('''
                 INSERT INTO auscpi.cpi_index (publish_date, seriesid, cpi_value, item, city)
                 VALUES (%s, %s, %s, %s, %s)
             ''', (row['Date'], row['Series ID'], row['CPI Value'], row['Item'], row['Location']))
             conn.commit()
         except Exception as e:
-            logging.error(f"{row} failed to insert")
+            conn.rollback()
+            logging.error(e)
 
     # Read the CSV file into a pandas DataFrame
     df = pd.read_csv('./data/aus_cpi_timeseries_monthly.csv')
@@ -45,13 +47,15 @@ def main():
     # Insert the rows into the table
     for index, row in df.iterrows():
         try:
+            cur = conn.cursor()
             cur.execute('''
                 INSERT INTO auscpi.cpi_index_monthly (publish_date, seriesid, cpi_value, item, city)
                 VALUES (%s, %s, %s, %s, %s)
             ''', (row['Date'], row['Series ID'], row['CPI Value'], row['Item'], row['Location']))
             conn.commit()
         except Exception as e:
-            logging.error(f"{row} failed to insert")
+            conn.rollback()
+            logging.error(e)
 
     logging.info("Refreshing Materialized Views")
     # refresh materialized views

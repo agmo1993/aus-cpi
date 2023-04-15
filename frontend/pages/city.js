@@ -7,8 +7,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "components/highChartsMultiLine";
 import HeatCorrelation from "@/components/heatMap";
-import Button from '@mui/material/Button';
-
+import Button from "@mui/material/Button";
 
 export async function getServerSideProps() {
   const quarterlyCategories = await Promise.resolve(
@@ -39,7 +38,6 @@ export default function City({ quarterlyCategories, firstData }) {
   const [correlateOn, setcorrelateOn] = useState(false);
   const [heatData, setHeatData] = useState([]);
 
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch(
@@ -50,37 +48,42 @@ export default function City({ quarterlyCategories, firstData }) {
       const data = await response.json();
       setChartData([...chartData, data]);
 
-      const heatData = await Promise.resolve(fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/correlate`, {
-        method: 'POST',
-        body: JSON.stringify([...chartData, data]),
-        headers: {
-          'Content-Type': 'application/json'
-        }}).then( res => res.json()));
-      
+      const heatData = await Promise.resolve(
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/correlate`, {
+          method: "POST",
+          body: JSON.stringify([...chartData, data]),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((res) => res.json())
+      );
+
       setHeatData(heatData);
     };
 
     const justCorrelateData = async (data) => {
-      const heatData = await Promise.resolve(fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/correlate`, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-          'Content-Type': 'application/json'
-        }}).then( res => res.json()));
-      
+      const heatData = await Promise.resolve(
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/correlate`, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((res) => res.json())
+      );
+
       setHeatData(heatData);
-    }
+    };
 
     if (value) {
       if (prevValue && prevValue.length > value.length) {
         setChartData(chartData.slice(0, -1));
-        if (value.length === 1){
+        if (value.length === 1) {
           setcorrelateOn(false);
-        }
-        else {
+        } else {
           justCorrelateData(chartData.slice(0, -1));
         }
-      } else if (value.length > 1){
+      } else if (value.length > 1) {
         fetchData();
       }
     }
@@ -144,37 +147,52 @@ export default function City({ quarterlyCategories, firstData }) {
             />
           )}
         />
-        <Box display="flex" justifyContent="right" alignItems="right" sx={styles.correlateButton}>
-        {
-          value.length > 1 && 
-            <Button 
-              variant="contained" 
+        <Box
+          display="flex"
+          justifyContent="right"
+          alignItems="right"
+          sx={styles.correlateButton}
+        >
+          {value.length > 1 && (
+            <Button
+              variant="contained"
               color="success"
               onClick={() => {
                 if (correlateOn) {
                   setcorrelateOn(false);
-                }
-                else {
+                } else {
                   setcorrelateOn(true);
                 }
               }}
             >
-              { correlateOn ? "Chart" :  "Correlate" } 
+              {correlateOn ? "Chart" : "Correlate"}
             </Button>
-        }
+          )}
         </Box>
-        {
-          !correlateOn ?
-            <HighChartsMultiLine
-              data={chartData}
-              xaxis="publish_date"
-              yaxis="cpi_value"
-              chartTitle={null}
-              height={550}
-              marginTop={30}
-            /> 
-            : <HeatCorrelation chartData={heatData}/>
-        }
+        <div position="relative">
+        {!correlateOn ? (
+          <HighChartsMultiLine
+            data={chartData}
+            xaxis="publish_date"
+            yaxis="cpi_value"
+            chartTitle={null}
+            height={550}
+            marginTop={30}
+          />
+        ) : (
+          <>
+          <HighChartsMultiLine
+            data={chartData}
+            xaxis="publish_date"
+            yaxis="cpi_value"
+            chartTitle={null}
+            height={550}
+            marginTop={30}
+          />
+          <HeatCorrelation chartData={heatData} />
+        </>
+        )}
+        </div>
       </Box>
     </DLayout>
   );
@@ -186,9 +204,9 @@ const styles = {
     height: ["320px", "320px", "320px", "90vh", "90vh"],
     margin: "40px",
   },
-  correlateButton : {
-    height : '3vh',
-    marginTop : '5px',
-    marginRight : '5px'
-  }
+  correlateButton: {
+    height: "3vh",
+    marginTop: "5px",
+    marginRight: "5px",
+  },
 };

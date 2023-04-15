@@ -24,19 +24,21 @@ def main():
         user="postgres",
         password="postgres"
     )
-    cur = conn.cursor()
+    
 
     logging.info("Inserting rows into table seriesid_lookup")
     # Insert the rows into the table
     for index, row in df.iterrows():
         try:
+            cur = conn.cursor()
             cur.execute('''
                 INSERT INTO auscpi.seriesid_lookup (seriesid, item, city, data_frequency)
                 VALUES (%s, %s, %s, %s)
             ''', (row['Series ID'], row['Item'], row['Location'], 'Monthly'))
             conn.commit()
         except Exception as e:
-            logging.error(f"{row} failed to insert")
+            conn.rollback()
+            logging.error(e)
 
     logging.info("Reading data file aus_cpi_lookup_quarterly.csv")
 
@@ -53,7 +55,8 @@ def main():
             ''', (row['Series ID'], row['Item'], row['Location'], 'Quarterly'))
             conn.commit()
         except Exception as e:
-            logging.error(f"{row} failed to insert")
+            conn.rollback()
+            logging.error(e)
 
     conn.close()
 

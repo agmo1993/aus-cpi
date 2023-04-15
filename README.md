@@ -14,7 +14,7 @@ A web application for visualizing and analyzing consumer price index data from t
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-### Prerequisites
+### Requirements
 
 - Python [v3.8.9]
 - Node.js [v16.17.1]
