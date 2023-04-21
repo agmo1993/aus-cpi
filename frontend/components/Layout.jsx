@@ -20,6 +20,7 @@ import Image from "next/image";
 import CategoryIcon from "@mui/icons-material/Category";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import InfoIcon from "@mui/icons-material/Info";
+import colors from "styles/colors";
 
 /*
  * A component to layout of the application
@@ -101,28 +102,39 @@ export default function DLayout({ children, version }) {
       </div>
       <nav sx={styles.navBarBottom}>
         <div sx={styles.navBarTab}>
+          <Image src="/images/logo.png" alt="AusCPI" width={70} height={70} />
+        </div>
+        <div sx={styles.navBarTab}>
+        <Link href="/">
           <HomeIcon
             fontSize="large"
-            style={{ margin: "22.5%", color: "black" }}
+            style={{ margin: "22.5%", color: "grey" }}
           />
+        </Link>
         </div>
         <div sx={styles.navBarTab}>
+        <Link href="/category">
           <CategoryIcon
             fontSize="large"
-            style={{ margin: "22.5%", color: "black" }}
+            style={{ margin: "22.5%", color: "grey" }}
           />
+        </Link>
         </div>
         <div sx={styles.navBarTab}>
+        <Link href="/city">
           <LocationCityIcon
             fontSize="large"
-            style={{ margin: "22.5%", color: "black" }}
+            style={{ margin: "22.5%", color: "grey" }}
           />
+        </Link>
         </div>
         <div sx={styles.navBarTab}>
+        <Link href="/about">
           <InfoIcon
             fontSize="large"
-            style={{ margin: "22.5%", color: "black" }}
+            style={{ margin: "22.5%", color: "grey" }}
           />
+        </Link>
         </div>
       </nav>
     </div>
@@ -145,7 +157,7 @@ const styles = {
     bottom: 0,
     width: "100%",
     display: ["flex", "flex", "flex", "none", "none"],
-    backgroundColor: "white",
+    backgroundColor: "#f4f6f9",
   },
   navBarItem: {
     height: "70px",
@@ -153,7 +165,7 @@ const styles = {
   },
   navBarTab: {
     height: "70px",
-    width: ["25vw", "25vw", "25vw", "70px", "70px"],
+    width: ["20vw", "20vw", "20vw", "70px", "70px"],
     display: "flex",
     justifyContent: "center",
     alignItems: "center",

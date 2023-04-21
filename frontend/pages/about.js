@@ -27,15 +27,14 @@ export default function About() {
             services, including housing, healthcare, education, transportation,
             and food. With its user-friendly interface and interactive data
             visualization tools, AusCPI provides a convenient and accessible
-            platform for anyone interested in understanding the state of
-            Australia's economy. By presenting CPI data in an easy-to-understand
+            platform for anyone interested in understanding the state of the
+            Australian. By presenting CPI data in an easy-to-understand
             format, AusCPI allows users to gain valuable insights and make
             informed decisions based on the latest economic trends.
           </Typography>
           <br />
           <Typography variant="body1">
-            Interpreting macroeconomic data from the ABS is daunting, but it's
-            crucial for people to understand. The data shapes economic policies
+            Interpreting macroeconomic data from the ABS is daunting. The data shapes economic policies
             and impacts the cost of living. The CPI measures inflation,
             affecting spending, investment, and borrowing decisions. A basic
             understanding of macroeconomic data is necessary to make informed
@@ -71,8 +70,8 @@ export default function About() {
 const styles = {
   chartPanel: {
     backgroundColor: "white",
-    height: ["320px", "320px", "320px", "90vh", "90vh"],
-    margin: "40px",
+    height: ["auto", "auto", "auto", "90vh", "90vh"],
+    margin: ["20px", "20px", "40px", "40px", "40px"],
   },
   section: {
     padding: "2%",

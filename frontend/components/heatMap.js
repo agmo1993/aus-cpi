@@ -6,9 +6,8 @@ import Box from "@mui/material/Box";
 
 const HeatCorrelation = ({ chartData }) => {
   const svgRef = useRef();
-  const width = 400;
-  const height = 400;
-
+  const width = window.innerWidth > 700 ? 500 : 150;
+  const height = window.innerWidth > 700 ? 500 : 150;
   useEffect(() => {
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
@@ -67,6 +66,10 @@ const HeatCorrelation = ({ chartData }) => {
           return "0";
         }
       });
+
+    // Select the tick lines and set their opacity
+      svg.selectAll('.tick line')
+      .style('opacity', "0");
 
     const axisTicks = svg.selectAll(".tick").nodes();
 
@@ -129,13 +132,12 @@ const HeatCorrelation = ({ chartData }) => {
             .style("border-radius", "1px")
             .style("padding", "5px")
             .html(
-              `${d.itemX} & ${
-                d.itemY
+              `${d.itemX} & ${d.itemY
               }</br>Pearson Correlation: ${d.corr.toFixed(2)}`
             )
             .style("font-size", "12px")
             .style("left", `${event.pageX - 200}px`)
-            .style("top", `${event.pageY- 200}px`);
+            .style("top", `${event.pageY - 200}px`);
         }
       })
       .on("mouseout", function (event, d) {
@@ -156,10 +158,10 @@ const HeatCorrelation = ({ chartData }) => {
       alignItems="center"
       id="box"
       zIndex={2}
-      style={{ width: "82vw", backgroundColor : "#ECEEE6e0", opacity : 1, height : '70vh' }}
+      style={{ width: "82vw", backgroundColor: "#ECEEE6e0", opacity: 1, height: '70vh' }}
     >
       <svg ref={svgRef} width={width + 200} height={height + 200}></svg>
-      <div id="tooltip" style={{ opacity: 0, position: "absolute", zIndex: 3} } />
+      <div id="tooltip" style={{ opacity: 0, position: "absolute", zIndex: 3 }} />
     </Box>
   );
 };

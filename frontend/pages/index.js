@@ -5,7 +5,7 @@ import colors from "styles/colors";
 import FiveCard from "components/fiveCard";
 import Grid from "@mui/material/Grid";
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const [dataGraph, dataBottom, dataBottom2] = await Promise.all([
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/monthlyCPI`).then((res) =>
       res.json()
@@ -80,7 +80,7 @@ export default function Home({ graphData, dataBottom, dataBottom2 }) {
 const styles = {
   chartPanel: {
     backgroundColor: "white",
-    height: ["320px", "320px", "320px", "55vh", "55vh"],
-    margin: "40px",
+    height: ["55vh", "320px", "320px", "55vh", "55vh"],
+    margin: ["20px", "20px", "40px", "40px", "40px"],
   },
 };

@@ -9,6 +9,19 @@ import HighChartsMultiLine from "components/highChartsMultiLine";
 import HeatCorrelation from "@/components/heatMap";
 import Button from "@mui/material/Button";
 
+
+const renderChip = (index, window) => {
+  if (window > 800 && index > 3) {
+    return false;
+  }
+  else if (window < 800 && index > 0) {
+    return false;
+  }
+  else {
+    return true;
+  }
+};
+
 export async function getServerSideProps() {
   const quarterlyCategories = await Promise.resolve(
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/lookupQuarterly`).then(
@@ -37,6 +50,7 @@ export default function City({ quarterlyCategories, firstData }) {
   const [chartData, setChartData] = useState([firstData]);
   const [correlateOn, setcorrelateOn] = useState(false);
   const [heatData, setHeatData] = useState([]);
+  const [width, setWidth] = useState(1200);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,6 +88,8 @@ export default function City({ quarterlyCategories, firstData }) {
 
       setHeatData(heatData);
     };
+
+    setWidth(window.innerWidth);
 
     if (value) {
       if (prevValue && prevValue.length > value.length) {
@@ -120,6 +136,7 @@ export default function City({ quarterlyCategories, firstData }) {
           getOptionLabel={(option) => `${option.city} - ${option.item}`}
           renderTags={(tagValue, getTagProps) =>
             tagValue.map((option, index) => (
+              renderChip(index, width) && 
               <Chip
                 label={`${option.city} - ${option.item}`}
                 {...getTagProps({ index })}
@@ -137,15 +154,19 @@ export default function City({ quarterlyCategories, firstData }) {
             padding: "1%",
             borderColor: "white",
           }}
-          renderInput={(params) => (
-            <TextField
+          renderInput={(params) => {
+            params.InputProps = {
+              ...params.InputProps,
+              style : { maxHeight : '60px'}
+            }
+            return <TextField
               {...params}
               label="CPI categories"
               InputLabelProps={{
                 style: { color: "white" },
               }}
             />
-          )}
+            }}
         />
         <Box
           display="flex"
@@ -201,8 +222,8 @@ export default function City({ quarterlyCategories, firstData }) {
 const styles = {
   chartPanel: {
     backgroundColor: "white",
-    height: ["320px", "320px", "320px", "90vh", "90vh"],
-    margin: "40px",
+    height: ["82vh", "82vh", "82vh", "90vh", "90vh"],
+    margin: ["20px", "20px", "40px", "40px", "40px"],
   },
   correlateButton: {
     height: "3vh",

@@ -9,7 +9,19 @@ import HighChartsMultiLine from "components/highChartsMultiLine";
 import Button from "@mui/material/Button";
 import HeatCorrelation from "@/components/heatMap";
 
-export async function getStaticProps() {
+const renderChip = (index, window) => {
+  if (window > 800 && index > 4) {
+    return false;
+  }
+  else if (window < 800 && index > 0) {
+    return false;
+  }
+  else {
+    return true;
+  }
+};
+
+export async function getServerSideProps() {
   const monthlyCategories = await Promise.resolve(
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/lookupMonthly`).then((res) =>
       res.json()
@@ -37,6 +49,7 @@ export default function Category({ monthlyCategories, firstData }) {
   const [chartData, setChartData] = useState([firstData]);
   const [correlateOn, setcorrelateOn] = useState(false);
   const [heatData, setHeatData] = useState([]);
+  const [width, setWidth] = useState(1200);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,6 +87,8 @@ export default function Category({ monthlyCategories, firstData }) {
 
       setHeatData(heatData);
     };
+
+    setWidth(window.innerWidth);
 
     if (value) {
       if (prevValue && prevValue.length > value.length) {
@@ -116,10 +131,11 @@ export default function Category({ monthlyCategories, firstData }) {
               ),
             ]);
           }}
-          options={monthlyCategories}
+           options={monthlyCategories}
           getOptionLabel={(option) => option.item}
           renderTags={(tagValue, getTagProps) =>
             tagValue.map((option, index) => (
+              renderChip(index, width) && 
               <Chip
                 label={option.item}
                 {...getTagProps({ index })}
@@ -201,8 +217,8 @@ export default function Category({ monthlyCategories, firstData }) {
 const styles = {
   chartPanel: {
     backgroundColor: "white",
-    height: ["320px", "320px", "320px", "90vh", "90vh"],
-    margin: "40px",
+    height: ["82vh", "82vh", "82vh", "90vh", "90vh"],
+    margin: ["20px", "20px", "40px", "40px", "40px"],
   },
   correlateButton: {
     height: "3vh",

@@ -11,7 +11,7 @@ import LineChart from "./LineChartIcon";
 export default function FiveCard({ data, heading }) {
   return (
     <TableContainer
-      sx={{ backgroundColor: "white", marginLeft: "10%", maxWidth: "80%" }}
+      sx={{ backgroundColor: "white", marginLeft: "10%", maxWidth: "80%", marginBottom : '1.5%' }}
     >
       <div
         style={{
