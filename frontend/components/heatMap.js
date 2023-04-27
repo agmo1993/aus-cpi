@@ -158,7 +158,7 @@ const HeatCorrelation = ({ chartData }) => {
       alignItems="center"
       id="box"
       zIndex={2}
-      style={{ width: "82vw", backgroundColor: "#ECEEE6e0", opacity: 1, height: '70vh' }}
+      style={{ width: "82vw", backgroundColor: "#ECEEE6e0", opacity: 1, height: '70vh', paddingTop : '5%' }}
     >
       <svg ref={svgRef} width={width + 200} height={height + 200}></svg>
       <div id="tooltip" style={{ opacity: 0, position: "absolute", zIndex: 3 }} />

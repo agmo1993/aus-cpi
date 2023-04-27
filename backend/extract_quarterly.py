@@ -2,7 +2,7 @@ import pandas as pd
 import urllib.request
 
 # download raw data file
-url = 'https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/dec-quarter-2022/640107.xlsx'  # URL of the file to download
+url = 'https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/mar-quarter-2023/640107.xlsx'  # URL of the file to download
 file_path = './data/640107.xlsx'  # File path where the downloaded file will be saved
 urllib.request.urlretrieve(url, file_path)
 

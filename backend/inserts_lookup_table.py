@@ -18,11 +18,11 @@ def main():
 
     # Connect to a PostgreSQL database
     conn = psycopg2.connect(
-        host="localhost",
+        host=os.environ['DB_HOST'],
         port=5432,
         database="auscpidb",
-        user="postgres",
-        password="postgres"
+        user= os.environ['DB_USER'],
+        password=os.environ['DB_PASS']
     )
     
 
