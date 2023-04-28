@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 import linePlotColors from "styles/linePlotColors";
@@ -13,6 +13,7 @@ function HighChartsMultiLine({
   height,
   marginTop,
 }) {
+
   var colorsList = Object.keys(linePlotColors).map(
     (key) => linePlotColors[key]
   );
@@ -23,9 +24,8 @@ function HighChartsMultiLine({
       align: "left",
     },
     chart: {
-      height: height,
       backgroundColor: "#ffffff00",
-      marginTop: marginTop,
+      marginTop: marginTop
     },
     legend: {
       enabled: false,
@@ -52,7 +52,6 @@ function HighChartsMultiLine({
     plotOptions: {
       line: {
         marker: {
-          fillColor: colors.primary, // Set the fill color of the markers to red
           lineWidth: 1, // Set the line width of the markers to 1
           radius: 2, // Set the radius of the markers to 4
         },
@@ -64,9 +63,10 @@ function HighChartsMultiLine({
       name: x[0].item,
     })),
   };
+
   return (
-    <Box position="absolute" zIndex={1} style={{ width: "80vw" }}>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+    <Box position="absolute" zIndex={1} style={{ width: "80vw", height : "70vh"}}>
+      <HighchartsReact highcharts={Highcharts} options={options} containerProps={{ style: { height: "90%" } }} />
     </Box>
   );
 }
