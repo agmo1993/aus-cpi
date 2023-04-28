@@ -102,7 +102,7 @@ export default function DLayout({ children, version }) {
       </div>
       <nav sx={styles.navBarBottom}>
         <div sx={styles.navBarTab}>
-          <Image src="/images/logo.png" alt="AusCPI" width={70} height={70} />
+          <Image src="/images/logo.png" alt="AusCPI" width={50} height={50} />
         </div>
         <div sx={styles.navBarTab}>
         <Link href="/">
@@ -164,7 +164,7 @@ const styles = {
     width: ["25vw", "25vw", "25vw", "70px", "70px"],
   },
   navBarTab: {
-    height: "70px",
+    height: "50px",
     width: ["20vw", "20vw", "20vw", "70px", "70px"],
     display: "flex",
     justifyContent: "center",

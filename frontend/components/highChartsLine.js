@@ -37,7 +37,6 @@ function HighChartsLine({ data, xaxis, yaxis, chartTitle, height, marginTop }) {
       align: "left",
     },
     chart: {
-      height: height,
       backgroundColor: "#ffffff00",
       marginTop: marginTop,
     },
@@ -81,8 +80,8 @@ function HighChartsLine({ data, xaxis, yaxis, chartTitle, height, marginTop }) {
     ],
   };
   return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
+    <div style={{ width: "80vw", height : "55vh"}}>
+      <HighchartsReact highcharts={Highcharts} options={options} containerProps={{ style: { height: "80%" } }}/>
     </div>
   );
 }

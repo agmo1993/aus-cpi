@@ -80,7 +80,7 @@ export default function Home({ graphData, dataBottom, dataBottom2 }) {
 const styles = {
   chartPanel: {
     backgroundColor: "white",
-    height: ["55vh", "320px", "320px", "55vh", "55vh"],
+    height: ["55vh", "55vh", "55vh", "55vh", "55vh"],
     margin: ["20px", "20px", "40px", "40px", "40px"],
   },
 };

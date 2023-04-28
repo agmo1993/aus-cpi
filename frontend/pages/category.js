@@ -217,7 +217,7 @@ export default function Category({ monthlyCategories, firstData }) {
 const styles = {
   chartPanel: {
     backgroundColor: "white",
-    height: ["85vh", "85vh", "85vh", "90vh", "90vh"],
+    height: ["80vh", "80vh", "85vh", "90vh", "90vh"],
     margin: ["20px", "20px", "40px", "40px", "40px"],
   },
   correlateButton: {
