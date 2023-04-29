@@ -108,7 +108,7 @@ export default function DLayout({ children, version }) {
         <Link href="/">
           <HomeIcon
             fontSize="large"
-            style={{ margin: "22.5%", color: "grey" }}
+            style={{ color: "grey" }}
           />
         </Link>
         </div>
@@ -116,7 +116,7 @@ export default function DLayout({ children, version }) {
         <Link href="/category">
           <CategoryIcon
             fontSize="large"
-            style={{ margin: "22.5%", color: "grey" }}
+            style={{ color: "grey" }}
           />
         </Link>
         </div>
@@ -124,7 +124,7 @@ export default function DLayout({ children, version }) {
         <Link href="/city">
           <LocationCityIcon
             fontSize="large"
-            style={{ margin: "22.5%", color: "grey" }}
+            style={{ color: "grey" }}
           />
         </Link>
         </div>
@@ -132,7 +132,7 @@ export default function DLayout({ children, version }) {
         <Link href="/about">
           <InfoIcon
             fontSize="large"
-            style={{ margin: "22.5%", color: "grey" }}
+            style={{ color: "grey" }}
           />
         </Link>
         </div>
