@@ -222,7 +222,7 @@ export default function City({ quarterlyCategories, firstData }) {
 const styles = {
   chartPanel: {
     backgroundColor: "white",
-    height: ["75vh", "75vh", "85vh", "90vh", "90vh"],
+    height: ["80vh", "80vh", "85vh", "90vh", "90vh"],
     margin: ["20px", "20px", "40px", "40px", "40px"],
   },
   correlateButton: {

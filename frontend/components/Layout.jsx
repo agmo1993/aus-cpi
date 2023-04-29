@@ -41,7 +41,7 @@ import colors from "styles/colors";
  */
 export default function DLayout({ children, version }) {
   return (
-    <div sx={{ minHeight: "100vh" }}>
+    <div sx={{ maxHeight: "95vh", position:"relative" }}>
       <div
         sx={{
           minHeight: "99vh",
@@ -158,6 +158,7 @@ const styles = {
     width: "100%",
     display: ["flex", "flex", "flex", "none", "none"],
     backgroundColor: "#f4f6f9",
+    zIndex: 5,
   },
   navBarItem: {
     height: "70px",
@@ -190,5 +191,6 @@ const styles = {
     marginLeft: ["0px", "0px", "0px", "200px", "200px"],
     height: [null, null, null, "80vh", "80vh"],
     paddingBottom: ["15%", "15%", null, null, null],
+    zIndex: 0,
   },
 };
