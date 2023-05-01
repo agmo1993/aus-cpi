@@ -4,18 +4,31 @@ import Box from "@mui/material/Box";
 import colors from "styles/colors";
 import FiveCard from "components/fiveCard";
 import Grid from "@mui/material/Grid";
+import client from "utils/dbClient";
 
 export async function getServerSideProps() {
   const [dataGraph, dataBottom, dataBottom2] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/monthlyCPI`).then((res) =>
-      res.json()
-    ),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/topIncreaseMonthly`).then(
-      (res) => res.json()
-    ),
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/topIncreaseYearly`).then(
-      (res) => res.json()
-    ),
+    client
+      .query(
+      "SELECT TO_CHAR(publish_date, 'mm-yyyy') as Date, cpi_value as CPI FROM auscpi.cpi_index_monthly WHERE seriesid = 'A128478317T';"
+      )
+      .then((data) => data.rows),
+    client
+      .query(
+        `
+      SELECT current_value, previous_value, percentage_change, seriesid, item
+      FROM auscpi.cpi_pct_monthly
+      order by publish_date desc, percentage_change desc limit 5;      `
+      )
+      .then((data) => data.rows),
+    client
+      .query(
+        `
+      SELECT current_value, previous_value, percentage_change, seriesid, item
+      FROM auscpi.cpi_pct_yearly_base2017
+      order by publish_date desc, percentage_change desc limit 5;  `
+      )
+      .then((data) => data.rows),
   ]);
 
   const fetchTimeSeries = async (name) => {
@@ -26,15 +39,15 @@ export async function getServerSideProps() {
   };
 
   const dataBottomWithTimeSeries = await Promise.all(
-    dataBottom.name.map(fetchTimeSeries)
+    dataBottom.map(fetchTimeSeries)
   );
   const dataBottom2WithTimeSeries = await Promise.all(
-    dataBottom2.name.map(fetchTimeSeries)
+    dataBottom2.map(fetchTimeSeries)
   );
 
   return {
     props: {
-      graphData: dataGraph.name,
+      graphData: dataGraph,
       dataBottom: dataBottomWithTimeSeries,
       dataBottom2: dataBottom2WithTimeSeries,
     },

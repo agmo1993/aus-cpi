@@ -27,17 +27,17 @@ export default function About() {
             and food. With its user-friendly interface and interactive data
             visualization tools, AusCPI provides a convenient and accessible
             platform for anyone interested in understanding the state of the
-            Australian. By presenting CPI data in an easy-to-understand
-            format, AusCPI allows users to gain valuable insights and make
-            informed decisions based on the latest economic trends.
+            Australian. By presenting CPI data in an easy-to-understand format,
+            AusCPI allows users to gain valuable insights and make informed
+            decisions based on the latest economic trends.
           </Typography>
           <br />
           <Typography variant="body1">
-            Interpreting macroeconomic data from the ABS is daunting. The data shapes economic policies
-            and impacts the cost of living. The CPI measures inflation,
-            affecting spending, investment, and borrowing decisions. A basic
-            understanding of macroeconomic data is necessary to make informed
-            decisions that impact daily lives.
+            Interpreting macroeconomic data from the ABS is daunting. The data
+            shapes economic policies and impacts the cost of living. The CPI
+            measures inflation, affecting spending, investment, and borrowing
+            decisions. A basic understanding of macroeconomic data is necessary
+            to make informed decisions that impact daily lives.
           </Typography>
         </Box>
         <Box sx={styles.section}>
