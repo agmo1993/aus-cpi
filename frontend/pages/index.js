@@ -10,7 +10,7 @@ export async function getServerSideProps() {
   const [dataGraph, dataBottom, dataBottom2] = await Promise.all([
     client
       .query(
-      "SELECT TO_CHAR(publish_date, 'mm-yyyy') as Date, cpi_value as CPI FROM auscpi.cpi_index_monthly WHERE seriesid = 'A128478317T';"
+        "SELECT TO_CHAR(publish_date, 'mm-yyyy') as Date, cpi_value as CPI FROM auscpi.cpi_index_monthly WHERE seriesid = 'A128478317T';"
       )
       .then((data) => data.rows),
     client
@@ -32,9 +32,15 @@ export async function getServerSideProps() {
   ]);
 
   const fetchTimeSeries = async (name) => {
-    const timeSeries = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/timeseries/${name.seriesid}`
-    ).then((res) => res.json());
+    const timeSeries = await client
+      .query(
+        `
+      SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, item
+      FROM auscpi.cpi_index_monthly
+      WHERE seriesid = '${name.seriesid}';
+    `
+      )
+      .then((data) => data.rows);
     return { ...name, timeseries: timeSeries };
   };
 
