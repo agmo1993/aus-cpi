@@ -8,7 +8,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "components/highChartsMultiLine";
 import HeatCorrelation from "@/components/heatMap";
 import Button from "@mui/material/Button";
-import client from "utils/dbClient";
+// import client from "utils/dbClient";
+import kv from '@vercel/kv';
 
 const renderChip = (index, window) => {
   if (window > 800 && index > 3) {
@@ -21,30 +22,36 @@ const renderChip = (index, window) => {
 };
 
 export async function getServerSideProps() {
-  const quarterlyCategories = await Promise.resolve(
-    client
-      .query(
-        `
-    SELECT seriesid, item, City
-    FROM auscpi.seriesid_lookup
-    WHERE data_frequency = 'Quarterly'
-    ORDER BY array_position(\'{\"All groups CPI\"}\', item) ASC, city DESC;
-  `
-      )
-      .then((data) => data.rows)
-  );
+  // const quarterlyCategories = await Promise.resolve(
+  //   client
+  //     .query(
+  //       `
+  //   SELECT seriesid, item, City
+  //   FROM auscpi.seriesid_lookup
+  //   WHERE data_frequency = 'Quarterly'
+  //   ORDER BY array_position(\'{\"All groups CPI\"}\', item) ASC, city DESC;
+  // `
+  //     )
+  //     .then((data) => data.rows)
+  // );
 
-  const firstData = await Promise.resolve(
-    client
-      .query(
-        `
-    SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, CONCAT (item, ' - ', City) AS "item"
-    FROM auscpi.cpi_index
-    WHERE seriesid = '${quarterlyCategories[0].seriesid}';
-  `
-      )
-      .then((data) => data.rows)
-  );
+  // const firstData = await Promise.resolve(
+  //   client
+  //     .query(
+  //       `
+  //   SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, CONCAT (item, ' - ', City) AS "item"
+  //   FROM auscpi.cpi_index
+  //   WHERE seriesid = '${quarterlyCategories[0].seriesid}';
+  // `
+  //     )
+  //     .then((data) => data.rows)
+  // );
+
+  const quarterlyCategories = await kv.get('quarterlyCategoriesCity');
+  const firstData = await kv.get('firstDataCity');
+
+  // await kv.set('quarterlyCategoriesCity', quarterlyCategories);
+  // await kv.set('firstDataCity', firstData);
 
   return {
     props: {

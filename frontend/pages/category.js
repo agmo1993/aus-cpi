@@ -8,7 +8,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "components/highChartsMultiLine";
 import Button from "@mui/material/Button";
 import HeatCorrelation from "@/components/heatMap";
-import client from "utils/dbClient";
+// import client from "utils/dbClient";
+import kv from '@vercel/kv';
 
 const renderChip = (index, window) => {
   if (window > 800 && index > 4) {
@@ -21,30 +22,36 @@ const renderChip = (index, window) => {
 };
 
 export async function getServerSideProps() {
-  const monthlyCategories = await Promise.resolve(
-    client
-      .query(
-        `
-    SELECT seriesid, item, City
-    FROM auscpi.seriesid_lookup
-    WHERE data_frequency = 'Monthly'
-    ORDER BY array_position(\'{\"All groups CPI\"}\', item) ASC, city DESC;
-  `
-      )
-      .then((data) => data.rows)
-  );
+  // const monthlyCategories = await Promise.resolve(
+  //   client
+  //     .query(
+  //       `
+  //   SELECT seriesid, item, City
+  //   FROM auscpi.seriesid_lookup
+  //   WHERE data_frequency = 'Monthly'
+  //   ORDER BY array_position(\'{\"All groups CPI\"}\', item) ASC, city DESC;
+  // `
+  //     )
+  //     .then((data) => data.rows)
+  // );
 
-  const firstData = await Promise.resolve(
-    client
-      .query(
-        `
-    SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, CONCAT (item, ' - ', City) AS "item"
-    FROM auscpi.cpi_index_monthly
-    WHERE seriesid = '${monthlyCategories[0].seriesid}';
-  `
-      )
-      .then((data) => data.rows)
-  );
+  // const firstData = await Promise.resolve(
+  //   client
+  //     .query(
+  //       `
+  //   SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, CONCAT (item, ' - ', City) AS "item"
+  //   FROM auscpi.cpi_index_monthly
+  //   WHERE seriesid = '${monthlyCategories[0].seriesid}';
+  // `
+  //     )
+  //     .then((data) => data.rows)
+  // );
+
+  const monthlyCategories = await kv.get('quarterlyCategoriesCat');
+  const firstData = await kv.get('firstDataCat');
+
+  // await kv.set('quarterlyCategoriesCat', monthlyCategories);
+  // await kv.set('firstDataCat', firstData);
 
   return {
     props: {
