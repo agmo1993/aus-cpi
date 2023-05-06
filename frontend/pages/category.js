@@ -8,42 +8,30 @@ import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "components/highChartsMultiLine";
 import Button from "@mui/material/Button";
 import HeatCorrelation from "@/components/heatMap";
-import client from "utils/dbClient";
 
 const renderChip = (index, window) => {
   if (window > 800 && index > 4) {
     return false;
-  } else if (window < 800 && index > 0) {
+  }
+  else if (window < 800 && index > 0) {
     return false;
-  } else {
+  }
+  else {
     return true;
   }
 };
 
 export async function getServerSideProps() {
   const monthlyCategories = await Promise.resolve(
-    client
-      .query(
-        `
-    SELECT seriesid, item, City
-    FROM auscpi.seriesid_lookup
-    WHERE data_frequency = 'Monthly'
-    ORDER BY array_position(\'{\"All groups CPI\"}\', item) ASC, city DESC;
-  `
-      )
-      .then((data) => data.rows)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/lookupMonthly`).then((res) =>
+      res.json()
+    )
   );
 
   const firstData = await Promise.resolve(
-    client
-      .query(
-        `
-    SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, CONCAT (item, ' - ', City) AS "item"
-    FROM auscpi.cpi_index_monthly
-    WHERE seriesid = '${monthlyCategories[0].seriesid}';
-  `
-      )
-      .then((data) => data.rows)
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/timeseries/${monthlyCategories[0].seriesid}`
+    ).then((res) => res.json())
   );
 
   return {
@@ -143,23 +131,21 @@ export default function Category({ monthlyCategories, firstData }) {
               ),
             ]);
           }}
-          options={monthlyCategories}
+           options={monthlyCategories}
           getOptionLabel={(option) => option.item}
           renderTags={(tagValue, getTagProps) =>
-            tagValue.map(
-              (option, index) =>
-                renderChip(index, width) && (
-                  <Chip
-                    label={option.item}
-                    {...getTagProps({ index })}
-                    key={option.item}
-                    disabled={fixedOptions.indexOf(option) !== -1}
-                    sx={{
-                      backgroundColor: "white",
-                    }}
-                  />
-                )
-            )
+            tagValue.map((option, index) => (
+              renderChip(index, width) && 
+              <Chip
+                label={option.item}
+                {...getTagProps({ index })}
+                key={option.item}
+                disabled={fixedOptions.indexOf(option) !== -1}
+                sx={{
+                  backgroundColor: "white",
+                }}
+              />
+            ))
           }
           style={{
             width: "100%",
@@ -186,7 +172,7 @@ export default function Category({ monthlyCategories, firstData }) {
           {value.length > 1 && (
             <Button
               variant="contained"
-              style={{ backgroundColor: colors.secondary }}
+              style={{ backgroundColor: colors.secondary }}             
               onClick={() => {
                 if (correlateOn) {
                   setcorrelateOn(false);

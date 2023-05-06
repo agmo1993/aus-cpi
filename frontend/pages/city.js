@@ -8,42 +8,31 @@ import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "components/highChartsMultiLine";
 import HeatCorrelation from "@/components/heatMap";
 import Button from "@mui/material/Button";
-import client from "utils/dbClient";
+
 
 const renderChip = (index, window) => {
   if (window > 800 && index > 3) {
     return false;
-  } else if (window < 800 && index > 0) {
+  }
+  else if (window < 800 && index > 0) {
     return false;
-  } else {
+  }
+  else {
     return true;
   }
 };
 
 export async function getServerSideProps() {
   const quarterlyCategories = await Promise.resolve(
-    client
-      .query(
-        `
-    SELECT seriesid, item, City
-    FROM auscpi.seriesid_lookup
-    WHERE data_frequency = 'Quarterly'
-    ORDER BY array_position(\'{\"All groups CPI\"}\', item) ASC, city DESC;
-  `
-      )
-      .then((data) => data.rows)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/lookupQuarterly`).then(
+      (res) => res.json()
+    )
   );
 
   const firstData = await Promise.resolve(
-    client
-      .query(
-        `
-    SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, CONCAT (item, ' - ', City) AS "item"
-    FROM auscpi.cpi_index
-    WHERE seriesid = '${quarterlyCategories[0].seriesid}';
-  `
-      )
-      .then((data) => data.rows)
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/api/timeseriesqtl/${quarterlyCategories[0].seriesid}`
+    ).then((res) => res.json())
   );
 
   return {
@@ -146,20 +135,18 @@ export default function City({ quarterlyCategories, firstData }) {
           options={quarterlyCategories}
           getOptionLabel={(option) => `${option.city} - ${option.item}`}
           renderTags={(tagValue, getTagProps) =>
-            tagValue.map(
-              (option, index) =>
-                renderChip(index, width) && (
-                  <Chip
-                    label={`${option.city} - ${option.item}`}
-                    {...getTagProps({ index })}
-                    key={option.item}
-                    disabled={fixedOptions.indexOf(option) !== -1}
-                    sx={{
-                      backgroundColor: "white",
-                    }}
-                  />
-                )
-            )
+            tagValue.map((option, index) => (
+              renderChip(index, width) && 
+              <Chip
+                label={`${option.city} - ${option.item}`}
+                {...getTagProps({ index })}
+                key={option.item}
+                disabled={fixedOptions.indexOf(option) !== -1}
+                sx={{
+                  backgroundColor: "white",
+                }}
+              />
+            ))
           }
           style={{
             width: "100%",
@@ -170,18 +157,16 @@ export default function City({ quarterlyCategories, firstData }) {
           renderInput={(params) => {
             params.InputProps = {
               ...params.InputProps,
-              style: { maxHeight: "60px" },
-            };
-            return (
-              <TextField
-                {...params}
-                label="CPI categories"
-                InputLabelProps={{
-                  style: { color: "white" },
-                }}
-              />
-            );
-          }}
+              style : { maxHeight : '60px'}
+            }
+            return <TextField
+              {...params}
+              label="CPI categories"
+              InputLabelProps={{
+                style: { color: "white" },
+              }}
+            />
+            }}
         />
         <Box
           display="flex"
@@ -206,29 +191,28 @@ export default function City({ quarterlyCategories, firstData }) {
           )}
         </Box>
         <div position="relative">
-          {chartData.length > 0 &&
-            (!correlateOn ? (
-              <HighChartsMultiLine
-                data={chartData}
-                xaxis="publish_date"
-                yaxis="cpi_value"
-                chartTitle={null}
-                height={550}
-                marginTop={30}
-              />
-            ) : (
-              <>
-                <HighChartsMultiLine
-                  data={chartData}
-                  xaxis="publish_date"
-                  yaxis="cpi_value"
-                  chartTitle={null}
-                  height={550}
-                  marginTop={30}
-                />
-                <HeatCorrelation chartData={heatData} />
-              </>
-            ))}
+        {!correlateOn ? (
+          <HighChartsMultiLine
+            data={chartData}
+            xaxis="publish_date"
+            yaxis="cpi_value"
+            chartTitle={null}
+            height={550}
+            marginTop={30}
+          />
+        ) : (
+          <>
+          <HighChartsMultiLine
+            data={chartData}
+            xaxis="publish_date"
+            yaxis="cpi_value"
+            chartTitle={null}
+            height={550}
+            marginTop={30}
+          />
+          <HeatCorrelation chartData={heatData} />
+        </>
+        )}
         </div>
       </Box>
     </DLayout>
