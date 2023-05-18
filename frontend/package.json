@@ -1,34 +1,29 @@
 {
-  "name": "aus-cpi-next",
+  "name": "aus-cpi",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --fix"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@mui/icons-material": "^5.11.11",
-    "@mui/material": "^5.11.11",
-    "@vercel/kv": "^0.1.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.0",
     "calculate-correlation": "^1.2.3",
-    "d3": "^7.8.2",
-    "d3-scale-chromatic": "^3.0.0",
-    "eslint": "8.35.0",
-    "eslint-config-next": "13.2.3",
-    "highcharts": "^10.3.3",
+    "d3": "^7.8.4",
+    "eslint": "8.40.0",
+    "eslint-config-next": "13.4.1",
+    "fs": "^0.0.1-security",
+    "highcharts": "^11.0.1",
     "highcharts-react-official": "^3.2.0",
-    "next": "13.2.3",
+    "next": "13.4.1",
     "pg": "^8.10.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "theme-ui": "^0.15.5",
-    "validator": "^13.9.0"
-  },
-  "devDependencies": {
-    "eslint-config-prettier": "^8.8.0"
+    "react-query": "^3.39.3",
+    "theme-ui": "^0.15.7"
   }
 }

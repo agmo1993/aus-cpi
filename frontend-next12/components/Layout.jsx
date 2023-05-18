@@ -2,11 +2,7 @@
 /** @jsx jsx */
 import { jsx } from "theme-ui";
 import HomeIcon from "@mui/icons-material/Home";
-import TimelineIcon from "@mui/icons-material/Timeline";
 import Link from "next/link";
-import TextsmsIcon from "@mui/icons-material/Textsms";
-import TopicIcon from "@mui/icons-material/Topic";
-import FindInPageIcon from "@mui/icons-material/FindInPage";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -14,13 +10,11 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
-import DraftsIcon from "@mui/icons-material/Drafts";
 import packageJson from "package.json";
 import Image from "next/image";
 import CategoryIcon from "@mui/icons-material/Category";
 import LocationCityIcon from "@mui/icons-material/LocationCity";
 import InfoIcon from "@mui/icons-material/Info";
-import colors from "styles/colors";
 
 /*
  * A component to layout of the application
