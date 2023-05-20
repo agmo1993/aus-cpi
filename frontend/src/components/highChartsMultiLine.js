@@ -65,7 +65,7 @@ function HighChartsMultiLine({
   };
 
   return (
-    <Box position="absolute" zIndex={1} style={{ width: "80vw", height : "70vh"}}>
+    <Box position="absolute" zIndex={1} style={{ width: "80vw", height : "65%"}}>
       <HighchartsReact highcharts={Highcharts} options={options} containerProps={{ style: { height: "90%" } }} />
     </Box>
   );

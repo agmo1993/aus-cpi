@@ -1,23 +1,24 @@
-import React from "react";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
+import React from 'react'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
+import Box from "@mui/material/Box";
 
 /**
  * A component to render the a histogram plot representing the distribution
  * of values on the map plotted above
- *
+ * 
  * @component
  * @example
- *
- *
- * const placeData = [{hc-key: '1', value: 25945},
- *                    {hc-key: '2', value: 22333},
+ * 
+ * 
+ * const placeData = [{hc-key: '1', value: 25945}, 
+ *                    {hc-key: '2', value: 22333}, 
  *                    {hc-key: '3', value: 14131} ];
- *
+ * 
  * return (
- *    <HighChartsBar
- *       data={langData}
- *       xaxis="language"
+ *    <HighChartsBar  
+ *       data={langData} 
+ *       xaxis="language" 
  *       yaxis="count"
  *       chartTitle={null}
  *       scale="logarithmic"
@@ -25,57 +26,65 @@ import HighchartsReact from "highcharts-react-official";
  * )
  */
 
-function HighChartsBar({ data, xaxis, yaxis, chartTitle, scale }) {
-  const options = {
-    chart: {
-      type: "column",
-      height: "210px",
-    },
-    exporting: {
-      enabled: false,
-    },
-    title: {
-      text: chartTitle,
-      useHTML: true,
-      align: "left",
-      margin: 40,
-    },
-    legend: {
-      enabled: false,
-    },
-    credits: {
-      enabled: false,
-    },
-    tooltip: {
-      formatter: function () {
-        return `Posts in ${this.x}: <b> ${Highcharts.numberFormat(
-          this.y,
-          0
-        )} </b>`;
-      },
-    },
-    yAxis: {
-      type: scale,
-      minorTickInterval: 0.1,
-      title: {
-        text: "Count (log scale)",
-      },
-      max: 1000000,
-    },
-    xAxis: {
-      categories: data.map((e) => e[xaxis]),
-    },
-    series: [
-      {
-        data: data.map((e) => e[yaxis]),
-      },
-    ],
-  };
+function HighChartsBar({ data, scale }) {
+    const options = {
+        chart: {
+            type: 'column',
+            backgroundColor: "#ECEEE6e0"
+        },
+        exporting: {
+            enabled: false
+        },
+        title: {
+            text: 'Correlation',
+            useHTML: true,
+            align: "center",
+            margin: 40
+        },
+        legend: {
+            enabled: false
+        },
+        credits: {
+            enabled: false
+        },
+        tooltip: {
+            formatter: function () {
+                return `<b>${this.x} ${Highcharts.numberFormat(this.y, 2)} </b>`;
+            }
+        },
+        yAxis: {
+            type: scale,
+            minorTickInterval: 0.1,
+            title: {
+                text: 'Correlation Coefficient'
+            },        
+            min : -1,
+            max: 1
+        },
+        xAxis: {
+            categories: data.data.map(e => `${e['itemY']} vs ${e['itemX']}`)
+        },
+        series: [{
+            data: data.data.map(e => e['corr'])
+        }]
+    }
 
-  return (
-    <div>
-      <HighchartsReact highcharts={Highcharts} options={options} />
-    </div>
-  );
+    return (
+        <Box
+            position="absolute"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            id="box"
+            zIndex={2}
+            style={{ width: "80%", opacity: 1, height: '70vh'}}
+        >
+            <HighchartsReact
+                highcharts={Highcharts}
+                options={options}
+                containerProps={{ style: { height: "90%", width: "90%" } }}
+            />
+        </Box>
+    );
 }
 export default HighChartsBar;

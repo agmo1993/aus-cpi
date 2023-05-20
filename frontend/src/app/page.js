@@ -50,7 +50,7 @@ export default async function Home() {
   );
 
   return (
-    <div>
+    <div className="chart-panel-outer">
       <div className="chart-panel">
         <div
           style={{

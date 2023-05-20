@@ -8,6 +8,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "@/components/highChartsMultiLine";
 import HeatCorrelation from "@/components/heatMap";
 import Button from "@mui/material/Button";
+import HighChartsBar from "./highChartsBar";
 
 const renderChip = (index, window) => {
     if (window > 800 && index > 3) {
@@ -47,6 +48,7 @@ export default function ChartUIMonthly({ categories, firstData}) {
                 }).then((res) => res.json())
             );
 
+            console.log(heatData);
             setHeatData(heatData);
         };
 
@@ -178,7 +180,7 @@ export default function ChartUIMonthly({ categories, firstData}) {
                                 height={550}
                                 marginTop={30}
                             />
-                            <HeatCorrelation chartData={heatData} />
+                            <HighChartsBar data={heatData} scale="linear"/>
                         </>
                     ))}
             </div>
@@ -189,7 +191,7 @@ export default function ChartUIMonthly({ categories, firstData}) {
 const styles = {
     chartPanel: {
       backgroundColor: "white",
-      height: ["80vh", "80vh", "85vh", "90vh", "90vh"],
+      height: ["70vh", "70vh", "85vh", "85vh", "85vh"],
       margin: ["20px", "20px", "40px", "40px", "40px"],
     },
     correlateButton: {

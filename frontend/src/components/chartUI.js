@@ -189,7 +189,7 @@ export default function ChartUI({ categories, firstData}) {
 const styles = {
     chartPanel: {
       backgroundColor: "white",
-      height: ["80vh", "80vh", "85vh", "90vh", "90vh"],
+      height: ["70vh", "70vh", "85vh", "85vh", "85vh"],
       margin: ["20px", "20px", "40px", "40px", "40px"],
     },
     correlateButton: {
