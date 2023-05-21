@@ -24,7 +24,7 @@ export async function POST(req) {
             (x) => x.itemY === value2.item && x.itemX === value1.item
           ).length === 0
         ) {
-          correlationData.push({
+          value1.item !== value2.item && correlationData.push({
             itemY: value1.item,
             itemX: value2.item,
             corr: calculateCorrelation(value1.values, value2.values),
@@ -32,8 +32,6 @@ export async function POST(req) {
         }
       }
     }
-
-    // console.log(correlationData);
 
     // res.status(200).json({ data: correlationData, categories: categories });
     return NextResponse.json( { data: correlationData, categories: categories });

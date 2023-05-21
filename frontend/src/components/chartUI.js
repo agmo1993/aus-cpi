@@ -8,6 +8,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "@/components/highChartsMultiLine";
 import HeatCorrelation from "@/components/heatMap";
 import Button from "@mui/material/Button";
+import HighChartsBar from "./highChartsBar";
 
 const renderChip = (index, window) => {
     if (window > 800 && index > 3) {
@@ -19,7 +20,7 @@ const renderChip = (index, window) => {
     }
 };
 
-export default function ChartUI({ categories, firstData}) {
+export default function ChartUI({ categories, firstData }) {
     const fixedOptions = [categories[0]];
     const [value, setValue] = useState([...fixedOptions]);
     const [prevValue, setPrevValue] = useState(null);
@@ -178,7 +179,7 @@ export default function ChartUI({ categories, firstData}) {
                                 height={550}
                                 marginTop={30}
                             />
-                            <HeatCorrelation chartData={heatData} />
+                            <HighChartsBar data={heatData} scale="linear" />
                         </>
                     ))}
             </div>
@@ -188,14 +189,13 @@ export default function ChartUI({ categories, firstData}) {
 
 const styles = {
     chartPanel: {
-      backgroundColor: "white",
-      height: ["70vh", "70vh", "85vh", "85vh", "85vh"],
-      margin: ["20px", "20px", "40px", "40px", "40px"],
+        backgroundColor: "white",
+        height: ["70vh", "70vh", "85vh", "85vh", "85vh"],
+        margin: ["20px", "20px", "40px", "40px", "40px"],
     },
     correlateButton: {
-      height: "3vh",
-      marginTop: "5px",
-      marginRight: "5px",
+        height: "3vh",
+        marginTop: "5px",
+        marginRight: "5px",
     },
-  };
-  
+};

@@ -6,7 +6,7 @@ import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import HighChartsMultiLine from "@/components/highChartsMultiLine";
-import HeatCorrelation from "@/components/heatMap";
+// import HeatCorrelation from "@/components/heatMap";
 import Button from "@mui/material/Button";
 import HighChartsBar from "./highChartsBar";
 
