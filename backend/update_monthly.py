@@ -37,7 +37,7 @@ def main():
         try:
             cur = conn.cursor()
             cur.execute('''
-                INSERT INTO auscpi.cpi_index (publish_date, seriesid, cpi_value, item, city)
+                INSERT INTO auscpi.cpi_index_monthly (publish_date, seriesid, cpi_value, item, city)
                 VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING;
             ''', (row['Date'], row['Series ID'], row['CPI Value'], row['Item'], row['Location']))
             conn.commit()
