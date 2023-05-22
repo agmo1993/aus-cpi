@@ -1,4 +1,5 @@
 "use client"
+import "../globals.css";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -14,6 +15,7 @@ const contributors = [
 
 export default function About() {
   return (
+    <div className="chart-panel-outer">
       <Box sx={styles.chartPanel}>
         <Box sx={styles.section}>
           <Typography variant="h4">About</Typography>
@@ -61,6 +63,7 @@ export default function About() {
           </Grid>
         </Box>
       </Box>
+    </div>
   );
 }
 
