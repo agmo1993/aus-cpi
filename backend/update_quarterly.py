@@ -28,7 +28,7 @@ def main():
         password=os.environ['DB_PASS']
     )
 
-    df = df[df['Date'] == '2023-03-01']
+    df = df[df['Date'] == os.environ['DATE']]
 
     logging.info("Inserting rows into table cpi_index")
 

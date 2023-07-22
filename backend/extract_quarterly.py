@@ -1,19 +1,21 @@
 import pandas as pd
 import urllib.request
+import os
 
 # download raw data file
-url = 'https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/mar-quarter-2023/640107.xlsx'  # URL of the file to download
+month = os.environ['MONTH']
+url = f'https://www.abs.gov.au/statistics/economy/price-indexes-and-inflation/consumer-price-index-australia/{month}-quarter-2023/640107.xlsx'  # URL of the file to download
 file_path = './data/640107.xlsx'  # File path where the downloaded file will be saved
 urllib.request.urlretrieve(url, file_path)
 
 # seed dataframe from first tab
-df = pd.read_excel('./data/640107.xlsx', sheet_name='Data1', skiprows=9)
+df = pd.read_excel(file_path, sheet_name='Data1', skiprows=9)
 df.rename(columns={df.columns[0]: 'Date'}, inplace=True)
 df.dropna(inplace=True)
 
 # extract data from all cities in sheet
 for i in range(2,6):
-  temp_df = pd.read_excel('./data/640107.xlsx', sheet_name=f'Data{i}', skiprows=9)
+  temp_df = pd.read_excel(file_path, sheet_name=f'Data{i}', skiprows=9)
   temp_df.rename(columns={temp_df.columns[0]: 'Date'}, inplace=True)
   temp_df.dropna(inplace=True)
   df = pd.merge(df, temp_df, on='Date', how='outer')

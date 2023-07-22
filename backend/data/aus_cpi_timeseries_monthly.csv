@@ -65,6 +65,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128478317T,118.2,All groups CPI,Australia
 2023-01-01,A128478317T,117.7,All groups CPI,Australia
 2023-02-01,A128478317T,117.9,All groups CPI,Australia
+2023-03-01,A128478317T,118.6,All groups CPI,Australia
+2023-04-01,A128478317T,119.5,All groups CPI,Australia
+2023-05-01,A128478317T,119.0,All groups CPI,Australia
 2017-09-01,A128480733V,100.0,Food and non-alcoholic beverages,Australia
 2017-10-01,A128480733V,101.2,Food and non-alcoholic beverages,Australia
 2017-11-01,A128480733V,102.2,Food and non-alcoholic beverages,Australia
@@ -131,6 +134,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128480733V,122.4,Food and non-alcoholic beverages,Australia
 2023-01-01,A128480733V,122.3,Food and non-alcoholic beverages,Australia
 2023-02-01,A128480733V,123.5,Food and non-alcoholic beverages,Australia
+2023-03-01,A128480733V,124.0,Food and non-alcoholic beverages,Australia
+2023-04-01,A128480733V,124.3,Food and non-alcoholic beverages,Australia
+2023-05-01,A128480733V,125.6,Food and non-alcoholic beverages,Australia
 2017-09-01,A128475629X,100.0,Bread and cereal products,Australia
 2017-10-01,A128475629X,100.7,Bread and cereal products,Australia
 2017-11-01,A128475629X,101.2,Bread and cereal products,Australia
@@ -197,6 +203,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128475629X,124.2,Bread and cereal products,Australia
 2023-01-01,A128475629X,124.5,Bread and cereal products,Australia
 2023-02-01,A128475629X,124.2,Bread and cereal products,Australia
+2023-03-01,A128475629X,124.6,Bread and cereal products,Australia
+2023-04-01,A128475629X,126.7,Bread and cereal products,Australia
+2023-05-01,A128475629X,128.8,Bread and cereal products,Australia
 2017-09-01,A128479215W,100.0,Meat and seafoods,Australia
 2017-10-01,A128479215W,100.5,Meat and seafoods,Australia
 2017-11-01,A128479215W,100.8,Meat and seafoods,Australia
@@ -263,6 +272,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128479215W,126.4,Meat and seafoods,Australia
 2023-01-01,A128479215W,126.5,Meat and seafoods,Australia
 2023-02-01,A128479215W,126.8,Meat and seafoods,Australia
+2023-03-01,A128479215W,126.6,Meat and seafoods,Australia
+2023-04-01,A128479215W,126.9,Meat and seafoods,Australia
+2023-05-01,A128479215W,127.4,Meat and seafoods,Australia
 2017-09-01,A128477405X,100.0,Dairy and related products,Australia
 2017-10-01,A128477405X,100.7,Dairy and related products,Australia
 2017-11-01,A128477405X,100.5,Dairy and related products,Australia
@@ -329,6 +341,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128477405X,131.2,Dairy and related products,Australia
 2023-01-01,A128477405X,130.6,Dairy and related products,Australia
 2023-02-01,A128477405X,130.5,Dairy and related products,Australia
+2023-03-01,A128477405X,132.9,Dairy and related products,Australia
+2023-04-01,A128477405X,133.2,Dairy and related products,Australia
+2023-05-01,A128477405X,133.0,Dairy and related products,Australia
 2017-09-01,A128480215V,100.0,Fruit and vegetables,Australia
 2017-10-01,A128480215V,106.4,Fruit and vegetables,Australia
 2017-11-01,A128480215V,111.7,Fruit and vegetables,Australia
@@ -395,6 +410,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128480215V,132.3,Fruit and vegetables,Australia
 2023-01-01,A128480215V,128.5,Fruit and vegetables,Australia
 2023-02-01,A128480215V,132.7,Fruit and vegetables,Australia
+2023-03-01,A128480215V,134.1,Fruit and vegetables,Australia
+2023-04-01,A128480215V,133.1,Fruit and vegetables,Australia
+2023-05-01,A128480215V,135.0,Fruit and vegetables,Australia
 2017-09-01,A128475329W,100.0,Food products n.e.c.,Australia
 2017-10-01,A128475329W,100.3,Food products n.e.c.,Australia
 2017-11-01,A128475329W,100.5,Food products n.e.c.,Australia
@@ -461,6 +479,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128475329W,120.7,Food products n.e.c.,Australia
 2023-01-01,A128475329W,122.0,Food products n.e.c.,Australia
 2023-02-01,A128475329W,123.3,Food products n.e.c.,Australia
+2023-03-01,A128475329W,124.0,Food products n.e.c.,Australia
+2023-04-01,A128475329W,124.5,Food products n.e.c.,Australia
+2023-05-01,A128475329W,124.2,Food products n.e.c.,Australia
 2017-09-01,A128473623X,100.0,Non-alcoholic beverages,Australia
 2017-10-01,A128473623X,100.3,Non-alcoholic beverages,Australia
 2017-11-01,A128473623X,100.5,Non-alcoholic beverages,Australia
@@ -527,6 +548,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128473623X,118.6,Non-alcoholic beverages,Australia
 2023-01-01,A128473623X,122.0,Non-alcoholic beverages,Australia
 2023-02-01,A128473623X,123.6,Non-alcoholic beverages,Australia
+2023-03-01,A128473623X,124.5,Non-alcoholic beverages,Australia
+2023-04-01,A128473623X,127.0,Non-alcoholic beverages,Australia
+2023-05-01,A128473623X,126.9,Non-alcoholic beverages,Australia
 2017-09-01,A128477399R,100.0,Alcohol and tobacco,Australia
 2017-10-01,A128477399R,101.1,Alcohol and tobacco,Australia
 2017-11-01,A128477399R,101.4,Alcohol and tobacco,Australia
@@ -593,6 +617,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128477399R,132.4,Alcohol and tobacco,Australia
 2023-01-01,A128477399R,132.8,Alcohol and tobacco,Australia
 2023-02-01,A128477399R,134.4,Alcohol and tobacco,Australia
+2023-03-01,A128477399R,135.4,Alcohol and tobacco,Australia
+2023-04-01,A128477399R,135.6,Alcohol and tobacco,Australia
+2023-05-01,A128477399R,135.7,Alcohol and tobacco,Australia
 2017-09-01,A128479281V,100.0,Alcoholic beverages,Australia
 2017-10-01,A128479281V,99.6,Alcoholic beverages,Australia
 2017-11-01,A128479281V,99.8,Alcoholic beverages,Australia
@@ -659,6 +686,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128479281V,109.7,Alcoholic beverages,Australia
 2023-01-01,A128479281V,110.2,Alcoholic beverages,Australia
 2023-02-01,A128479281V,112.1,Alcoholic beverages,Australia
+2023-03-01,A128479281V,112.9,Alcoholic beverages,Australia
+2023-04-01,A128479281V,112.8,Alcoholic beverages,Australia
+2023-05-01,A128479281V,112.9,Alcoholic beverages,Australia
 2017-09-01,A128484257R,100.0,Tobacco,Australia
 2017-10-01,A128484257R,103.7,Tobacco,Australia
 2017-11-01,A128484257R,104.1,Tobacco,Australia
@@ -725,6 +755,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128484257R,172.8,Tobacco,Australia
 2023-01-01,A128484257R,173.1,Tobacco,Australia
 2023-02-01,A128484257R,173.4,Tobacco,Australia
+2023-03-01,A128484257R,174.8,Tobacco,Australia
+2023-04-01,A128484257R,176.0,Tobacco,Australia
+2023-05-01,A128484257R,175.7,Tobacco,Australia
 2017-09-01,A128475583C,100.0,Clothing and footwear,Australia
 2017-10-01,A128475583C,100.8,Clothing and footwear,Australia
 2017-11-01,A128475583C,100.3,Clothing and footwear,Australia
@@ -791,6 +824,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128475583C,104.4,Clothing and footwear,Australia
 2023-01-01,A128475583C,100.6,Clothing and footwear,Australia
 2023-02-01,A128475583C,102.1,Clothing and footwear,Australia
+2023-03-01,A128475583C,102.3,Clothing and footwear,Australia
+2023-04-01,A128475583C,104.2,Clothing and footwear,Australia
+2023-05-01,A128475583C,102.2,Clothing and footwear,Australia
 2017-09-01,A128478847A,100.0,Garments,Australia
 2017-10-01,A128478847A,101.4,Garments,Australia
 2017-11-01,A128478847A,100.6,Garments,Australia
@@ -857,6 +893,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128478847A,100.4,Garments,Australia
 2023-01-01,A128478847A,95.4,Garments,Australia
 2023-02-01,A128478847A,97.9,Garments,Australia
+2023-03-01,A128478847A,98.1,Garments,Australia
+2023-04-01,A128478847A,101.9,Garments,Australia
+2023-05-01,A128478847A,98.6,Garments,Australia
 2017-09-01,A128485865L,100.0,Housing,Australia
 2017-10-01,A128485865L,99.9,Housing,Australia
 2017-11-01,A128485865L,100.2,Housing,Australia
@@ -920,9 +959,12 @@ Date,Series ID,CPI Value,Item,Location
 2022-09-01,A128485865L,114.1,Housing,Australia
 2022-10-01,A128485865L,115.9,Housing,Australia
 2022-11-01,A128485865L,116.0,Housing,Australia
-2022-12-01,A128485865L,117.2,Housing,Australia
-2023-01-01,A128485865L,117.8,Housing,Australia
-2023-02-01,A128485865L,118.1,Housing,Australia
+2022-12-01,A128485865L,117.0,Housing,Australia
+2023-01-01,A128485865L,117.6,Housing,Australia
+2023-02-01,A128485865L,117.9,Housing,Australia
+2023-03-01,A128485865L,118.9,Housing,Australia
+2023-04-01,A128485865L,119.3,Housing,Australia
+2023-05-01,A128485865L,119.7,Housing,Australia
 2017-09-01,A128473449C,100.0,Rents,Australia
 2017-10-01,A128473449C,100.0,Rents,Australia
 2017-11-01,A128473449C,100.2,Rents,Australia
@@ -989,6 +1031,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128473449C,104.0,Rents,Australia
 2023-01-01,A128473449C,104.7,Rents,Australia
 2023-02-01,A128473449C,105.4,Rents,Australia
+2023-03-01,A128473449C,105.9,Rents,Australia
+2023-04-01,A128473449C,106.7,Rents,Australia
+2023-05-01,A128473449C,107.6,Rents,Australia
 2017-09-01,A128475405L,100.0,New dwelling purchase by owner-occupiers,Australia
 2017-10-01,A128475405L,99.6,New dwelling purchase by owner-occupiers,Australia
 2017-11-01,A128475405L,100.1,New dwelling purchase by owner-occupiers,Australia
@@ -1055,6 +1100,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128475405L,131.9,New dwelling purchase by owner-occupiers,Australia
 2023-01-01,A128475405L,132.5,New dwelling purchase by owner-occupiers,Australia
 2023-02-01,A128475405L,132.7,New dwelling purchase by owner-occupiers,Australia
+2023-03-01,A128475405L,133.0,New dwelling purchase by owner-occupiers,Australia
+2023-04-01,A128475405L,133.6,New dwelling purchase by owner-occupiers,Australia
+2023-05-01,A128475405L,134.2,New dwelling purchase by owner-occupiers,Australia
 2017-09-01,A128474303F,100.0,Electricity,Australia
 2017-10-01,A128474303F,100.0,Electricity,Australia
 2017-11-01,A128474303F,100.0,Electricity,Australia
@@ -1116,11 +1164,14 @@ Date,Series ID,CPI Value,Item,Location
 2022-07-01,A128474303F,95.7,Electricity,Australia
 2022-08-01,A128474303F,97.0,Electricity,Australia
 2022-09-01,A128474303F,92.8,Electricity,Australia
-2022-10-01,A128474303F,102.7,Electricity,Australia
-2022-11-01,A128474303F,102.4,Electricity,Australia
-2022-12-01,A128474303F,108.1,Electricity,Australia
-2023-01-01,A128474303F,108.6,Electricity,Australia
-2023-02-01,A128474303F,108.6,Electricity,Australia
+2022-10-01,A128474303F,102.8,Electricity,Australia
+2022-11-01,A128474303F,102.6,Electricity,Australia
+2022-12-01,A128474303F,106.7,Electricity,Australia
+2023-01-01,A128474303F,107.2,Electricity,Australia
+2023-02-01,A128474303F,107.2,Electricity,Australia
+2023-03-01,A128474303F,107.1,Electricity,Australia
+2023-04-01,A128474303F,106.1,Electricity,Australia
+2023-05-01,A128474303F,105.3,Electricity,Australia
 2017-09-01,A128485881L,100.0,"Furnishings, household equipment and services",Australia
 2017-10-01,A128485881L,98.9,"Furnishings, household equipment and services",Australia
 2017-11-01,A128485881L,99.1,"Furnishings, household equipment and services",Australia
@@ -1187,6 +1238,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128485881L,116.9,"Furnishings, household equipment and services",Australia
 2023-01-01,A128485881L,115.0,"Furnishings, household equipment and services",Australia
 2023-02-01,A128485881L,115.8,"Furnishings, household equipment and services",Australia
+2023-03-01,A128485881L,116.1,"Furnishings, household equipment and services",Australia
+2023-04-01,A128485881L,117.8,"Furnishings, household equipment and services",Australia
+2023-05-01,A128485881L,118.2,"Furnishings, household equipment and services",Australia
 2017-09-01,A128473315W,100.0,Health,Australia
 2017-10-01,A128473315W,100.0,Health,Australia
 2017-11-01,A128473315W,100.0,Health,Australia
@@ -1253,6 +1307,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128473315W,117.2,Health,Australia
 2023-01-01,A128473315W,118.1,Health,Australia
 2023-02-01,A128473315W,118.1,Health,Australia
+2023-03-01,A128473315W,121.2,Health,Australia
+2023-04-01,A128473315W,121.3,Health,Australia
+2023-05-01,A128473315W,121.3,Health,Australia
 2017-09-01,A128482435J,100.0,Transport,Australia
 2017-10-01,A128482435J,101.1,Transport,Australia
 2017-11-01,A128482435J,102.3,Transport,Australia
@@ -1319,6 +1376,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128482435J,124.5,Transport,Australia
 2023-01-01,A128482435J,124.9,Transport,Australia
 2023-02-01,A128482435J,127.2,Transport,Australia
+2023-03-01,A128482435J,126.9,Transport,Australia
+2023-04-01,A128482435J,128.1,Transport,Australia
+2023-05-01,A128482435J,125.6,Transport,Australia
 2017-09-01,A128484685K,100.0,Automotive fuel,Australia
 2017-10-01,A128484685K,103.9,Automotive fuel,Australia
 2017-11-01,A128484685K,108.8,Automotive fuel,Australia
@@ -1385,6 +1445,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128484685K,142.3,Automotive fuel,Australia
 2023-01-01,A128484685K,143.9,Automotive fuel,Australia
 2023-02-01,A128484685K,149.8,Automotive fuel,Australia
+2023-03-01,A128484685K,146.5,Automotive fuel,Australia
+2023-04-01,A128484685K,150.7,Automotive fuel,Australia
+2023-05-01,A128484685K,140.6,Automotive fuel,Australia
 2017-09-01,A128475063X,100.0,Communication,Australia
 2017-10-01,A128475063X,98.7,Communication,Australia
 2017-11-01,A128475063X,99.0,Communication,Australia
@@ -1451,6 +1514,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128475063X,89.1,Communication,Australia
 2023-01-01,A128475063X,89.1,Communication,Australia
 2023-02-01,A128475063X,89.4,Communication,Australia
+2023-03-01,A128475063X,89.4,Communication,Australia
+2023-04-01,A128475063X,88.8,Communication,Australia
+2023-05-01,A128475063X,89.5,Communication,Australia
 2017-09-01,A128478473V,100.0,Recreation and culture,Australia
 2017-10-01,A128478473V,99.9,Recreation and culture,Australia
 2017-11-01,A128478473V,99.1,Recreation and culture,Australia
@@ -1517,6 +1583,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128478473V,118.3,Recreation and culture,Australia
 2023-01-01,A128478473V,114.6,Recreation and culture,Australia
 2023-02-01,A128478473V,107.7,Recreation and culture,Australia
+2023-03-01,A128478473V,108.3,Recreation and culture,Australia
+2023-04-01,A128478473V,111.3,Recreation and culture,Australia
+2023-05-01,A128478473V,106.4,Recreation and culture,Australia
 2017-09-01,A128475797K,100.0,Holiday travel and accommodation,Australia
 2017-10-01,A128475797K,100.2,Holiday travel and accommodation,Australia
 2017-11-01,A128475797K,98.4,Holiday travel and accommodation,Australia
@@ -1583,6 +1652,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128475797K,142.4,Holiday travel and accommodation,Australia
 2023-01-01,A128475797K,132.2,Holiday travel and accommodation,Australia
 2023-02-01,A128475797K,112.9,Holiday travel and accommodation,Australia
+2023-03-01,A128475797K,114.6,Holiday travel and accommodation,Australia
+2023-04-01,A128475797K,122.8,Holiday travel and accommodation,Australia
+2023-05-01,A128475797K,108.9,Holiday travel and accommodation,Australia
 2017-09-01,A128473361K,100.0,Education,Australia
 2017-10-01,A128473361K,100.0,Education,Australia
 2017-11-01,A128473361K,100.0,Education,Australia
@@ -1649,6 +1721,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128473361K,113.6,Education,Australia
 2023-01-01,A128473361K,113.6,Education,Australia
 2023-02-01,A128473361K,119.8,Education,Australia
+2023-03-01,A128473361K,119.7,Education,Australia
+2023-04-01,A128473361K,119.7,Education,Australia
+2023-05-01,A128473361K,119.7,Education,Australia
 2017-09-01,A128477043A,100.0,Insurance and financial services,Australia
 2017-10-01,A128477043A,99.7,Insurance and financial services,Australia
 2017-11-01,A128477043A,100.1,Insurance and financial services,Australia
@@ -1715,6 +1790,9 @@ Date,Series ID,CPI Value,Item,Location
 2022-12-01,A128477043A,111.2,Insurance and financial services,Australia
 2023-01-01,A128477043A,111.2,Insurance and financial services,Australia
 2023-02-01,A128477043A,112.0,Insurance and financial services,Australia
+2023-03-01,A128477043A,113.4,Insurance and financial services,Australia
+2023-04-01,A128477043A,113.4,Insurance and financial services,Australia
+2023-05-01,A128477043A,114.7,Insurance and financial services,Australia
 2017-09-01,A128473239F,100.0,All groups CPI excluding 'volatile items',Australia
 2017-10-01,A128473239F,100.0,All groups CPI excluding 'volatile items',Australia
 2017-11-01,A128473239F,100.0,All groups CPI excluding 'volatile items',Australia
@@ -1740,9 +1818,9 @@ Date,Series ID,CPI Value,Item,Location
 2019-07-01,A128473239F,103.2,All groups CPI excluding 'volatile items',Australia
 2019-08-01,A128473239F,102.9,All groups CPI excluding 'volatile items',Australia
 2019-09-01,A128473239F,103.3,All groups CPI excluding 'volatile items',Australia
-2019-10-01,A128473239F,103.7,All groups CPI excluding 'volatile items',Australia
-2019-11-01,A128473239F,103.4,All groups CPI excluding 'volatile items',Australia
-2019-12-01,A128473239F,104.3,All groups CPI excluding 'volatile items',Australia
+2019-10-01,A128473239F,103.6,All groups CPI excluding 'volatile items',Australia
+2019-11-01,A128473239F,103.3,All groups CPI excluding 'volatile items',Australia
+2019-12-01,A128473239F,104.2,All groups CPI excluding 'volatile items',Australia
 2020-01-01,A128473239F,104.3,All groups CPI excluding 'volatile items',Australia
 2020-02-01,A128473239F,103.6,All groups CPI excluding 'volatile items',Australia
 2020-03-01,A128473239F,104.4,All groups CPI excluding 'volatile items',Australia
@@ -1750,7 +1828,7 @@ Date,Series ID,CPI Value,Item,Location
 2020-05-01,A128473239F,103.0,All groups CPI excluding 'volatile items',Australia
 2020-06-01,A128473239F,102.6,All groups CPI excluding 'volatile items',Australia
 2020-07-01,A128473239F,104.4,All groups CPI excluding 'volatile items',Australia
-2020-08-01,A128473239F,104.4,All groups CPI excluding 'volatile items',Australia
+2020-08-01,A128473239F,104.3,All groups CPI excluding 'volatile items',Australia
 2020-09-01,A128473239F,104.1,All groups CPI excluding 'volatile items',Australia
 2020-10-01,A128473239F,104.8,All groups CPI excluding 'volatile items',Australia
 2020-11-01,A128473239F,105.1,All groups CPI excluding 'volatile items',Australia
@@ -1765,19 +1843,22 @@ Date,Series ID,CPI Value,Item,Location
 2021-08-01,A128473239F,106.2,All groups CPI excluding 'volatile items',Australia
 2021-09-01,A128473239F,106.6,All groups CPI excluding 'volatile items',Australia
 2021-10-01,A128473239F,107.0,All groups CPI excluding 'volatile items',Australia
-2021-11-01,A128473239F,107.3,All groups CPI excluding 'volatile items',Australia
-2021-12-01,A128473239F,108.0,All groups CPI excluding 'volatile items',Australia
-2022-01-01,A128473239F,108.4,All groups CPI excluding 'volatile items',Australia
-2022-02-01,A128473239F,109.0,All groups CPI excluding 'volatile items',Australia
-2022-03-01,A128473239F,109.6,All groups CPI excluding 'volatile items',Australia
-2022-04-01,A128473239F,110.6,All groups CPI excluding 'volatile items',Australia
-2022-05-01,A128473239F,110.9,All groups CPI excluding 'volatile items',Australia
-2022-06-01,A128473239F,111.4,All groups CPI excluding 'volatile items',Australia
-2022-07-01,A128473239F,112.2,All groups CPI excluding 'volatile items',Australia
-2022-08-01,A128473239F,113.0,All groups CPI excluding 'volatile items',Australia
-2022-09-01,A128473239F,113.8,All groups CPI excluding 'volatile items',Australia
-2022-10-01,A128473239F,114.1,All groups CPI excluding 'volatile items',Australia
-2022-11-01,A128473239F,114.8,All groups CPI excluding 'volatile items',Australia
+2021-11-01,A128473239F,107.4,All groups CPI excluding 'volatile items',Australia
+2021-12-01,A128473239F,108.1,All groups CPI excluding 'volatile items',Australia
+2022-01-01,A128473239F,108.5,All groups CPI excluding 'volatile items',Australia
+2022-02-01,A128473239F,109.1,All groups CPI excluding 'volatile items',Australia
+2022-03-01,A128473239F,109.8,All groups CPI excluding 'volatile items',Australia
+2022-04-01,A128473239F,110.7,All groups CPI excluding 'volatile items',Australia
+2022-05-01,A128473239F,111.1,All groups CPI excluding 'volatile items',Australia
+2022-06-01,A128473239F,111.6,All groups CPI excluding 'volatile items',Australia
+2022-07-01,A128473239F,112.4,All groups CPI excluding 'volatile items',Australia
+2022-08-01,A128473239F,113.1,All groups CPI excluding 'volatile items',Australia
+2022-09-01,A128473239F,113.9,All groups CPI excluding 'volatile items',Australia
+2022-10-01,A128473239F,114.2,All groups CPI excluding 'volatile items',Australia
+2022-11-01,A128473239F,114.9,All groups CPI excluding 'volatile items',Australia
 2022-12-01,A128473239F,117.0,All groups CPI excluding 'volatile items',Australia
-2023-01-01,A128473239F,116.5,All groups CPI excluding 'volatile items',Australia
+2023-01-01,A128473239F,116.6,All groups CPI excluding 'volatile items',Australia
 2023-02-01,A128473239F,116.5,All groups CPI excluding 'volatile items',Australia
+2023-03-01,A128473239F,117.4,All groups CPI excluding 'volatile items',Australia
+2023-04-01,A128473239F,118.2,All groups CPI excluding 'volatile items',Australia
+2023-05-01,A128473239F,117.9,All groups CPI excluding 'volatile items',Australia

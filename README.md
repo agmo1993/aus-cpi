@@ -93,6 +93,13 @@ python inserts.py
 These should fill the database tables, as well as the dependent materialized views with the data required to run
 the application. 
 
+To update / add new data
+
+```
+DATE='<enter date of new data in YYYY-MM-DD format>' python update_monthly.py
+DATE='<enter date of new data in YYYY-MM-DD format>' python update_quarterly.py
+```
+
 2. Start the frontend server
 
 ```

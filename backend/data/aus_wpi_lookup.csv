@@ -1,0 +1,69 @@
+Location,Sector,Industry,Series ID
+Australia,Private,All industries,A2603039T
+Australia,Public,All industries,A2603989W
+Australia,Private and Public,All industries,A2603609J
+New South Wales,Private and Public,All industries,A2599619A
+Victoria,Private and Public,All industries,A2608929K
+Queensland,Private and Public,All industries,A2600949X
+South Australia,Private and Public,All industries,A2610259A
+Western Australia,Private and Public,All industries,A2607599L
+Tasmania,Private and Public,All industries,A2602279K
+Northern Territory,Private and Public,All industries,A2606269C
+Australian Capital Territory,Private and Public,All industries,A2604939T
+New South Wales,Private,All industries,A2599049K
+Victoria,Private,All industries,A2608359V
+Queensland,Private,All industries,A2600379J
+South Australia,Private,All industries,A2609689C
+Western Australia,Private,All industries,A2607029K
+Tasmania,Private,All industries,A2601709F
+Northern Territory,Private,All industries,A2605699K
+Australian Capital Territory,Private,All industries,A2604369A
+New South Wales,Public,All industries,A2599999R
+Victoria,Public,All industries,A2609309R
+Queensland,Public,All industries,A2601329C
+South Australia,Public,All industries,A2610639C
+Western Australia,Public,All industries,A2607979R
+Tasmania,Public,All industries,A2602659L
+Northern Territory,Public,All industries,A2606649F
+Australian Capital Territory,Public,All industries,A2605319W
+Australia,Private,Mining,A2602939F
+Australia,Private,Manufacturing,A2602959R
+Australia,Private,"Electricity, gas, water and waste services",A2602919W
+Australia,Private,Construction,A2603019J
+Australia,Private,Wholesale trade,A2602999J
+Australia,Private,Retail trade,A2602989C
+Australia,Private,Accommodation and food services,A2602869K
+Australia,Private,"Transport, postal and warehousing",A2602899X
+Australia,Private,Information media and telecommunications,A2602949K
+Australia,Private,Financial and insurance services,A2602889V
+Australia,Private,"Rental, hiring and real estate services",A2603029L
+Australia,Private,"Professional, scientific and technical services",A2602909T
+Australia,Private,Administrative and support services,A2602969V
+Australia,Private,Public administration and safety,A2602979X
+Australia,Private,Education and training,A2602879R
+Australia,Private,Health care and social assistance,A2602929A
+Australia,Private,Arts and recreation services,A2602859F
+Australia,Private,Other services,A2603009C
+Australia,Public,"Electricity, gas, water and waste services",A2603869C
+Australia,Public,"Professional, scientific and technical services",A2603859X
+Australia,Public,Public administration and safety,A2603929V
+Australia,Public,Education and training,A2603829K
+Australia,Public,Health care and social assistance,A2603879J
+Australia,Private and Public,Mining,A2603509X
+Australia,Private and Public,Manufacturing,A2603529J
+Australia,Private and Public,"Electricity, gas, water and waste services",A2603489A
+Australia,Private and Public,Construction,A2603589K
+Australia,Private and Public,Wholesale trade,A2603569A
+Australia,Private and Public,Retail trade,A2603559W
+Australia,Private and Public,Accommodation and food services,A2603439C
+Australia,Private and Public,"Transport, postal and warehousing",A2603469T
+Australia,Private and Public,Information media and telecommunications,A2603519C
+Australia,Private and Public,Financial and insurance services,A2603459L
+Australia,Private and Public,"Rental, hiring and real estate services",A2603599R
+Australia,Private and Public,"Professional, scientific and technical services",A2603479W
+Australia,Private and Public,Administrative and support services,A2603539L
+Australia,Private and Public,Public administration and safety,A2603549T
+Australia,Private and Public,Education and training,A2603449J
+Australia,Private and Public,Health care and social assistance,A2603499F
+Australia,Private and Public,Arts and recreation services,A2603429X
+Australia,Private and Public,Other services,A2603579F
