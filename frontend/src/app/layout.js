@@ -11,6 +11,13 @@ export const metadata = {
   description: `AusCPI is a powerful dashboard that offers users a range of tools to
   analyze and visualize consumer price index (CPI) data from the
   Australian Bureau of Statistics.`,
+  openGraph : {
+    title: 'Aus-CPI',
+    images: ['https://aus-cpi.vercel.app/_next/image?url=%2Fimages%2Flogo.png&w=384&q=75'],
+    description: `AusCPI is a powerful dashboard that offers users a range of tools to
+    analyze and visualize consumer price index (CPI) data from the
+    Australian Bureau of Statistics.`, 
+  },
   icons: {
     icon: {
       url: "/favicon.png",
