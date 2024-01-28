@@ -10,12 +10,14 @@ logging.basicConfig(
     format="[%(asctime)s] [%(levelname)s] %(message)s",
 )
 
+
 def main():
     logging.info("Starting program to insert cpi data in table")
     logging.info("Reading data file aus_cpi_timeseries.csv")
 
     # read the first row of the CSV file
-    header = pd.read_csv('./data/aus_cpi_timeseries_monthly.csv', nrows=1).columns
+    header = pd.read_csv(
+        './data/aus_cpi_timeseries_monthly.csv', nrows=1).columns
     # Read the CSV file into a pandas DataFrame
     df = pd.read_csv('./data/aus_cpi_timeseries_monthly.csv', names=header)
 
@@ -24,18 +26,21 @@ def main():
         host=os.environ['DB_HOST'],
         port=5432,
         database="auscpidb",
-        user= os.environ['DB_USER'],
-        password=os.environ['DB_PASS']
+        user=os.environ['DB_USER'],
+        password=os.environ['DB_PASS'],
+        sslmode='require',
+        options='endpoint=ep-shiny-fog-840646'
     )
 
     df = df[df['Date'] == os.environ['DATE']]
 
     logging.info("Inserting rows into table cpi_index")
-
+    
+    cur = conn.cursor()
     # Insert the rows into the table
     for index, row in df.iterrows():
         try:
-            cur = conn.cursor()
+
             cur.execute('''
                 INSERT INTO auscpi.cpi_index_monthly (publish_date, seriesid, cpi_value, item, city)
                 VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING;
@@ -54,6 +59,7 @@ def main():
     cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_yearly_base2017;")
 
     conn.close()
+
 
 if __name__ == "__main__":
     main()

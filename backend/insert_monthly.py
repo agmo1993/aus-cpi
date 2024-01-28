@@ -10,6 +10,7 @@ logging.basicConfig(
     format="[%(asctime)s] [%(levelname)s] %(message)s",
 )
 
+
 def main():
     logging.info("Starting program to insert cpi data in table")
     logging.info("Reading data file aus_cpi_timeseries.csv")
@@ -19,18 +20,20 @@ def main():
         host=os.getenv('DB_HOST'),
         port=5432,
         database="auscpidb",
-        user= os.getenv('DB_USER'),
-        password=os.getenv('DB_PASS')
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASS'),
+        sslmode='require',
+        options='endpoint=ep-shiny-fog-840646'
     )
 
     # Read the CSV file into a pandas DataFrame
     df = pd.read_csv('./data/aus_cpi_timeseries_monthly.csv')
-
+    cur = conn.cursor()
     logging.info("Inserting rows into table cpi_index_monthly")
     # Insert the rows into the table
     for index, row in df.iterrows():
         try:
-            cur = conn.cursor()
+
             cur.execute('''
                 INSERT INTO auscpi.cpi_index_monthly (publish_date, seriesid, cpi_value, item, city)
                 VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING;
@@ -47,6 +50,7 @@ def main():
     cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_yearly_base2017;")
 
     conn.close()
+
 
 if __name__ == "__main__":
     main()

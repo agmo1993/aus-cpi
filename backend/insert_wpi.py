@@ -10,38 +10,35 @@ logging.basicConfig(
     format="[%(asctime)s] [%(levelname)s] %(message)s",
 )
 
-
 def main():
     logging.info("Starting program to insert cpi data in table")
-    logging.info("Reading data file aus_cpi_timeseries.csv")
+    logging.info("Reading data file aus_wpi_timeseries.csv")
+
+    filename = './data/aus_wpi_timeseries.csv'
 
     # read the first row of the CSV file
-    header = pd.read_csv('./data/aus_cpi_timeseries.csv', nrows=1).columns
+    header = pd.read_csv(filename, nrows=1).columns
     # Read the CSV file into a pandas DataFrame
-    df = pd.read_csv('./data/aus_cpi_timeseries.csv', names=header)
+    df = pd.read_csv(filename, skiprows=5564,names=header)
 
     # Connect to a PostgreSQL database
     conn = psycopg2.connect(
         host=os.environ['DB_HOST'],
         port=5432,
         database="auscpidb",
-        user=os.environ['DB_USER'],
-        password=os.environ['DB_PASS'],
-        sslmode='require',
-        options='endpoint=ep-shiny-fog-840646'
+        user= os.environ['DB_USER'],
+        password=os.environ['DB_PASS']
     )
 
-    df = df[df['Date'] == os.environ['DATE']]
-
-    logging.info("Inserting rows into table cpi_index")
-    cur = conn.cursor()
+    logging.info("Inserting rows into table wpi_index")
     # Insert the rows into the table
     for index, row in df.iterrows():
         try:
+            cur = conn.cursor()
             cur.execute('''
-                INSERT INTO auscpi.cpi_index (publish_date, seriesid, cpi_value, item, city)
+                INSERT INTO auscpi.wpi_index (publish_date, seriesid, wpi_value, item, city)
                 VALUES (%s, %s, %s, %s, %s) ON CONFLICT DO NOTHING;
-            ''', (row['Date'], row['Series ID'], row['CPI Value'], row['Item'], row['Location']))
+            ''', (row['Date'], row['Series ID'], row['WPI Value'], f"{row['Industry']}-{row['Sector']}", row['Location']))
             conn.commit()
             logging.info(f"Inserted {row['Series ID']} for {row['Date']}")
         except Exception as e:
@@ -50,13 +47,12 @@ def main():
 
     logging.info("Refreshing Materialized Views")
     # refresh materialized views
-    cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_quarterly;")
-    cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_yearly;")
-    cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_monthly;")
-    cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_yearly_base2017;")
+    # cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_quarterly;")
+    # cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_yearly;")
+    # cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_monthly;")
+    # cur.execute("REFRESH MATERIALIZED VIEW auscpi.cpi_pct_yearly_base2017;")
 
     conn.close()
-
 
 if __name__ == "__main__":
     main()

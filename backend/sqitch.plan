@@ -6,3 +6,4 @@
 02-create-percentage-views 2023-02-23T06:37:41Z Abdul Mohammad <mohammada7r@WS253596> # creation of materlized views for percentage change
 03-create-lookup-table 2023-03-17T06:06:54Z Abdul Mohammad <mohammada7r@WS253596> # Lookup table for seriesid to category name
 04-add-constraits 2023-04-04T10:42:35Z Abdul Mohammad <mohammada7r@WS253596> # Adding constrain on lookup table and foreign keys
+05-add-wpi 2023-07-22T03:44:54Z Abdul Mohammad <mohammad.abdul@ABC-F6T3WNYXW5> # added wage price index to the database
