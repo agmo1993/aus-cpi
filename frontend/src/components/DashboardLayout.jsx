@@ -12,6 +12,7 @@ export default function DashboardLayout({children}) {
           <Link href="/city" className={styles.navItem}>City</Link>
           <Link href="/category" className={styles.navItem}>Category</Link>
           <Link href="/chart" className={styles.navItem}>Chart</Link>
+          <Link href="/chat" className={styles.navItem}>Chat</Link>
           <Link href="/about" className={styles.navItem}>About</Link>
         </nav>
       </aside>

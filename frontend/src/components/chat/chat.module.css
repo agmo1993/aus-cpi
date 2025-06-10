@@ -1,0 +1,36 @@
+.chatWindow {
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+
+.history {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.messageUser {
+  align-self: flex-end;
+  background: #4f46e5;
+  color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+.messageBot {
+  align-self: flex-start;
+  background: #e5e7eb;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+.inputArea {
+  display: flex;
+  gap: 0.5rem;
+}
