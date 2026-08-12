@@ -11,6 +11,8 @@ export {
   getMonthlyCPIByDate,
   getQuarterlyCPIByDate,
   getMultipleTimeSeries,
+  HEADLINE_ITEM,
+  NATIONAL_CITY,
 } from './cpi';
 
 // Lookup queries
@@ -27,6 +29,7 @@ export {
 export {
   getTopMonthlyIncreases,
   getTopYearlyIncreases,
+  getAnnualChangeByItem,
   getPercentageChanges,
   getSeriesStatistics,
 } from './stats';

@@ -49,6 +49,13 @@ export interface TopMover {
 export interface CorrelationData {
   itemY: string;
   itemX: string;
+  /**
+   * Positions of the two series in the request. Item names repeat across
+   * cities, so these are the only unambiguous handle on which series a pair
+   * refers to.
+   */
+  indexY: number;
+  indexX: number;
   corr: number; // Pearson correlation coefficient (-1 to 1)
 }
 

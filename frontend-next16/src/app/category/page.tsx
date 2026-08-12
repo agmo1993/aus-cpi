@@ -3,7 +3,7 @@
  * Plot and compare CPI by Category
  */
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import ChartSelector from "@/components/ui/ChartSelector";
 import { getMonthlyCategories } from "@/lib/queries/lookup";
 import { getMonthlyTimeSeries } from "@/lib/queries/cpi";
@@ -12,7 +12,9 @@ import { getMonthlyTimeSeries } from "@/lib/queries/cpi";
 export const dynamic = 'force-dynamic';
 
 export default async function Category() {
-  // Fetch monthly categories
+  // Every series across all nine locations. ChartSelector labels each option
+  // '<city> - <item>', so the eight capital cities and the national weighted
+  // average stay distinguishable in the list.
   const monthlyCategories = await getMonthlyCategories();
 
   // Fetch first category's data
@@ -22,12 +24,16 @@ export default async function Category() {
 
   return (
     <div className="space-y-6">
+      <div className="space-y-2">
+        <h1 className="text-3xl font-semibold tracking-tight">Categories</h1>
+        <p className="max-w-[65ch] text-muted-foreground">
+          Plot and compare any published CPI series. Options are labelled
+          &lsquo;city - item&rsquo;, so the eight capital cities and the national
+          weighted average can be compared against each other.
+        </p>
+      </div>
+
       <Card>
-        <CardHeader className="bg-secondary text-secondary-foreground">
-          <CardTitle className="text-center text-xl font-bold">
-            Plot and compare CPI by Category
-          </CardTitle>
-        </CardHeader>
         <CardContent className="p-6">
           <ChartSelector
             categories={monthlyCategories}

@@ -15,10 +15,13 @@ export async function getMonthlyTimeSeries(
   seriesId: string
 ): Promise<TimeSeriesDataPoint[]> {
   const result = await query<TimeSeriesDataPoint>(
-    `SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, item
-     FROM auscpi.cpi_index_monthly
-     WHERE seriesid = $1
-     ORDER BY publish_date ASC`,
+    // Ordered on t.publish_date, not the output column of the same name:
+    // ORDER BY resolves output aliases first, so an unqualified reference
+    // would sort the 'mm-yyyy' text and put January 2018 before September 2017.
+    `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item
+     FROM auscpi.cpi_index_monthly t
+     WHERE t.seriesid = $1
+     ORDER BY t.publish_date ASC`,
     [seriesId]
   );
 
@@ -34,10 +37,10 @@ export async function getQuarterlyTimeSeries(
   seriesId: string
 ): Promise<TimeSeriesDataPoint[]> {
   const result = await query<TimeSeriesDataPoint>(
-    `SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, item
-     FROM auscpi.cpi_index
-     WHERE seriesid = $1
-     ORDER BY publish_date ASC`,
+    `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item
+     FROM auscpi.cpi_index t
+     WHERE t.seriesid = $1
+     ORDER BY t.publish_date ASC`,
     [seriesId]
   );
 
@@ -45,7 +48,18 @@ export async function getQuarterlyTimeSeries(
 }
 
 /**
- * Get the main CPI index series (A128478317T - All groups CPI, Australia)
+ * The headline series: All groups CPI for the weighted average of eight
+ * capital cities, which the ABS publishes under the location 'Australia'.
+ *
+ * Resolved by item and city rather than by series ID. The ABS reissued the
+ * monthly series IDs when it moved to the complete monthly CPI, and the
+ * previously hardcoded A128478317T no longer exists in any published table.
+ */
+export const HEADLINE_ITEM = 'All groups CPI';
+export const NATIONAL_CITY = 'Australia';
+
+/**
+ * Get the main CPI index series (All groups CPI, Australia)
  * @returns Array of monthly CPI values
  */
 export async function getMainCPISeries(): Promise<
@@ -54,9 +68,9 @@ export async function getMainCPISeries(): Promise<
   const result = await query<{ date: string; cpi: string }>(
     `SELECT TO_CHAR(publish_date, 'mm-yyyy') as date, cpi_value as cpi
      FROM auscpi.cpi_index_monthly
-     WHERE seriesid = $1
+     WHERE item = $1 AND city = $2
      ORDER BY publish_date ASC`,
-    ['A128478317T']
+    [HEADLINE_ITEM, NATIONAL_CITY]
   );
 
   return result.rows;
@@ -116,10 +130,10 @@ export async function getMultipleTimeSeries(
   const results = await Promise.all(
     seriesIds.map(async (seriesId) => {
       const result = await query<TimeSeriesDataPoint>(
-        `SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, item
-         FROM ${table}
-         WHERE seriesid = $1
-         ORDER BY publish_date ASC`,
+        `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item
+         FROM ${table} t
+         WHERE t.seriesid = $1
+         ORDER BY t.publish_date ASC`,
         [seriesId]
       );
       return result.rows;

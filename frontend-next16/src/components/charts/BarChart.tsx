@@ -9,7 +9,6 @@ import React from "react";
 import { Bar, BarChart as RechartsBarChart, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
-import { chartColorArray } from "@/lib/colors";
 import type { BarChartProps } from "@/types";
 
 const BarChart: React.FC<BarChartProps> = ({
@@ -67,9 +66,22 @@ const BarChart: React.FC<BarChartProps> = ({
                 />
               }
             />
-            <Bar dataKey="correlation" radius={[4, 4, 0, 0]}>
+            {/*
+              Correlation runs -1 to 1 around a meaningful zero, so the bars
+              carry a diverging encoding: one hue per direction. Coloring them
+              by their position in the list instead would tie color to rank,
+              which repaints every bar as soon as the filter changes.
+            */}
+            <Bar dataKey="correlation" radius={[4, 4, 0, 0]} isAnimationActive={false}>
               {chartData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={chartColorArray[index % chartColorArray.length]} />
+                <Cell
+                  key={`cell-${index}`}
+                  fill={
+                    Number(entry.correlation) < 0
+                      ? "hsl(var(--chart-3))"
+                      : "hsl(var(--chart-1))"
+                  }
+                />
               ))}
             </Bar>
           </RechartsBarChart>

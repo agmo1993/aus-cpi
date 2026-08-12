@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useEffect, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "@/components/ui/command";
@@ -14,9 +14,14 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Check, ChevronsUpDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import MultiLineChart from "@/components/charts/MultiLineChart";
-import BarChart from "@/components/charts/BarChart";
+import CorrelationMatrix from "@/components/charts/CorrelationMatrix";
 import type { TimeSeriesDataPoint, CorrelationData } from "@/types/cpi";
 import type { SeriesLookup } from "@/types/database";
+
+/** The same 'city - item' wording the picker uses, so the two lists match. */
+function seriesLabel(category: SeriesLookup): string {
+  return `${category.city} - ${category.item}`;
+}
 
 interface ChartSelectorProps {
   categories: SeriesLookup[];
@@ -40,6 +45,7 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
   ]);
   const [correlateOn, setCorrelateOn] = useState(false);
   const [correlationData, setCorrelationData] = useState<CorrelationData[]>([]);
+  const [correlationError, setCorrelationError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // Determine API endpoint based on data frequency
@@ -54,17 +60,51 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
     return response.json();
   };
 
-  // Fetch correlation data
-  const fetchCorrelation = async (data: TimeSeriesDataPoint[][]): Promise<CorrelationData[]> => {
+  /**
+   * Fetch correlation data.
+   *
+   * The route replies with a `{ data, categories }` envelope, not a bare
+   * array. Treating the envelope as the array left `.length` undefined, so the
+   * render guard below was never true and the correlation view stayed blank
+   * however many times the button was pressed.
+   *
+   * A refusal here is ordinary rather than exceptional: series that overlap for
+   * under a year cannot be correlated, and the route says so in `error`. That
+   * message is worth showing, so it is returned rather than thrown.
+   */
+  const fetchCorrelation = async (
+    data: TimeSeriesDataPoint[][]
+  ): Promise<{ pairs: CorrelationData[]; error: string | null }> => {
     const response = await fetch("/api/correlate", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+
+    const body = await response.json().catch(() => null);
+
     if (!response.ok) {
-      throw new Error("Failed to fetch correlation data");
+      return {
+        pairs: [],
+        error: body?.error ?? "These series could not be correlated.",
+      };
     }
-    return response.json();
+
+    return { pairs: body?.data ?? [], error: null };
+  };
+
+  /** Recompute correlations for the current selection, or clear them. */
+  const refreshCorrelation = async (nextChartData: TimeSeriesDataPoint[][]) => {
+    if (nextChartData.length < 2) {
+      setCorrelateOn(false);
+      setCorrelationData([]);
+      setCorrelationError(null);
+      return;
+    }
+
+    const { pairs, error } = await fetchCorrelation(nextChartData);
+    setCorrelationData(pairs);
+    setCorrelationError(error);
   };
 
   // Handle category selection
@@ -74,23 +114,21 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
     );
 
     if (isAlreadySelected) {
-      // Remove category
-      const newSelected = selectedCategories.filter(
-        (c) => c.seriesid !== category.seriesid
+      // Drop the deselected series and its data at the same position.
+      // Truncating chartData to the new length instead removed whichever
+      // series happened to be last, so every series after the deselected one
+      // was plotted under the wrong label.
+      const removedAt = selectedCategories.findIndex(
+        (c) => c.seriesid === category.seriesid
       );
-      const newChartData = chartData.slice(0, newSelected.length);
+      if (removedAt <= 0) return; // the first series is fixed
+
+      const newSelected = selectedCategories.filter((_, i) => i !== removedAt);
+      const newChartData = chartData.filter((_, i) => i !== removedAt);
 
       setSelectedCategories(newSelected);
       setChartData(newChartData);
-
-      // Update correlation if more than 1 series remains
-      if (newSelected.length > 1) {
-        const newCorrelation = await fetchCorrelation(newChartData);
-        setCorrelationData(newCorrelation);
-      } else {
-        setCorrelateOn(false);
-        setCorrelationData([]);
-      }
+      await refreshCorrelation(newChartData);
     } else {
       // Add category
       setIsLoading(true);
@@ -101,12 +139,7 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
 
         setSelectedCategories(newSelected);
         setChartData(newChartData);
-
-        // Fetch correlation if more than 1 series
-        if (newSelected.length > 1) {
-          const newCorrelation = await fetchCorrelation(newChartData);
-          setCorrelationData(newCorrelation);
-        }
+        await refreshCorrelation(newChartData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -124,14 +157,7 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
 
     setSelectedCategories(newSelected);
     setChartData(newChartData);
-
-    if (newSelected.length > 1) {
-      const newCorrelation = await fetchCorrelation(newChartData);
-      setCorrelationData(newCorrelation);
-    } else {
-      setCorrelateOn(false);
-      setCorrelationData([]);
-    }
+    await refreshCorrelation(newChartData);
   };
 
   return (
@@ -210,14 +236,15 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
         </CardContent>
       </Card>
 
-      {/* Correlate Toggle */}
+      {/* Correlate toggle. Correlation needs at least two series to compare. */}
       {selectedCategories.length > 1 && (
         <div className="flex justify-end">
           <Button
             variant={correlateOn ? "default" : "secondary"}
-            onClick={() => setCorrelateOn(!correlateOn)}
+            onClick={() => setCorrelateOn((on) => !on)}
+            aria-pressed={correlateOn}
           >
-            {correlateOn ? "Chart" : "Correlate"}
+            {correlateOn ? "Hide correlation" : "Correlate"}
           </Button>
         </div>
       )}
@@ -232,12 +259,32 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
             chartTitle={null}
             height={550}
             marginTop={30}
+            seriesNames={selectedCategories.map(seriesLabel)}
           />
 
-          {/* Correlation Bar Chart */}
-          {correlateOn && correlationData.length > 0 && (
-            <BarChart data={correlationData} scale="linear" />
-          )}
+          {correlateOn &&
+            (correlationError ? (
+              <Card>
+                <CardContent className="p-6">
+                  <p className="text-sm text-muted-foreground">
+                    {correlationError}
+                  </p>
+                </CardContent>
+              </Card>
+            ) : correlationData.length > 0 ? (
+              <CorrelationMatrix
+                pairs={correlationData}
+                labels={selectedCategories.map(seriesLabel)}
+              />
+            ) : (
+              <Card>
+                <CardContent className="p-6">
+                  <p className="text-sm text-muted-foreground">
+                    Working out the correlations...
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
         </div>
       )}
     </div>
