@@ -4,10 +4,21 @@
  */
 
 import { query } from '../db';
+import { NATIONAL_CITY } from './cpi';
 import { TopMover, TimeSeriesDataPoint } from '@/types';
 
 /**
- * Get top monthly price increases
+ * Top movers are ranked over national series only.
+ *
+ * Every item is published for all nine locations, so ranking across the whole
+ * lookup lets a single volatile item occupy several slots at once (the same
+ * category in Melbourne, Hobart and Brisbane) and puts the national weighted
+ * average in competition with the eight cities it is computed from.
+ */
+const TOP_MOVER_CITY = NATIONAL_CITY;
+
+/**
+ * Get top monthly price increases, nationally
  * @param limit - Number of results to return (default: 5)
  * @returns Array of top monthly movers with percentage changes
  */
@@ -24,9 +35,10 @@ export async function getTopMonthlyIncreases(
     `SELECT item, city, seriesid, percentage_change AS pct_change, current_value
      FROM auscpi.cpi_pct_monthly
      WHERE percentage_change IS NOT NULL
+       AND city = $2
      ORDER BY publish_date DESC, percentage_change DESC
      LIMIT $1`,
-    [limit]
+    [limit, TOP_MOVER_CITY]
   );
 
   // Get timeseries for each top mover
@@ -34,10 +46,13 @@ export async function getTopMonthlyIncreases(
     result.rows.map(async (row) => {
       // Get timeseries for sparkline (last 12 months)
       const timeseriesResult = await query<TimeSeriesDataPoint>(
-        `SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, item
-         FROM auscpi.cpi_index_monthly
-         WHERE seriesid = $1
-         ORDER BY publish_date DESC
+        // t.publish_date, not the output alias of the same name: ordering on
+        // the alias sorts 'mm-yyyy' as text, which returns one December per
+        // year instead of the last twelve months.
+        `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item
+         FROM auscpi.cpi_index_monthly t
+         WHERE t.seriesid = $1
+         ORDER BY t.publish_date DESC
          LIMIT 12`,
         [row.seriesid]
       );
@@ -53,7 +68,7 @@ export async function getTopMonthlyIncreases(
 }
 
 /**
- * Get top yearly price increases
+ * Get top yearly price increases, nationally
  * @param limit - Number of results to return (default: 5)
  * @returns Array of top yearly movers with percentage changes
  */
@@ -70,9 +85,10 @@ export async function getTopYearlyIncreases(
     `SELECT item, city, seriesid, percentage_change, current_value
      FROM auscpi.cpi_pct_yearly_base2017
      WHERE percentage_change IS NOT NULL
+       AND city = $2
      ORDER BY publish_date DESC, percentage_change DESC
      LIMIT $1`,
-    [limit]
+    [limit, TOP_MOVER_CITY]
   );
 
   // Get timeseries for each top mover
@@ -80,10 +96,10 @@ export async function getTopYearlyIncreases(
     result.rows.map(async (row) => {
       // Get timeseries for sparkline (last 24 months for yearly view)
       const timeseriesResult = await query<TimeSeriesDataPoint>(
-        `SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, cpi_value, item
-         FROM auscpi.cpi_index_monthly
-         WHERE seriesid = $1
-         ORDER BY publish_date DESC
+        `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item
+         FROM auscpi.cpi_index_monthly t
+         WHERE t.seriesid = $1
+         ORDER BY t.publish_date DESC
          LIMIT 24`,
         [row.seriesid]
       );
@@ -100,6 +116,39 @@ export async function getTopYearlyIncreases(
   );
 
   return topMovers;
+}
+
+/**
+ * Get the latest annual percentage change for named items in one city
+ * @param items - Item names as published by the ABS, e.g. 'Electricity'
+ * @param city - The city, or 'Australia' for the eight-capital-city average
+ * @returns Map of item name to its most recent annual change
+ */
+export async function getAnnualChangeByItem(
+  items: string[],
+  city: string = 'Australia'
+): Promise<Map<string, { pct_change: string; current_value: string }>> {
+  const result = await query<{
+    item: string;
+    pct_change: string;
+    current_value: string;
+  }>(
+    `SELECT DISTINCT ON (item)
+       item, percentage_change AS pct_change, current_value
+     FROM auscpi.cpi_pct_yearly_base2017
+     WHERE city = $1
+       AND item = ANY($2)
+       AND percentage_change IS NOT NULL
+     ORDER BY item, publish_date DESC`,
+    [city, items]
+  );
+
+  return new Map(
+    result.rows.map((row) => [
+      row.item,
+      { pct_change: row.pct_change, current_value: row.current_value },
+    ])
+  );
 }
 
 /**
@@ -131,10 +180,10 @@ export async function getPercentageChanges(
     pct_change: string;
     item: string;
   }>(
-    `SELECT TO_CHAR(publish_date, 'mm-yyyy') as publish_date, percentage_change AS pct_change, item
-     FROM ${view}
-     WHERE seriesid = $1
-     ORDER BY publish_date ASC`,
+    `SELECT TO_CHAR(v.publish_date, 'mm-yyyy') as publish_date, v.percentage_change AS pct_change, v.item
+     FROM ${view} v
+     WHERE v.seriesid = $1
+     ORDER BY v.publish_date ASC`,
     [seriesId]
   );
 

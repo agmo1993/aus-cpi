@@ -9,6 +9,10 @@ export default {
   ],
   theme: {
   	extend: {
+  		fontFamily: {
+  			sans: ['var(--font-sans)', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+  			mono: ['var(--font-mono)', 'ui-monospace', 'monospace']
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -48,17 +52,14 @@ export default {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
+  			// Five categorical slots, validated as a set against both surfaces.
+  			// A sixth series folds into "Other" rather than getting a new hue.
   			chart: {
   				'1': 'hsl(var(--chart-1))',
   				'2': 'hsl(var(--chart-2))',
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))',
-  				'6': 'hsl(var(--chart-6))',
-  				'7': 'hsl(var(--chart-7))',
-  				'8': 'hsl(var(--chart-8))',
-  				'9': 'hsl(var(--chart-9))',
-  				'10': 'hsl(var(--chart-10))'
+  				'5': 'hsl(var(--chart-5))'
   			},
   			// Custom AusCPI colors
   			success: 'hsl(var(--success))',

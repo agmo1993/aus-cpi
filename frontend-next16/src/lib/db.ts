@@ -1,14 +1,16 @@
 import { Pool, QueryResult, QueryResultRow } from "pg";
 import { env } from "./env";
 
-const connectionString = `postgresql://${env.DB_USER}:${env.DB_PASS}@${env.DB_HOST}:${env.DB_PORT}/auscpidb`;
+const connectionString = `postgresql://${env.DB_USER}:${env.DB_PASS}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME}`;
 
 // Use connection pool for better performance with serverless functions
 const pool = new Pool({
   connectionString,
-  ssl: {
-    rejectUnauthorized: false, // Neon uses valid SSL certs but pooler may have issues
-  },
+  ssl: env.DB_SSL
+    ? {
+        rejectUnauthorized: false, // Neon uses valid SSL certs but pooler may have issues
+      }
+    : false,
   max: 20, // Maximum pool size
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 10000, // Increased timeout for Neon

@@ -8,7 +8,21 @@
 import React, { useRef, useEffect, useState } from "react";
 import * as d3 from "d3";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useColorScheme } from "@/lib/use-color-scheme";
 import type { HeatmapChartProps } from "@/types";
+
+/**
+ * Diverging scale for correlation, which runs -1 to 1 around a meaningful zero:
+ * one hue per direction with a neutral midpoint, so sign reads before magnitude.
+ *
+ * These are literal hex rather than the `--chart-*` custom properties because
+ * d3 interpolates colors by parsing them, and `hsl(var(--x))` is not parseable.
+ * Passing one collapses the whole scale onto a single flat color.
+ */
+const DIVERGING = {
+  light: { negative: "#E0684F", neutral: "#E8EBE9", positive: "#1E7A4E" },
+  dark: { negative: "#E06B52", neutral: "#2A302D", positive: "#3D9E6B" },
+} as const;
 
 const HeatmapChart: React.FC<HeatmapChartProps> = ({
   chartData,
@@ -19,6 +33,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = useState({ width: 500, height: 500 });
+  const scheme = useColorScheme();
 
   // Responsive sizing
   useEffect(() => {
@@ -84,11 +99,15 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({
     // Hide tick lines
     svg.selectAll(".tick line").style("opacity", "0");
 
-    // Color scale
+    // Color scale, anchored at zero rather than at the data's own minimum, so
+    // a cell's hue means the same thing regardless of which items are selected.
+    const ramp = DIVERGING[scheme];
+    const extent = Math.max(Math.abs(Math.min(...corrValues)), Math.abs(Math.max(...corrValues))) || 1;
     const colorScale = d3
       .scaleLinear<string>()
-      .range(["hsl(var(--muted))", "hsl(var(--secondary))"])
-      .domain([Math.min(...corrValues), Math.max(...corrValues)]);
+      .interpolate(d3.interpolateRgb)
+      .range([ramp.negative, ramp.neutral, ramp.positive])
+      .domain([-extent, 0, extent]);
 
     // Draw heatmap cells
     g.selectAll("rect")
@@ -102,7 +121,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({
       .style("fill", (d) => colorScale(d.corr))
       .style("cursor", "pointer")
       .on("mouseover", function (event, d) {
-        d3.select(this).attr("stroke", "hsl(var(--secondary))").attr("stroke-width", 2);
+        d3.select(this).attr("stroke", ramp.positive).attr("stroke-width", 2);
 
         if (tooltipRef.current) {
           d3.select(tooltipRef.current)
@@ -120,7 +139,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({
           d3.select(tooltipRef.current).style("opacity", "0");
         }
       });
-  }, [chartData, dimensions]);
+  }, [chartData, dimensions, scheme]);
 
   return (
     <Card className={className}>
@@ -132,7 +151,7 @@ const HeatmapChart: React.FC<HeatmapChartProps> = ({
           <svg ref={svgRef} width={dimensions.width + 200} height={dimensions.height + 200} />
           <div
             ref={tooltipRef}
-            className="absolute opacity-0 bg-card border-2 border-secondary rounded px-3 py-2 text-sm pointer-events-none z-10"
+            className="absolute opacity-0 bg-card border border-border rounded px-3 py-2 text-sm pointer-events-none z-10"
             style={{ transition: "opacity 0.2s" }}
           />
         </div>

@@ -30,7 +30,7 @@ const LineChart: React.FC<LineChartProps> = ({
   const chartConfig = {
     [yaxis]: {
       label: "CPI Value",
-      color: "hsl(var(--secondary))",
+      color: "hsl(var(--chart-1))",
     },
   };
 
@@ -54,9 +54,17 @@ const LineChart: React.FC<LineChartProps> = ({
               axisLine={false}
               className="text-xs"
             />
+            {/*
+              A CPI index sits near 100 and moves by a point or two, so a
+              zero-based axis squashes the whole series into a flat line. Fit
+              the axis to the data instead: this is an index, not a magnitude,
+              and nothing here is proportional to the distance from zero.
+            */}
             <YAxis
+              domain={["dataMin - 1", "dataMax + 1"]}
               tickLine={false}
               axisLine={false}
+              width={44}
               className="text-xs"
             />
             <ChartTooltip
@@ -67,13 +75,22 @@ const LineChart: React.FC<LineChartProps> = ({
                 />
               }
             />
+            {/*
+              Animation off. Recharts draws the line in by animating
+              stroke-dasharray from "0px <length>", so until the animation runs
+              the path is a zero-length dash and the line is invisible. That
+              leaves the chart blank for anyone whose animations do not run:
+              reduced-motion users, print, and screenshots. The draw-in carries
+              no information, so there is nothing to trade away by dropping it.
+            */}
             <Line
               type="monotone"
               dataKey={yaxis}
-              stroke="hsl(var(--secondary))"
+              stroke="hsl(var(--chart-1))"
               strokeWidth={2}
-              dot={{ fill: "hsl(var(--secondary))", r: 3 }}
+              dot={false}
               activeDot={{ r: 5 }}
+              isAnimationActive={false}
             />
           </RechartsLineChart>
         </ChartContainer>

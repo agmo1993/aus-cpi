@@ -22,27 +22,21 @@ export default function About() {
         <CardContent className="p-6 md:p-8 space-y-8">
           {/* About Section */}
           <section className="space-y-4">
-            <h1 className="text-3xl font-bold tracking-tight">About</h1>
-            <div className="space-y-4 text-muted-foreground leading-relaxed">
+            <h1 className="text-3xl font-semibold tracking-tight">About</h1>
+            <div className="space-y-4 text-muted-foreground leading-relaxed max-w-[65ch]">
               <p>
-                AusCPI is a powerful dashboard that offers users a range of tools to
-                analyze and visualize consumer price index (CPI) data from the
-                Australian Bureau of Statistics. The dashboard is designed to help
-                users monitor and explore trends in the prices of various goods and
-                services, including housing, healthcare, education, transportation,
-                and food. With its user-friendly interface and interactive data
-                visualization tools, AusCPI provides a convenient and accessible
-                platform for anyone interested in understanding the state of the
-                Australian economy. By presenting CPI data in an easy-to-understand
-                format, AusCPI allows users to gain valuable insights and make
-                informed decisions based on the latest economic trends.
+                AusCPI charts the Consumer Price Index published by the Australian
+                Bureau of Statistics. It covers the monthly and quarterly series
+                for every published category, across the eight capital cities and
+                the weighted average of all of them.
               </p>
               <p>
-                Interpreting macroeconomic data from the ABS is daunting. The data
-                shapes economic policies and impacts the cost of living. The CPI
-                measures inflation, affecting spending, investment, and borrowing
-                decisions. A basic understanding of macroeconomic data is necessary
-                to make informed decisions that impact daily lives.
+                The CPI measures how the price of a fixed basket of goods and
+                services changes over time, which is what most people mean by
+                inflation. It feeds into wage negotiations, pension indexation,
+                and the Reserve Bank&apos;s cash rate decisions. The figures here
+                come straight from the ABS release and are updated when a new one
+                lands.
               </p>
             </div>
           </section>
@@ -51,7 +45,7 @@ export default function About() {
 
           {/* Contributors Section */}
           <section className="space-y-6">
-            <h2 className="text-2xl font-bold tracking-tight">Contributors</h2>
+            <h2 className="text-2xl font-semibold tracking-tight">Contributors</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
               {contributors.map((contributor) => (
                 <Card key={contributor.name} className="overflow-hidden">

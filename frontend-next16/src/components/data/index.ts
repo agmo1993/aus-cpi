@@ -5,3 +5,4 @@
 
 export { default as TopMoversCard } from './TopMoversCard';
 export { default as TopMoversGrid } from './TopMoversGrid';
+export { default as TrendChart } from './TrendChart';

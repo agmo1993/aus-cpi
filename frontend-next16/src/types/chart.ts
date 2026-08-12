@@ -36,6 +36,12 @@ export interface MultiLineChartProps {
   height?: number;
   marginTop?: number;
   className?: string;
+  /**
+   * One legend label per series. Without these the chart falls back to each
+   * series' `item`, which repeats across cities: comparing the same item in
+   * three cities produces three identically named lines.
+   */
+  seriesNames?: string[];
 }
 
 /**

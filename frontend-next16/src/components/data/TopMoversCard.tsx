@@ -2,7 +2,7 @@
 
 /**
  * TopMoversCard Component
- * Displays top CPI movers in a table with sparklines
+ * The largest CPI movers, with a sparkline per row.
  */
 
 import React from "react";
@@ -34,69 +34,65 @@ const TopMoversCard: React.FC<TopMoversCardProps> = ({
   heading,
   className = "",
 }) => {
-  if (!data || data.length === 0) {
-    return (
-      <Card className={className}>
-        <CardHeader className="bg-secondary text-secondary-foreground">
-          <CardTitle className="text-center text-xl">{heading}</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <p className="text-center text-muted-foreground">No data available</p>
-        </CardContent>
-      </Card>
-    );
-  }
-
   return (
     <Card className={className}>
-      <CardHeader className="bg-secondary text-secondary-foreground p-3">
-        <CardTitle className="text-center text-xl font-bold">
-          {heading}
-        </CardTitle>
+      <CardHeader>
+        <CardTitle className="text-base">{heading}</CardTitle>
       </CardHeader>
+
       <CardContent className="p-0">
-        <Table>
-          <TableHeader>
-            <TableRow className="hover:bg-transparent border-b">
-              <TableHead className="text-center font-semibold">Item</TableHead>
-              <TableHead className="text-center font-semibold">Trend</TableHead>
-              <TableHead className="text-center font-semibold">Value</TableHead>
-              <TableHead className="text-center font-semibold">Change</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.map((row, index) => (
-              <TableRow
-                key={`${heading}-${index}`}
-                className="hover:bg-muted/50"
-              >
-                <TableCell className="text-center py-2 px-2 text-sm text-foreground">
-                  {row.item}
-                </TableCell>
-                <TableCell className="text-center py-2 px-2">
-                  {row.timeseries && row.timeseries.length > 0 ? (
-                    <div className="flex justify-center">
-                      <SparklineChart
-                        data={row.timeseries}
-                        width={70}
-                        height={30}
-                        color="hsl(var(--success))"
-                      />
-                    </div>
-                  ) : (
-                    <span className="text-muted-foreground text-xs">No data</span>
-                  )}
-                </TableCell>
-                <TableCell className="text-center py-2 px-2 text-sm text-foreground">
-                  {parseFloat(row.current_value).toFixed(1)}
-                </TableCell>
-                <TableCell className="text-center py-2 px-2 text-sm font-semibold text-foreground">
-                  {parseFloat(row.pct_change).toFixed(1)}%
-                </TableCell>
+        {!data || data.length === 0 ? (
+          <p className="px-6 pb-6 text-sm text-muted-foreground">
+            No data available.
+          </p>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow className="hover:bg-transparent">
+                <TableHead className="pl-6 font-medium">Item</TableHead>
+                <TableHead className="w-[90px] font-medium">Trend</TableHead>
+                <TableHead className="text-right font-medium">Index</TableHead>
+                <TableHead className="pr-6 text-right font-medium">Change</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {data.map((row, index) => {
+                const change = parseFloat(row.pct_change);
+
+                return (
+                  <TableRow key={`${heading}-${index}`} className="hover:bg-muted/50">
+                    <TableCell className="py-2 pl-6 text-sm">{row.item}</TableCell>
+                    <TableCell className="py-2">
+                      {row.timeseries && row.timeseries.length > 0 ? (
+                        // Recessive: the change column carries the meaning, the
+                        // sparkline only carries the shape.
+                        <SparklineChart
+                          data={row.timeseries}
+                          width={70}
+                          height={30}
+                          className="text-muted-foreground"
+                        />
+                      ) : (
+                        <span className="text-xs text-muted-foreground">n/a</span>
+                      )}
+                    </TableCell>
+                    <TableCell className="py-2 text-right text-sm tabular-nums">
+                      {parseFloat(row.current_value).toFixed(1)}
+                    </TableCell>
+                    <TableCell
+                      className={`py-2 pr-6 text-right text-sm font-medium tabular-nums ${
+                        change > 0 ? "text-danger" : change < 0 ? "text-success" : ""
+                      }`}
+                    >
+                      {change > 0 ? "+" : ""}
+                      {change.toFixed(1)}%
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        )}
       </CardContent>
     </Card>
   );

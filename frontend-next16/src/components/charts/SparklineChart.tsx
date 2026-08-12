@@ -13,7 +13,11 @@ const SparklineChart: React.FC<SparklineChartProps> = ({
   data,
   width = 70,
   height = 30,
-  color = "hsl(var(--success))",
+  // Defaults to currentColor so the caller sets the stroke with a text utility
+  // and it follows the theme with the surrounding text. An explicit
+  // `hsl(var(--token))` also works here, but it pins the sparkline to one token
+  // regardless of where it is used.
+  color = "currentColor",
   className = "",
 }) => {
   const svgRef = useRef<SVGSVGElement>(null);

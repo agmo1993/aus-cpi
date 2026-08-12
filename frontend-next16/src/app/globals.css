@@ -2,88 +2,162 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * AusCPI palette.
+ *
+ * Light is the primary mode, sampled from mockups/screen.png: an off-white
+ * ground with a faint green cast and a single deep forest-green accent.
+ *
+ * The five categorical series were validated with the dataviz skill's
+ * validate_palette.js against both surfaces. Both modes pass every check:
+ * lightness band, chroma floor, CVD separation, normal-vision floor, and
+ * contrast. Worst adjacent CVD is dE 16.1 light / 13.9 dark, comfortably
+ * above the 8 target, so no secondary-encoding obligation applies.
+ *
+ * Order matters and is deliberate: green and coral are NOT adjacent slots,
+ * because a green/coral pair is the classic protanopia collision. Violet sits
+ * between them. Do not reorder these without re-running the validator:
+ *   node scripts/validate_palette.js "<hex,...>" --mode light --surface "#F6F8F6"
+ *
+ * Rising and falling prices use --danger and --success, which are reserved
+ * status colors and never reused as a series hue. They always ship alongside
+ * a direction icon, so the state is never carried by color alone.
+ */
+
 @layer base {
   :root {
-    /* AusCPI Custom Colors - Background is light gray from original design */
-    --background: 73 25% 93%; /* #ECEEE6 */
-    --foreground: 0 0% 9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
+    /* Surfaces */
+    --background: 120 13% 97%;      /* #F6F8F6 */
+    --foreground: 150 12% 8%;
+    --card: 120 20% 99%;
+    --card-foreground: 150 12% 8%;
+    --popover: 120 20% 99%;
+    --popover-foreground: 150 12% 8%;
 
-    /* Primary is the dark text/UI color */
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
+    /* Brand accent. The only accent on the page. */
+    --primary: 151 61% 30%;         /* #1E7A4E forest green */
+    --primary-foreground: 120 20% 99%;
 
-    /* Secondary is the teal/green accent from original #3cad92 */
-    --secondary: 166 51% 47%;
-    --secondary-foreground: 0 0% 100%;
+    /* Recessive surface for secondary controls, not an accent */
+    --secondary: 140 8% 93%;
+    --secondary-foreground: 150 12% 20%;
 
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
+    --muted: 140 9% 93%;
+    --muted-foreground: 143 5% 37%;  /* 6.0:1 on --background */
 
-    /* Chart colors - from linePlotColors.js */
-    --chart-1: 210 71% 46%; /* blue #1f77b4 */
-    --chart-2: 142 54% 40%; /* green #2ca02c */
-    --chart-3: 360 64% 50%; /* red #d62728 */
-    --chart-4: 264 30% 56%; /* purple #9467bd */
-    --chart-5: 28 100% 53%; /* orange #ff7f0e */
-    --chart-6: 187 84% 46%; /* teal #17becf */
-    --chart-7: 331 61% 69%; /* pink #e377c2 */
-    --chart-8: 20 35% 43%; /* brown #8c564b */
-    --chart-9: 0 0% 50%; /* gray #7f7f7f */
-    --chart-10: 0 0% 0%; /* black #000000 */
+    --accent: 142 26% 92%;           /* green tint for hover and active nav */
+    --accent-foreground: 151 61% 24%;
 
-    /* Additional AusCPI colors */
-    --success: 207 33% 56%; /* #7596AD */
-    --danger: 180 6% 51%; /* #7D8A8E */
-    --warning: 45 100% 51%; /* #ffc107 */
-    --info: 220 28% 20%; /* #242D42 */
+    --destructive: 6 62% 43%;
+    --destructive-foreground: 120 20% 99%;
 
-    --radius: 0.5rem;
+    --border: 135 7% 89%;
+    --input: 135 7% 89%;
+    --ring: 151 61% 30%;
+
+    /* Reserved status colors. Rising prices are the unwelcome direction. */
+    --danger: 6 62% 43%;             /* prices up */
+    --success: 151 61% 27%;          /* prices down */
+    --warning: 38 69% 33%;
+    --info: 207 60% 38%;
+
+    /* Categorical series, fixed order, never cycled */
+    --chart-1: 151 61% 30%;          /* #1E7A4E green */
+    --chart-2: 277 44% 56%;          /* #9B5FC0 violet */
+    --chart-3: 10 70% 59%;           /* #E0684F coral */
+    --chart-4: 207 60% 41%;          /* #2A6FA8 blue */
+    --chart-5: 38 69% 39%;           /* #A8761F ochre */
+
+    --radius: 0.75rem;
   }
+
+  /*
+   * Dark steps are selected for the dark surface, not flipped from light.
+   * The two blocks below are intentionally identical: the media query follows
+   * the OS setting, the class follows an explicit toggle. Keep them in sync,
+   * and keep every token above defined in both, since a token defined in only
+   * one mode resolves to nothing in the other.
+   */
   .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --background: 150 9% 9%;         /* #141816 */
+    --foreground: 150 10% 95%;
+    --card: 150 10% 12%;
+    --card-foreground: 150 10% 95%;
+    --popover: 150 10% 12%;
+    --popover-foreground: 150 10% 95%;
+
+    --primary: 148 44% 43%;          /* #3D9E6B */
+    --primary-foreground: 150 9% 9%; /* dark ink on green: 6.0:1 */
+
+    --secondary: 150 8% 15%;
+    --secondary-foreground: 150 10% 92%;
+
+    --muted: 150 8% 14%;
+    --muted-foreground: 153 6% 63%;  /* 7.2:1 on --background */
+
+    --accent: 147 15% 14%;
+    --accent-foreground: 148 40% 70%;
+
+    --destructive: 9 75% 64%;
+    --destructive-foreground: 150 9% 9%;
+
+    --border: 150 7% 18%;
+    --input: 150 7% 18%;
+    --ring: 148 44% 43%;
+
+    --danger: 9 75% 64%;
+    --success: 148 40% 51%;
+    --warning: 40 61% 55%;
+    --info: 208 59% 62%;
+
+    --chart-1: 148 44% 43%;          /* #3D9E6B */
+    --chart-2: 269 43% 63%;          /* #9E77C9 */
+    --chart-3: 11 70% 60%;           /* #E06B52 */
+    --chart-4: 208 59% 59%;          /* #5A9BD4 */
+    --chart-5: 40 61% 44%;           /* #B4862C */
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light) {
+      --background: 150 9% 9%;
+      --foreground: 150 10% 95%;
+      --card: 150 10% 12%;
+      --card-foreground: 150 10% 95%;
+      --popover: 150 10% 12%;
+      --popover-foreground: 150 10% 95%;
+
+      --primary: 148 44% 43%;
+      --primary-foreground: 150 9% 9%;
+
+      --secondary: 150 8% 15%;
+      --secondary-foreground: 150 10% 92%;
+
+      --muted: 150 8% 14%;
+      --muted-foreground: 153 6% 63%;
+
+      --accent: 147 15% 14%;
+      --accent-foreground: 148 40% 70%;
+
+      --destructive: 9 75% 64%;
+      --destructive-foreground: 150 9% 9%;
+
+      --border: 150 7% 18%;
+      --input: 150 7% 18%;
+      --ring: 148 44% 43%;
+
+      --danger: 9 75% 64%;
+      --success: 148 40% 51%;
+      --warning: 40 61% 55%;
+      --info: 208 59% 62%;
+
+      --chart-1: 148 44% 43%;
+      --chart-2: 269 43% 63%;
+      --chart-3: 11 70% 60%;
+      --chart-4: 208 59% 59%;
+      --chart-5: 40 61% 44%;
+    }
   }
 }
-
-body {
-  background: hsl(var(--background));
-  color: hsl(var(--foreground));
-}
-
-
 
 @layer base {
   * {
