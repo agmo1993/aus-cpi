@@ -76,27 +76,35 @@ cd backend
 sqitch deploy
 ```
 
-Run the data extraction scripts, which should create four csv files in the `./data` directory.
+Run the data extraction scripts, which write csv files into the `./data` directory.
+
+The monthly extract downloads every workbook listed in `abs_sources.py` for the
+given release — Table 10 for the eight capital cities and Table 3 for the
+weighted average of eight capital cities, which the ABS labels `Australia`.
+`MONTH` is the release month slug from the ABS url, e.g. `jun`.
 
 ```
-python extract_monthly.py
+MONTH=jun YEAR=2026 python extract_cpi_monthly.py
 python extract_quarterly.py
 ```
 
 Insert the data into the database tables,
 
 ```sh
-python inserts_lookup_table.py
+python load_cpi_monthly.py
 python inserts.py
 ```
 
 These should fill the database tables, as well as the dependent materialized views with the data required to run
-the application. 
+the application.
 
-To update / add new data
+To update / add new data, re-run the extract for the new release and load it
+again. Rows are upserted, so revisions to already-published months overwrite
+what is loaded and only the changed months move.
 
 ```
-DATE='<enter date of new data in YYYY-MM-DD format>' python update_monthly.py
+MONTH=jul YEAR=2026 python extract_cpi_monthly.py
+python load_cpi_monthly.py
 DATE='<enter date of new data in YYYY-MM-DD format>' python update_quarterly.py
 ```
 
