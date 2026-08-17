@@ -25,6 +25,9 @@ export {
   searchSeries,
 } from './lookup';
 
+// Weighting pattern queries
+export { getBasketInputs } from './weights';
+
 // Statistics queries
 export {
   getTopMonthlyIncreases,

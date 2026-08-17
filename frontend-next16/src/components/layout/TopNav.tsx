@@ -18,6 +18,7 @@ interface TopNavProps {
 const NAV_ITEMS = [
   { href: "/", label: "Overview" },
   { href: "/category", label: "Categories" },
+  { href: "/basket", label: "Your basket" },
   { href: "/about", label: "About" },
 ];
 
