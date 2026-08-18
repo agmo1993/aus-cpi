@@ -17,7 +17,7 @@ These instructions will get you a copy of the project up and running on your loc
 ### Requirements
 
 - Python [v3.8.9]
-- Node.js [v16.17.1]
+- Node.js [v18.x]
 - Docker [>=v20.10.17] 
 - Sqitch [v1.3.1]
 
