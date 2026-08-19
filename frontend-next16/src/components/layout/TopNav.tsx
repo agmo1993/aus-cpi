@@ -5,7 +5,7 @@
  * Brand plus the primary sections.
  */
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -24,6 +24,9 @@ const NAV_ITEMS = [
 
 const TopNav: React.FC<TopNavProps> = ({ className }) => {
   const pathname = usePathname();
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const closeMobile = () => setMobileOpen(false);
 
   return (
     <header
@@ -32,8 +35,8 @@ const TopNav: React.FC<TopNavProps> = ({ className }) => {
         className
       )}
     >
-      {/* Capped at 72px so the nav never eats the viewport, and one line at every width */}
-      <div className="container mx-auto flex h-[72px] max-w-7xl items-center gap-8 px-6">
+      <div className="container mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
+        {/* Brand – always visible */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
           <Image
             src="/images/logo.png"
@@ -48,7 +51,8 @@ const TopNav: React.FC<TopNavProps> = ({ className }) => {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-1" aria-label="Primary">
+        {/* Desktop nav – hidden on mobile */}
+        <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
             const isActive =
               item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
@@ -70,7 +74,60 @@ const TopNav: React.FC<TopNavProps> = ({ className }) => {
             );
           })}
         </nav>
+
+        {/* Mobile hamburger button – visible only on mobile */}
+        <button
+          className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-accent/60 transition-colors"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
+        >
+          {mobileOpen ? (
+            /* X icon */
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          ) : (
+            /* Hamburger icon */
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="4" y1="6" x2="20" y2="6" />
+              <line x1="4" y1="12" x2="20" y2="12" />
+              <line x1="4" y1="18" x2="20" y2="18" />
+            </svg>
+          )}
+        </button>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {mobileOpen && (
+        <nav
+          className="md:hidden border-t bg-background px-4 pb-4 pt-2"
+          aria-label="Primary"
+        >
+          {NAV_ITEMS.map((item) => {
+            const isActive =
+              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={closeMobile}
+                aria-current={isActive ? "page" : undefined}
+                className={cn(
+                  "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                  isActive
+                    ? "bg-accent text-accent-foreground"
+                    : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+                )}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+      )}
     </header>
   );
 };
