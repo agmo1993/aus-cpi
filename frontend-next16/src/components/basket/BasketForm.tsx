@@ -88,12 +88,14 @@ const BasketForm: React.FC<BasketFormProps> = ({
   // without are short enough to sit two abreast.
   const dense = question.options.every((option) => !option.detail);
 
-  // Animation classes based on direction
+  // Animation classes based on direction - 3D card flip
   const cardAnimation = isAnimating
     ? direction === "next"
-      ? "animate-out slide-out-to-left duration-300"
-      : "animate-out slide-out-to-right duration-300"
-    : "animate-in slide-in-from-right duration-300";
+      ? "flip-out-next"
+      : "flip-out-prev"
+    : direction === "next"
+      ? "flip-in-next"
+      : "flip-in-prev";
 
   return (
     <div className="fixed inset-0 z-50 flex flex-col bg-background overflow-y-auto">
