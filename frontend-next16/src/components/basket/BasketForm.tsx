@@ -99,8 +99,8 @@ const BasketForm: React.FC<BasketFormProps> = ({
     <div className="fixed inset-0 z-50 flex flex-col bg-background overflow-y-auto">
       {/* Progress rail. Answered steps are clickable, so a reader who changes
           their mind three cards later does not have to walk back. */}
-      <div className="sticky top-0 bg-background/95 backdrop-blur border-b px-6 py-4 z-10">
-        <div className="mx-auto max-w-3xl space-y-2">
+      <div className="sticky top-0 bg-background/95 backdrop-blur border-b px-4 sm:px-6 py-4 z-10">
+        <div className="mx-auto max-w-3xl w-full space-y-2">
           <div className="flex items-baseline justify-between gap-3 text-sm">
             <span className="font-medium">
               Question {step + 1}
@@ -133,7 +133,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-6 py-8">
+      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-8 w-full">
         <Card
           // Remounting on the step is what makes the card animate in rather than
           // its contents swapping under a static frame.
@@ -142,7 +142,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
         >
         <form onSubmit={submit}>
           <fieldset>
-            <CardHeader className="space-y-2 pb-4">
+            <CardHeader className="space-y-2 pb-4 px-4 sm:px-6">
               <legend className="space-y-2">
                 <p className="text-xs font-medium uppercase tracking-wider text-primary">
                   {question.short}
@@ -156,7 +156,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
               </legend>
             </CardHeader>
 
-            <CardContent className="space-y-4">
+            <CardContent className="space-y-4 px-4 sm:px-6">
               <div className={cn("grid gap-3", dense && "sm:grid-cols-2")}>
                 {question.options.map((option) => {
                   const active = picked.includes(option.id);
@@ -243,7 +243,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
             </CardContent>
           </fieldset>
 
-          <div className="flex items-center justify-between gap-3 border-t px-6 py-4">
+          <div className="flex items-center justify-between gap-3 border-t px-4 sm:px-6 py-4">
             <button
               type="button"
               onClick={() => step > 0 && goToStep(step - 1, "prev")}
