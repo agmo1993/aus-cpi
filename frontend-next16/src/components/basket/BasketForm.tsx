@@ -13,8 +13,8 @@
  * basket, dropping postal services does not.
  */
 
-import React from "react";
-import { ArrowLeft, ArrowRight, Check, ListTree } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { ArrowLeft, ArrowRight, Check, ListTree, X } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { QUESTIONS, type BasketAnswers } from "./questions";
@@ -46,6 +46,8 @@ const BasketForm: React.FC<BasketFormProps> = ({
   const question = QUESTIONS[step];
   const picked = answers[question.id] ?? [];
   const last = step === QUESTIONS.length - 1;
+  const [direction, setDirection] = useState<"next" | "prev">("next");
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // The weight an answer is worth: what it keeps, as a share of the published
   // basket. Looked up per city, so Sydney's rents and Hobart's are not the
@@ -66,58 +68,78 @@ const BasketForm: React.FC<BasketFormProps> = ({
     );
   };
 
+  const goToStep = (newStep: number, dir: "next" | "prev") => {
+    if (isAnimating) return;
+    setDirection(dir);
+    setIsAnimating(true);
+    setTimeout(() => {
+      onStep(newStep);
+      setIsAnimating(false);
+    }, 300);
+  };
+
   const submit = (event: React.FormEvent) => {
     event.preventDefault();
     if (last) onDone();
-    else onStep(step + 1);
+    else goToStep(step + 1, "next");
   };
 
   // Cards with an explanatory line under each answer read as a list; the ones
   // without are short enough to sit two abreast.
   const dense = question.options.every((option) => !option.detail);
 
+  // Animation classes based on direction
+  const cardAnimation = isAnimating
+    ? direction === "next"
+      ? "animate-out slide-out-to-left duration-300"
+      : "animate-out slide-out-to-right duration-300"
+    : "animate-in slide-in-from-right duration-300";
+
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-5">
+    <div className="fixed inset-0 z-50 flex flex-col bg-background overflow-y-auto">
       {/* Progress rail. Answered steps are clickable, so a reader who changes
           their mind three cards later does not have to walk back. */}
-      <div className="space-y-2">
-        <div className="flex items-baseline justify-between gap-3 text-sm">
-          <span className="font-medium">
-            Question {step + 1}
-            <span className="text-muted-foreground"> of {QUESTIONS.length}</span>
-          </span>
-          <span className="tabular-nums text-muted-foreground">
-            {coverage.toFixed(0)}% of the published basket kept
-          </span>
-        </div>
-        <div className="flex gap-1.5">
-          {QUESTIONS.map((entry, index) => (
-            <button
-              key={entry.id}
-              type="button"
-              onClick={() => onStep(index)}
-              disabled={index > step && !(entry.id in answers)}
-              aria-label={`Question ${index + 1}: ${entry.short}`}
-              aria-current={index === step ? "step" : undefined}
-              className={cn(
-                "h-1.5 flex-1 rounded-full transition-colors disabled:cursor-not-allowed",
-                index === step
-                  ? "bg-primary"
-                  : index < step
-                    ? "bg-primary/40 hover:bg-primary/60"
-                    : "bg-muted"
-              )}
-            />
-          ))}
+      <div className="sticky top-0 bg-background/95 backdrop-blur border-b px-6 py-4 z-10">
+        <div className="mx-auto max-w-3xl space-y-2">
+          <div className="flex items-baseline justify-between gap-3 text-sm">
+            <span className="font-medium">
+              Question {step + 1}
+              <span className="text-muted-foreground"> of {QUESTIONS.length}</span>
+            </span>
+            <span className="tabular-nums text-muted-foreground">
+              {coverage.toFixed(0)}% of the published basket kept
+            </span>
+          </div>
+          <div className="flex gap-1.5">
+            {QUESTIONS.map((entry, index) => (
+              <button
+                key={entry.id}
+                type="button"
+                onClick={() => index <= step && goToStep(index, index < step ? "prev" : "next")}
+                disabled={index > step && !(entry.id in answers)}
+                aria-label={`Question ${index + 1}: ${entry.short}`}
+                aria-current={index === step ? "step" : undefined}
+                className={cn(
+                  "h-1.5 flex-1 rounded-full transition-colors disabled:cursor-not-allowed",
+                  index === step
+                    ? "bg-primary"
+                    : index < step
+                      ? "bg-primary/40 hover:bg-primary/60"
+                      : "bg-muted"
+                )}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
-      <Card
-        // Remounting on the step is what makes the card animate in rather than
-        // its contents swapping under a static frame.
-        key={question.id}
-        className="animate-in fade-in slide-in-from-bottom-2 duration-300"
-      >
+      <div className="flex-1 flex items-center justify-center px-6 py-8">
+        <Card
+          // Remounting on the step is what makes the card animate in rather than
+          // its contents swapping under a static frame.
+          key={question.id}
+          className={cn("w-full max-w-3xl", cardAnimation)}
+        >
         <form onSubmit={submit}>
           <fieldset>
             <CardHeader className="space-y-2 pb-4">
@@ -224,7 +246,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
           <div className="flex items-center justify-between gap-3 border-t px-6 py-4">
             <button
               type="button"
-              onClick={() => onStep(step - 1)}
+              onClick={() => step > 0 && goToStep(step - 1, "prev")}
               disabled={step === 0}
               className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground disabled:invisible"
             >
@@ -242,16 +264,6 @@ const BasketForm: React.FC<BasketFormProps> = ({
           </div>
         </form>
       </Card>
-
-      <div className="flex justify-center">
-        <button
-          type="button"
-          onClick={onDone}
-          className="inline-flex items-center gap-1.5 text-sm text-muted-foreground underline-offset-4 hover:text-foreground hover:underline"
-        >
-          <ListTree className="h-3.5 w-3.5" strokeWidth={1.75} />
-          Skip the questions and pick categories myself
-        </button>
       </div>
     </div>
   );

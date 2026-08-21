@@ -16,6 +16,7 @@
 
 import React, { useState, useSyncExternalStore } from "react";
 import {
+  ArrowRight,
   Check,
   Copy,
   ListTree,
@@ -146,8 +147,8 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
 
   // Always start with the form to show the interactive card flow.
   // Previous answers are pre-filled so returning users can review/modify.
-  const [phase, setPhase] = useState<"form" | "results" | null>(null);
-  const showing = phase ?? "form";
+  const [phase, setPhase] = useState<"intro" | "form" | "results" | null>(null);
+  const showing = phase ?? "intro";
 
   const manual = decodeSelection(state.manual, leaves);
   const selected = new Set(manual ?? selectionFromAnswers(state.answers, leaves));
@@ -174,7 +175,7 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   const restart = () => {
     commit({ answers: DEFAULT_ANSWERS, manual: null });
     setStep(0);
-    setPhase("form");
+    setPhase("intro");
   };
 
   /** Back to a single question, with the form's controls matching what is shown. */
@@ -216,6 +217,30 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   // What the chips say. Where the tree has been used the stored answers are
   // stale, so they are read back off the selection instead.
   const shownAnswers = state.manual ? answersFromSelection(selected) : state.answers;
+
+  if (showing === "intro") {
+    return (
+      <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
+        <div className="space-y-6 max-w-2xl">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Your Personal CPI
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Answer 8 quick questions about your household to calculate how inflation
+            affects you personally, not the average Australian.
+          </p>
+          <button
+            type="button"
+            onClick={() => setPhase("form")}
+            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-medium text-primary-foreground shadow-lg transition-all hover:shadow-xl hover:scale-105"
+          >
+            Start the questionnaire
+            <ArrowRight className="h-5 w-5" strokeWidth={2} />
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (showing === "form") {
     return (
