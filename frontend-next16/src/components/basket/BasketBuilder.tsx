@@ -144,12 +144,10 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   const [tuning, setTuning] = useState(false);
   const [step, setStep] = useState(0);
 
-  // A reader arriving with a shared link or a saved basket has already
-  // answered the questions and wants the result; everyone else starts at the
-  // first card. Left underived until they say otherwise, so that it can follow
-  // the saved state appearing after hydration.
+  // Always start with the form to show the interactive card flow.
+  // Previous answers are pre-filled so returning users can review/modify.
   const [phase, setPhase] = useState<"form" | "results" | null>(null);
-  const showing = phase ?? (shared || stored ? "results" : "form");
+  const showing = phase ?? "form";
 
   const manual = decodeSelection(state.manual, leaves);
   const selected = new Set(manual ?? selectionFromAnswers(state.answers, leaves));
