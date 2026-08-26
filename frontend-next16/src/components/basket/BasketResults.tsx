@@ -20,6 +20,8 @@ import {
   groupShares,
 } from "@/lib/basket";
 import type { BasketInputs, BasketResult } from "@/types/basket";
+import type { BasketAnswers, BasketSpending } from "./questions";
+import { QUESTIONS } from "./questions";
 import BasketChart, { type ChartMode } from "./BasketChart";
 import ContributionTable from "./ContributionTable";
 
@@ -31,6 +33,10 @@ interface BasketResultsProps {
   from: number;
   /** The window in words, e.g. '12 months to Jun 2026'. */
   windowLabel: string;
+  /** Dollar spending per question category. */
+  spending: BasketSpending;
+  /** Current answers per question. */
+  answers: BasketAnswers;
 }
 
 const signed = (value: number, digits = 1) =>
@@ -42,6 +48,8 @@ const BasketResults: React.FC<BasketResultsProps> = ({
   result,
   from,
   windowLabel,
+  spending,
+  answers,
 }) => {
   const [mode, setMode] = useState<ChartMode>("change");
 
@@ -52,6 +60,68 @@ const BasketResults: React.FC<BasketResultsProps> = ({
   const yours = change(result.index, from, last);
   const published = change(headline, from, last);
   const gap = yours !== null && published !== null ? yours - published : null;
+
+  // Calculate dollar impact per category
+  const dollarImpact = QUESTIONS.map((q) => {
+    const monthlySpend = spending[q.id] ?? q.defaultSpending;
+    const picked = answers[q.id] ?? [];
+    
+    // Only calculate if this category has selections
+    if (picked.length === 0) {
+      return {
+        question: q,
+        monthlySpend,
+        monthlyChange: 0,
+        yearlyChange: 0,
+        totalChange: 0,
+      };
+    }
+
+    // Calculate average CPI change for this category's expenditure classes
+    const selectedClasses = q.options
+      .filter(opt => picked.includes(opt.id))
+      .flatMap(opt => opt.keep);
+    
+    const series = inputs.series[city] ?? {};
+    const validClasses = selectedClasses.filter(item => series[item] && inputs.weights[city]?.[item] > 0);
+    
+    if (validClasses.length === 0) {
+      return {
+        question: q,
+        monthlySpend,
+        monthlyChange: 0,
+        yearlyChange: 0,
+        totalChange: 0,
+      };
+    }
+
+    // Weight the CPI changes by the expenditure class weights
+    const weights = inputs.weights[city] ?? {};
+    const totalWeight = validClasses.reduce((sum, item) => sum + weights[item], 0);
+    
+    let weightedChange = 0;
+    for (const item of validClasses) {
+      const itemWeight = weights[item] / totalWeight;
+      const itemChange = change(series[item], from, last);
+      if (itemChange !== null) {
+        weightedChange += itemChange * itemWeight;
+      }
+    }
+
+    const monthlyChange = monthlySpend * (weightedChange / 100);
+    const yearlyChange = monthlyChange * 12;
+    
+    return {
+      question: q,
+      monthlySpend,
+      monthlyChange,
+      yearlyChange,
+      totalChange: monthlyChange,
+    };
+  }).filter(imp => imp.monthlySpend > 0 && (answers[imp.question.id] ?? []).length > 0);
+
+  const totalMonthlyChange = dollarImpact.reduce((sum, imp) => sum + imp.monthlyChange, 0);
+  const totalYearlyChange = dollarImpact.reduce((sum, imp) => sum + imp.yearlyChange, 0);
 
   // Left unmemoized: the React Compiler caches these, and by hand it is a few
   // hundred multiplications over 87 items either way.
@@ -98,6 +168,71 @@ const BasketResults: React.FC<BasketResultsProps> = ({
           }}
         />
       </div>
+
+      {/* Dollar Impact Summary */}
+      {dollarImpact.length > 0 && (
+        <Card className="border-primary/20 bg-primary/5">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base">Your Dollar Impact</CardTitle>
+            <p className="text-sm text-muted-foreground">
+              Based on your spending, here's how inflation affects your wallet
+            </p>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="rounded-lg border bg-card p-4">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  Monthly Change
+                </p>
+                <p className={cn(
+                  "text-2xl font-bold tabular-nums mt-1",
+                  totalMonthlyChange > 0 ? "text-danger" : totalMonthlyChange < 0 ? "text-success" : ""
+                )}>
+                  {totalMonthlyChange > 0 ? "+" : ""}${totalMonthlyChange.toFixed(2)}
+                </p>
+              </div>
+              <div className="rounded-lg border bg-card p-4">
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                  Yearly Change
+                </p>
+                <p className={cn(
+                  "text-2xl font-bold tabular-nums mt-1",
+                  totalYearlyChange > 0 ? "text-danger" : totalYearlyChange < 0 ? "text-success" : ""
+                )}>
+                  {totalYearlyChange > 0 ? "+" : ""}${totalYearlyChange.toFixed(2)}
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                Breakdown by Category
+              </p>
+              <div className="space-y-1.5">
+                {dollarImpact.map(({ question, monthlySpend, monthlyChange, yearlyChange }) => (
+                  <div
+                    key={question.id}
+                    className="flex items-center justify-between text-sm py-1.5 border-b last:border-0"
+                  >
+                    <span className="font-medium">{question.short}</span>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-muted-foreground tabular-nums">
+                        ${monthlySpend}/mo
+                      </span>
+                      <span className={cn(
+                        "text-sm font-semibold tabular-nums min-w-[80px] text-right",
+                        monthlyChange > 0 ? "text-danger" : monthlyChange < 0 ? "text-success" : ""
+                      )}>
+                        {monthlyChange > 0 ? "+" : ""}${monthlyChange.toFixed(2)}/mo
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       <Card>
         <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">

@@ -69,6 +69,10 @@ export interface BasketQuestion {
   /** Every class the question can drop. */
   governs: string[];
   options: BasketOption[];
+  /** Label for the dollar spending input on this card. */
+  spendingLabel: string;
+  /** Default monthly spending suggestion (user can override). */
+  defaultSpending: number;
 }
 
 /** An answer per question, as option ids. A missing key is an unanswered question. */
@@ -123,6 +127,8 @@ export const QUESTIONS: BasketQuestion[] = [
         keep: [],
       },
     ],
+    spendingLabel: 'Housing costs per month',
+    defaultSpending: 2000,
   },
   {
     id: 'utilities',
@@ -146,6 +152,8 @@ export const QUESTIONS: BasketQuestion[] = [
         keep: ['Water and sewerage'],
       },
     ],
+    spendingLabel: 'Utility bills per month',
+    defaultSpending: 400,
   },
   {
     id: 'transport',
@@ -170,6 +178,8 @@ export const QUESTIONS: BasketQuestion[] = [
         keep: ['Urban transport fares'],
       },
     ],
+    spendingLabel: 'Transport spending per month',
+    defaultSpending: 600,
   },
   {
     id: 'household',
@@ -207,6 +217,8 @@ export const QUESTIONS: BasketQuestion[] = [
         keep: ['Tertiary education'],
       },
     ],
+    spendingLabel: 'Education & childcare per month',
+    defaultSpending: 800,
   },
   {
     id: 'eating',
@@ -237,6 +249,8 @@ export const QUESTIONS: BasketQuestion[] = [
         keep: [],
       },
     ],
+    spendingLabel: 'Eating out per month',
+    defaultSpending: 500,
   },
   {
     id: 'vices',
@@ -251,6 +265,8 @@ export const QUESTIONS: BasketQuestion[] = [
       { id: 'spirits', label: 'Spirits', icon: Martini, keep: ['Spirits'] },
       { id: 'tobacco', label: 'Tobacco', icon: Cigarette, keep: ['Tobacco'] },
     ],
+    spendingLabel: 'Alcohol & tobacco per month',
+    defaultSpending: 200,
   },
   {
     id: 'travel',
@@ -276,6 +292,8 @@ export const QUESTIONS: BasketQuestion[] = [
         keep: ['International holiday travel and accommodation'],
       },
     ],
+    spendingLabel: 'Holiday travel per year',
+    defaultSpending: 4000,
   },
   {
     id: 'pets',
@@ -292,6 +310,8 @@ export const QUESTIONS: BasketQuestion[] = [
       },
       { id: 'no', label: 'No', icon: CircleSlash, keep: [] },
     ],
+    spendingLabel: 'Pet costs per month',
+    defaultSpending: 150,
   },
 ];
 
@@ -313,6 +333,13 @@ export const DEFAULT_ANSWERS: BasketAnswers = {
   travel: ['domestic', 'international'],
   pets: ['no'],
 };
+
+/** Spending per question in dollars. Travel is annual, the rest are monthly. */
+export type BasketSpending = Record<string, number>;
+
+export const DEFAULT_SPENDING: BasketSpending = Object.fromEntries(
+  QUESTIONS.map((q) => [q.id, q.defaultSpending])
+);
 
 /** Every class governed by some question, i.e. everything the form can drop. */
 export const GOVERNED = new Set(QUESTIONS.flatMap((question) => question.governs));

@@ -44,10 +44,12 @@ import {
 import type { BasketInputs } from "@/types/basket";
 import {
   DEFAULT_ANSWERS,
+  DEFAULT_SPENDING,
   QUESTIONS,
   answersFromSelection,
   selectionFromAnswers,
   type BasketAnswers,
+  type BasketSpending,
 } from "./questions";
 import BasketForm from "./BasketForm";
 import BasketResults from "./BasketResults";
@@ -79,6 +81,8 @@ interface BasketState {
   answers: BasketAnswers;
   /** An encoded selection, set once the reader edits the tree directly. */
   manual: string | null;
+  /** Dollar spending per question category. */
+  spending: BasketSpending;
 }
 
 /**
@@ -107,7 +111,11 @@ function parse(raw: string | null): BasketState | null {
     if (!value || typeof value.answers !== "object" || value.answers === null) {
       return null;
     }
-    return { answers: value.answers, manual: value.manual ?? null };
+    return {
+      answers: value.answers,
+      manual: value.manual ?? null,
+      spending: value.spending ?? DEFAULT_SPENDING,
+    };
   } catch {
     return null;
   }
@@ -132,12 +140,12 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   // back off it as closely as they can be.
   const shared: BasketState | null =
     sharedItems && sharedCode
-      ? { answers: answersFromSelection(new Set(sharedItems)), manual: sharedCode }
+      ? { answers: answersFromSelection(new Set(sharedItems)), manual: sharedCode, spending: DEFAULT_SPENDING }
       : null;
 
   const state = edited ??
     shared ??
-    stored ?? { answers: DEFAULT_ANSWERS, manual: null };
+    stored ?? { answers: DEFAULT_ANSWERS, manual: null, spending: DEFAULT_SPENDING };
 
   const [city, setCity] = useState(sharedCity ?? inputs.cities[0] ?? "Australia");
   const [period, setPeriod] = useState<Period>("annual");
@@ -161,7 +169,10 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   // An answer supersedes any hand-editing: the two cannot both be in force,
   // and the one just given is the one the reader meant.
   const answer = (questionId: string, picked: string[]) =>
-    commit({ answers: { ...state.answers, [questionId]: picked }, manual: null });
+    commit({ answers: { ...state.answers, [questionId]: picked }, manual: null, spending: state.spending });
+
+  const updateSpending = (questionId: string, amount: number) =>
+    commit({ answers: state.answers, manual: state.manual, spending: { ...state.spending, [questionId]: amount } });
 
   const toggle = (items: string[], select: boolean) => {
     const next = new Set(selected);
@@ -169,11 +180,11 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
       if (select) next.add(item);
       else next.delete(item);
     }
-    commit({ answers: state.answers, manual: encodeSelection(next, leaves) });
+    commit({ answers: state.answers, manual: encodeSelection(next, leaves), spending: state.spending });
   };
 
   const restart = () => {
-    commit({ answers: DEFAULT_ANSWERS, manual: null });
+    commit({ answers: DEFAULT_ANSWERS, manual: null, spending: DEFAULT_SPENDING });
     setStep(0);
     setPhase("intro");
   };
@@ -182,7 +193,7 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   const editQuestion = (index: number) => {
     // Re-derived first where the tree has been used, so the card the reader
     // lands on is not showing an answer the basket stopped obeying.
-    if (state.manual) commit({ answers: answersFromSelection(selected), manual: null });
+    if (state.manual) commit({ answers: answersFromSelection(selected), manual: null, spending: state.spending });
     setStep(index);
     setPhase("form");
   };
@@ -246,7 +257,9 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
     return (
       <BasketForm
         answers={state.answers}
+        spending={state.spending}
         onAnswer={answer}
+        onSpending={updateSpending}
         step={step}
         onStep={setStep}
         weights={inputs.weights[city] ?? {}}
@@ -407,6 +420,8 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
           result={result}
           from={from}
           windowLabel={windowLabel}
+          spending={state.spending}
+          answers={shownAnswers}
         />
       )}
 

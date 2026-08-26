@@ -17,12 +17,15 @@ import React, { useState, useEffect } from "react";
 import { ArrowLeft, ArrowRight, Check, ListTree, X } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { QUESTIONS, type BasketAnswers } from "./questions";
+import { QUESTIONS, type BasketAnswers, type BasketSpending } from "./questions";
 
 interface BasketFormProps {
   /** The current answers, one entry per question the reader has reached. */
   answers: BasketAnswers;
+  /** Dollar spending per question category. */
+  spending: BasketSpending;
   onAnswer: (questionId: string, picked: string[]) => void;
+  onSpending: (questionId: string, amount: number) => void;
   /** Which card is showing, controlled so the results view can send the reader back. */
   step: number;
   onStep: (step: number) => void;
@@ -36,7 +39,9 @@ interface BasketFormProps {
 
 const BasketForm: React.FC<BasketFormProps> = ({
   answers,
+  spending,
   onAnswer,
+  onSpending,
   step,
   onStep,
   weights,
@@ -159,6 +164,32 @@ const BasketForm: React.FC<BasketFormProps> = ({
             </CardHeader>
 
             <CardContent className="space-y-4 px-4 sm:px-6">
+              {/* Dollar spending input */}
+              <div className="space-y-2">
+                <label
+                  htmlFor={`spending-${question.id}`}
+                  className="block text-sm font-medium text-foreground"
+                >
+                  {question.spendingLabel}
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                    $
+                  </span>
+                  <input
+                    id={`spending-${question.id}`}
+                    type="number"
+                    min="0"
+                    step="10"
+                    value={spending[question.id] ?? question.defaultSpending}
+                    onChange={(e) =>
+                      onSpending(question.id, parseFloat(e.target.value) || 0)
+                    }
+                    className="w-full pl-8 pr-4 py-2 rounded-md border border-input bg-background text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring"
+                  />
+                </div>
+              </div>
+
               <div className={cn("grid gap-3", dense && "sm:grid-cols-2")}>
                 {question.options.map((option) => {
                   const active = picked.includes(option.id);
