@@ -51,10 +51,10 @@ if [[ "$FORCE" != true ]] && ! is_last_wednesday; then
 fi
 
 # ── Determine the ABS release month/year ────────────────────────────
-# ABS publishes the release page with the current month slug, e.g.
-# https://www.abs.gov.au/.../aug-2026/6401010.xlsx
-MONTH=$(date +%b | tr '[:upper:]' '[:lower:]')
-YEAR=$(date +%Y)
+# ABS publishes the PREVIOUS month's data on the last Wednesday.
+# So the last Wednesday of August publishes July data (jul-2026).
+MONTH=$(date -d "-1 month" +%b | tr '[:upper:]' '[:lower:]')
+YEAR=$(date -d "-1 month" +%Y)
 
 LOG_FILE="$LOG_DIR/cpi_${YEAR}_${MONTH}.log"
 
