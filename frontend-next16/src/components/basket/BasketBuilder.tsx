@@ -272,7 +272,7 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   const empty = result.index.length === 0;
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 max-w-full space-y-6 overflow-x-hidden">
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-3">
         <Select value={city} onValueChange={setCity}>

@@ -134,7 +134,7 @@ const BasketResults: React.FC<BasketResultsProps> = ({
   }));
 
   return (
-    <div className="space-y-6">
+    <div className="w-full min-w-0 max-w-full space-y-6 overflow-x-hidden">
       <div className="grid gap-4 sm:grid-cols-3">
         <StatCard
           title="Your inflation"
@@ -284,8 +284,8 @@ const BasketResults: React.FC<BasketResultsProps> = ({
         </CardContent>
       </Card>
 
-      <div className="grid gap-6 lg:grid-cols-12">
-        <div className="lg:col-span-7">
+      <div className="grid w-full min-w-0 gap-6 lg:grid-cols-12">
+        <div className="min-w-0 w-full lg:col-span-7">
           <ContributionTable
             contributions={contributions}
             windowLabel={windowLabel}
@@ -293,23 +293,23 @@ const BasketResults: React.FC<BasketResultsProps> = ({
           />
         </div>
 
-        <Card className="lg:col-span-5">
-          <CardHeader className="pb-3">
+        <Card className="min-w-0 w-full overflow-hidden lg:col-span-5">
+          <CardHeader className="pb-3 px-4 sm:px-6">
             <CardTitle>Where the weight sits</CardTitle>
             <p className="text-sm text-muted-foreground">
               Your basket renormalised to 100, against the official weight of the
               same group.
             </p>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="space-y-3 px-4 sm:px-6">
             {composition.map((entry) => (
-              <div key={entry.group} className="space-y-1">
-                <div className="flex items-baseline justify-between gap-3 text-sm">
-                  <span className="truncate">{entry.group}</span>
-                  <span className="shrink-0 tabular-nums">
+              <div key={entry.group} className="space-y-1 min-w-0">
+                <div className="flex items-baseline justify-between gap-2 text-sm min-w-0">
+                  <span className="min-w-0 truncate">{entry.group}</span>
+                  <span className="shrink-0 tabular-nums text-xs sm:text-sm">
                     {entry.share.toFixed(1)}%
-                    <span className="ml-2 text-xs text-muted-foreground">
-                      official {entry.official.toFixed(1)}%
+                    <span className="ml-1.5 text-xs text-muted-foreground">
+                      off. {entry.official.toFixed(1)}%
                     </span>
                   </span>
                 </div>

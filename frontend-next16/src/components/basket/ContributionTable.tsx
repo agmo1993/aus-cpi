@@ -50,8 +50,8 @@ const ContributionTable: React.FC<ContributionTableProps> = ({
   );
 
   return (
-    <Card className="w-full">
-      <CardHeader className="pb-3">
+    <Card className="w-full min-w-0 max-w-full overflow-hidden">
+      <CardHeader className="pb-3 px-4 sm:px-6">
         <div className="flex flex-wrap items-baseline justify-between gap-2">
           <CardTitle>What moved your basket</CardTitle>
           {total !== null && (
@@ -67,28 +67,28 @@ const ContributionTable: React.FC<ContributionTableProps> = ({
       </CardHeader>
 
       <CardContent className="p-0">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto max-w-full">
+          <table className="w-full table-fixed text-sm">
             <thead>
               <tr className="border-b text-xs uppercase tracking-wide text-muted-foreground">
-                <th scope="col" className="px-4 py-2 text-left font-medium sm:px-6">
+                <th scope="col" className="w-[40%] px-3 py-2 text-left font-medium sm:w-auto sm:px-6">
                   Item
                 </th>
-                <th scope="col" className="px-2 py-2 text-right font-medium sm:px-3">
+                <th scope="col" className="w-[18%] px-1 py-2 text-right font-medium sm:px-3">
                   Share
                 </th>
-                <th scope="col" className="px-2 py-2 text-right font-medium sm:px-3">
+                <th scope="col" className="w-[18%] px-1 py-2 text-right font-medium sm:px-3">
                   Price
                 </th>
-                <th scope="col" className="px-4 py-2 text-right font-medium sm:px-6">
-                  Contribution
+                <th scope="col" className="w-[24%] px-3 py-2 text-right font-medium sm:px-6">
+                  Contrib.
                 </th>
               </tr>
             </thead>
             <tbody>
               {rows.map((row) => (
                 <tr key={row.item} className="border-b last:border-0 hover:bg-accent/40">
-                  <td className="max-w-[280px] px-4 py-2 sm:px-6">
+                  <td className="px-3 py-2 sm:px-6">
                     <div className="truncate" title={row.item}>
                       {row.item}
                     </div>
@@ -96,20 +96,20 @@ const ContributionTable: React.FC<ContributionTableProps> = ({
                       {row.group}
                     </div>
                   </td>
-                  <td className="px-2 py-2 text-right tabular-nums text-muted-foreground sm:px-3">
+                  <td className="px-1 py-2 text-right tabular-nums text-muted-foreground sm:px-3">
                     {row.share.toFixed(1)}%
                   </td>
                   <td
                     className={cn(
-                      "px-2 py-2 text-right tabular-nums sm:px-3",
+                      "px-1 py-2 text-right tabular-nums sm:px-3",
                       row.itemChange > 0 ? "text-danger" : row.itemChange < 0 ? "text-success" : ""
                     )}
                   >
                     {row.itemChange > 0 ? "+" : row.itemChange < 0 ? "−" : ""}
                     {Math.abs(row.itemChange).toFixed(1)}%
                   </td>
-                  <td className="px-4 py-2 sm:px-6">
-                    <div className="flex items-center justify-end gap-3">
+                  <td className="px-3 py-2 sm:px-6">
+                    <div className="flex items-center justify-end gap-2 sm:gap-3">
                       {/* A bar either side of a shared centre line: the sign
                           is the whole point of this column. */}
                       <div className="relative hidden h-1.5 w-24 rounded-full bg-muted sm:block">
@@ -123,7 +123,7 @@ const ContributionTable: React.FC<ContributionTableProps> = ({
                           }}
                         />
                       </div>
-                      <span className="w-16 shrink-0 text-right tabular-nums">
+                      <span className="text-right tabular-nums">
                         {row.contribution > 0 ? "+" : row.contribution < 0 ? "−" : ""}
                         {Math.abs(row.contribution).toFixed(2)}pp
                       </span>
@@ -136,7 +136,7 @@ const ContributionTable: React.FC<ContributionTableProps> = ({
         </div>
 
         {contributions.length > rows.length || expanded ? (
-          <div className="border-t px-6 py-3">
+          <div className="border-t px-4 py-3 sm:px-6">
             <button
               type="button"
               onClick={() => setExpanded((current) => !current)}
