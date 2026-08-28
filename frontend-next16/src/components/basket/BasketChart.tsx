@@ -1,13 +1,11 @@
 "use client";
 
 /**
- * Your basket against the published CPI, over the current link period.
+ * Your basket against the published CPI.
  *
  * Two views of the same pair of series: the index levels, which share a scale
- * because the rebuilt index is anchored to the published one at the link, and
- * the cumulative change since the link, which is the same picture with the
- * common starting point divided out. The second is the one that answers 'is
- * my cost of living rising faster than the headline', so it leads.
+ * because the rebuilt index is anchored to the published one at the first
+ * month of the window, and the cumulative change since that month.
  */
 
 import React from "react";
@@ -48,9 +46,19 @@ const BasketChart: React.FC<BasketChartProps> = ({
   const data = months.map((month, t) => ({
     month: formatBasketMonth(month),
     yours:
-      mode === "level" ? basket[t] : (basket[t] / basket[0] - 1) * 100,
+      mode === "level"
+        ? headline[0] && basket[0]
+          ? (basket[t] / basket[0]) * headline[0]
+          : basket[t]
+        : basket[0]
+          ? (basket[t] / basket[0] - 1) * 100
+          : null,
     published:
-      mode === "level" ? headline[t] : (headline[t] / headline[0] - 1) * 100,
+      mode === "level"
+        ? headline[t]
+        : headline[0]
+          ? (headline[t] / headline[0] - 1) * 100
+          : null,
   }));
 
   const format = (value: number) =>

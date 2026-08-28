@@ -29,8 +29,9 @@ const LEAF_LEVEL = 'expenditure class';
  * throw away the selection the way a server round trip would.
  */
 export async function getBasketInputs(): Promise<BasketInputs> {
-  // The newest pattern loaded. Index numbers may only be aggregated with the
-  // weights of their own link period, so a basket cannot run back past this.
+  // The newest pattern loaded. Its link period is the ABS-valid start for
+  // aggregation; class indexes themselves run further back, so a "today's mix
+  // through history" reading can start at the earliest month every class has.
   const patternResult = await query<{ pattern: number; link_period: string }>(
     `SELECT pattern, TO_CHAR(link_period, 'YYYY-MM') AS link_period
        FROM auscpi.cpi_weights_by_city
@@ -43,6 +44,25 @@ export async function getBasketInputs(): Promise<BasketInputs> {
   if (!pattern) {
     throw new Error('No weighting pattern loaded in auscpi.cpi_weights_by_city');
   }
+
+  // Latest of the per-class start dates: before that, at least one expenditure
+  // class is missing and the arrays would not line up.
+  const startResult = await query<{ start_month: string }>(
+    `SELECT TO_CHAR(MAX(first_date), 'YYYY-MM') AS start_month
+       FROM (
+         SELECT MIN(i.publish_date) AS first_date
+           FROM auscpi.cpi_index_monthly i
+           JOIN (
+             SELECT DISTINCT item
+               FROM auscpi.cpi_weights_by_city
+              WHERE pattern = $1 AND item_level = $2
+           ) c ON c.item = i.item
+          WHERE i.city = 'Australia'
+          GROUP BY i.item
+       ) starts`,
+    [pattern.pattern, LEAF_LEVEL]
+  );
+  const startMonth = startResult.rows[0]?.start_month ?? pattern.link_period;
 
   // weight is numeric and cpi_value is numeric, both of which node-postgres
   // hands back as strings to protect precision it cannot represent. Two
@@ -70,7 +90,7 @@ export async function getBasketInputs(): Promise<BasketInputs> {
                 WHERE pattern = $1 AND item_level = $2) c ON c.item = i.item
         WHERE i.publish_date >= TO_DATE($3, 'YYYY-MM')
         GROUP BY i.city, i.item`,
-      [pattern.pattern, LEAF_LEVEL, pattern.link_period]
+      [pattern.pattern, LEAF_LEVEL, startMonth]
     ),
 
     query<{ city: string; values: number[] }>(
@@ -78,7 +98,7 @@ export async function getBasketInputs(): Promise<BasketInputs> {
          FROM auscpi.cpi_index_monthly
         WHERE item = $1 AND publish_date >= TO_DATE($2, 'YYYY-MM')
         GROUP BY city`,
-      [HEADLINE_ITEM, pattern.link_period]
+      [HEADLINE_ITEM, startMonth]
     ),
 
     query<{ month: string }>(
@@ -86,7 +106,7 @@ export async function getBasketInputs(): Promise<BasketInputs> {
          FROM auscpi.cpi_index_monthly
         WHERE publish_date >= TO_DATE($1, 'YYYY-MM')
         ORDER BY month`,
-      [pattern.link_period]
+      [startMonth]
     ),
   ]);
 

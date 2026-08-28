@@ -67,8 +67,8 @@ interface BasketBuilderProps {
 /** Where the basket is kept between visits. */
 const STORAGE_KEY = "auscpi.basket.v2";
 
-/** The two windows worth reading off a single link period. */
-type Period = "annual" | "link";
+/** Windows over the rebuilt index: 12 months, since the ABS link, or full history. */
+type Period = "annual" | "link" | "all";
 
 /**
  * The saved basket: the answers, and the selection if it was edited by hand.
@@ -203,18 +203,21 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
 
   const months = inputs.months;
   const last = months.length - 1;
-
-  // The annual window needs thirteen months of the same link period. Where the
-  // pattern is younger than that there is no twelve-month change to show, and
-  // the control falls back to the whole link period rather than inventing one
-  // by reaching back across the re-weighting.
+  const linkIndex = Math.max(0, months.indexOf(inputs.linkPeriod));
   const annualAvailable = months.length >= 13;
-  const from = period === "annual" && annualAvailable ? last - 12 : 0;
+  const linkAvailable = linkIndex > 0 && linkIndex < last;
+
+  const from =
+    period === "annual" && annualAvailable
+      ? last - 12
+      : period === "link" && linkAvailable
+        ? linkIndex
+        : 0;
 
   const windowLabel =
     period === "annual" && annualAvailable
       ? `12 months to ${formatBasketMonth(months[last])}`
-      : `since ${formatBasketMonth(months[0])}`;
+      : `since ${formatBasketMonth(months[from])}`;
 
   const share = () => {
     const url = new URL(globalThis.location.href);
@@ -296,18 +299,22 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
           </SelectContent>
         </Select>
 
-        <div className="flex rounded-lg border p-0.5" role="group" aria-label="Period">
+        <div className="flex flex-wrap rounded-lg border p-0.5" role="group" aria-label="Period">
           {(
             [
               ["annual", "Last 12 months"],
-              ["link", `Since ${formatBasketMonth(months[0])}`],
+              ["link", `Since ${formatBasketMonth(inputs.linkPeriod)}`],
+              ["all", `Since ${formatBasketMonth(months[0])}`],
             ] as const
           ).map(([value, label]) => (
             <button
               key={value}
               type="button"
               onClick={() => setPeriod(value)}
-              disabled={value === "annual" && !annualAvailable}
+              disabled={
+                (value === "annual" && !annualAvailable) ||
+                (value === "link" && !linkAvailable)
+              }
               aria-pressed={period === value}
               className={cn(
                 "rounded-md px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-40",

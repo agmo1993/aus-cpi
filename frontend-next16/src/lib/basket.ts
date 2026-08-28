@@ -13,10 +13,11 @@
  *    not of whatever subset is selected, so the sum over the selected items is
  *    the denominator. Dropping tobacco does not shrink the index; it
  *    redistributes tobacco's 1.86% across everything that is left.
- *  - The aggregation cannot cross a link. The 2025 pattern is price-updated to
- *    December 2024 and is only valid from there, which is why every series
- *    handed to these functions starts at the link period and why `values[0]`
- *    is always the base of the price relative.
+ *  - Official aggregation cannot cross a link. The 2025 pattern is
+ *    price-updated to December 2024. The page still offers a longer reading:
+ *    the same (current) weights applied to class indexes as far back as every
+ *    class is published. That is "if I had always spent like this", not an
+ *    ABS chain. `values[0]` is that earliest complete month.
  *
  * Verified against the published All groups CPI in
  * backend/docs/cpi-index-from-weights.md: rebuilding from all 87 expenditure

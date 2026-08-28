@@ -211,7 +211,7 @@ const BasketResults: React.FC<BasketResultsProps> = ({
               {city === "Australia"
                 ? "Weighted average of eight capital cities"
                 : city}
-              , {formatBasketMonth(months[0])} to {formatBasketMonth(months[last])}
+              , {formatBasketMonth(months[from])} to {formatBasketMonth(months[last])}
             </p>
           </div>
           <div
@@ -244,9 +244,9 @@ const BasketResults: React.FC<BasketResultsProps> = ({
         </CardHeader>
         <CardContent>
           <BasketChart
-            months={months}
-            basket={result.index}
-            headline={headline}
+            months={months.slice(from)}
+            basket={result.index.slice(from)}
+            headline={headline.slice(from)}
             mode={mode}
             city={city === "Australia" ? "Australia" : city}
           />

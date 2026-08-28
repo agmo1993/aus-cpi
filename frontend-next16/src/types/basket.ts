@@ -36,16 +36,17 @@ export interface BasketNode {
  * Everything the client needs to rebuild the index for any city and any
  * selection, fetched once on the server.
  *
- * Index levels are kept per city as a flat array aligned to `months`, whose
- * first entry is the link period: the aggregation divides every series by its
- * own value there, so `values[0]` is the base of the price relative.
+ * Index levels are kept per city as a flat array aligned to `months`. The
+ * first month is the earliest date every expenditure class is published;
+ * `values[0]` is the base of the price relative. The ABS link period may sit
+ * later in the array.
  */
 export interface BasketInputs {
   /** The ABS weighting pattern year, e.g. 2025. */
   pattern: number;
   /** Period the weights are price-updated to, 'YYYY-MM'. The base of everything. */
   linkPeriod: string;
-  /** Months from the link period to the latest published, 'YYYY-MM'. */
+  /** Months from the earliest complete class panel to the latest published, 'YYYY-MM'. */
   months: string[];
   cities: string[];
   /** The hierarchy, identical across cities. */
