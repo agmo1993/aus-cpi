@@ -21,6 +21,8 @@ interface ContributionTableProps {
   windowLabel: string;
   /** The basket's own change, which the contributions add up to. */
   total: number | null;
+  /** Jump back to the questionnaire card that governs this item. */
+  onItemClick?: (item: string) => void;
 }
 
 /** Rows shown before the table has to be expanded. */
@@ -30,6 +32,7 @@ const ContributionTable: React.FC<ContributionTableProps> = ({
   contributions,
   windowLabel,
   total,
+  onItemClick,
 }) => {
   const [expanded, setExpanded] = useState(false);
 
@@ -87,7 +90,14 @@ const ContributionTable: React.FC<ContributionTableProps> = ({
             </thead>
             <tbody>
               {rows.map((row) => (
-                <tr key={row.item} className="border-b last:border-0 hover:bg-accent/40">
+                <tr
+                  key={row.item}
+                  className={cn(
+                    "border-b last:border-0 hover:bg-accent/40",
+                    onItemClick && "cursor-pointer"
+                  )}
+                  onClick={() => onItemClick?.(row.item)}
+                >
                   <td className="px-3 py-2 sm:px-6">
                     <div className="truncate" title={row.item}>
                       {row.item}

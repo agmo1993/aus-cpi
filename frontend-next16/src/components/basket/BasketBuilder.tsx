@@ -54,6 +54,7 @@ import {
 import BasketForm from "./BasketForm";
 import BasketResults from "./BasketResults";
 import CategoryTree from "./CategoryTree";
+import { computeDollarImpact, formatAud } from "./dollarImpact";
 
 interface BasketBuilderProps {
   inputs: BasketInputs;
@@ -219,7 +220,14 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
     const url = new URL(globalThis.location.href);
     url.searchParams.set("city", city);
     url.searchParams.set("b", encodeSelection(selected, leaves));
-    void navigator.clipboard.writeText(url.toString()).then(() => {
+    const impact = computeDollarImpact(inputs, city, state.spending, shownAnswers, from, last);
+    const monthly = impact.reduce((sum, row) => sum + row.monthlyChange, 0);
+    const yearly = impact.reduce((sum, row) => sum + row.yearlyChange, 0);
+    const headlineText =
+      monthly === 0
+        ? url.toString()
+        : `Your basket is ${formatAud(monthly, 0)}/mo (${formatAud(yearly, 0)}/yr) against last year. ${url.toString()}`;
+    void navigator.clipboard.writeText(headlineText).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     });
@@ -323,7 +331,7 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
           ) : (
             <Copy className="h-4 w-4" strokeWidth={1.75} />
           )}
-          {copied ? "Link copied" : "Copy link to this basket"}
+          {copied ? "Copied headline" : "Copy link to this basket"}
         </button>
       </div>
 
@@ -422,6 +430,8 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
           windowLabel={windowLabel}
           spending={state.spending}
           answers={shownAnswers}
+          onSpending={updateSpending}
+          onEditQuestion={editQuestion}
         />
       )}
 

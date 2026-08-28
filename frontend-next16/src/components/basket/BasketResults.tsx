@@ -22,6 +22,7 @@ import {
 import type { BasketInputs, BasketResult } from "@/types/basket";
 import type { BasketAnswers, BasketSpending } from "./questions";
 import { QUESTIONS } from "./questions";
+import { computeDollarImpact, formatAud, questionIndexForItem } from "./dollarImpact";
 import BasketChart, { type ChartMode } from "./BasketChart";
 import ContributionTable from "./ContributionTable";
 
@@ -37,6 +38,8 @@ interface BasketResultsProps {
   spending: BasketSpending;
   /** Current answers per question. */
   answers: BasketAnswers;
+  onSpending?: (questionId: string, amount: number) => void;
+  onEditQuestion?: (index: number) => void;
 }
 
 const signed = (value: number, digits = 1) =>
@@ -50,6 +53,8 @@ const BasketResults: React.FC<BasketResultsProps> = ({
   windowLabel,
   spending,
   answers,
+  onSpending,
+  onEditQuestion,
 }) => {
   const [mode, setMode] = useState<ChartMode>("change");
 
@@ -61,65 +66,7 @@ const BasketResults: React.FC<BasketResultsProps> = ({
   const published = change(headline, from, last);
   const gap = yours !== null && published !== null ? yours - published : null;
 
-  // Calculate dollar impact per category
-  const dollarImpact = QUESTIONS.map((q) => {
-    const monthlySpend = spending[q.id] ?? q.defaultSpending;
-    const picked = answers[q.id] ?? [];
-    
-    // Only calculate if this category has selections
-    if (picked.length === 0) {
-      return {
-        question: q,
-        monthlySpend,
-        monthlyChange: 0,
-        yearlyChange: 0,
-        totalChange: 0,
-      };
-    }
-
-    // Calculate average CPI change for this category's expenditure classes
-    const selectedClasses = q.options
-      .filter(opt => picked.includes(opt.id))
-      .flatMap(opt => opt.keep);
-    
-    const series = inputs.series[city] ?? {};
-    const validClasses = selectedClasses.filter(item => series[item] && inputs.weights[city]?.[item] > 0);
-    
-    if (validClasses.length === 0) {
-      return {
-        question: q,
-        monthlySpend,
-        monthlyChange: 0,
-        yearlyChange: 0,
-        totalChange: 0,
-      };
-    }
-
-    // Weight the CPI changes by the expenditure class weights
-    const weights = inputs.weights[city] ?? {};
-    const totalWeight = validClasses.reduce((sum, item) => sum + weights[item], 0);
-    
-    let weightedChange = 0;
-    for (const item of validClasses) {
-      const itemWeight = weights[item] / totalWeight;
-      const itemChange = change(series[item], from, last);
-      if (itemChange !== null) {
-        weightedChange += itemChange * itemWeight;
-      }
-    }
-
-    const monthlyChange = monthlySpend * (weightedChange / 100);
-    const yearlyChange = monthlyChange * 12;
-    
-    return {
-      question: q,
-      monthlySpend,
-      monthlyChange,
-      yearlyChange,
-      totalChange: monthlyChange,
-    };
-  }).filter(imp => imp.monthlySpend > 0 && (answers[imp.question.id] ?? []).length > 0);
-
+  const dollarImpact = computeDollarImpact(inputs, city, spending, answers, from, last);
   const totalMonthlyChange = dollarImpact.reduce((sum, imp) => sum + imp.monthlyChange, 0);
   const totalYearlyChange = dollarImpact.reduce((sum, imp) => sum + imp.yearlyChange, 0);
 
@@ -188,7 +135,7 @@ const BasketResults: React.FC<BasketResultsProps> = ({
                   "text-2xl font-bold tabular-nums mt-1",
                   totalMonthlyChange > 0 ? "text-danger" : totalMonthlyChange < 0 ? "text-success" : ""
                 )}>
-                  {totalMonthlyChange > 0 ? "+" : ""}${totalMonthlyChange.toFixed(2)}
+                  {formatAud(totalMonthlyChange, 2)}
                 </p>
               </div>
               <div className="rounded-lg border bg-card p-4">
@@ -199,35 +146,57 @@ const BasketResults: React.FC<BasketResultsProps> = ({
                   "text-2xl font-bold tabular-nums mt-1",
                   totalYearlyChange > 0 ? "text-danger" : totalYearlyChange < 0 ? "text-success" : ""
                 )}>
-                  {totalYearlyChange > 0 ? "+" : ""}${totalYearlyChange.toFixed(2)}
+                  {formatAud(totalYearlyChange, 2)}
                 </p>
               </div>
             </div>
 
             <div className="space-y-2">
               <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-                Breakdown by Category
+                What if you spent less?
               </p>
-              <div className="space-y-1.5">
-                {dollarImpact.map(({ question, monthlySpend, monthlyChange, yearlyChange }) => (
-                  <div
-                    key={question.id}
-                    className="flex items-center justify-between text-sm py-1.5 border-b last:border-0"
-                  >
-                    <span className="font-medium">{question.short}</span>
-                    <div className="flex items-center gap-3">
-                      <span className="text-xs text-muted-foreground tabular-nums">
-                        ${monthlySpend}/mo
-                      </span>
-                      <span className={cn(
-                        "text-sm font-semibold tabular-nums min-w-[80px] text-right",
-                        monthlyChange > 0 ? "text-danger" : monthlyChange < 0 ? "text-success" : ""
-                      )}>
-                        {monthlyChange > 0 ? "+" : ""}${monthlyChange.toFixed(2)}/mo
-                      </span>
+              <div className="space-y-3">
+                {dollarImpact.map((row) => {
+                  const question = QUESTIONS.find((entry) => entry.id === row.questionId);
+                  if (!question) return null;
+                  const stored = spending[question.id] ?? question.defaultSpending;
+                  const max = Math.max(question.defaultSpending * 3, stored, 100);
+                  return (
+                    <div key={question.id} className="space-y-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2 text-sm">
+                        <span className="font-medium">{question.short}</span>
+                        <span
+                          className={cn(
+                            "tabular-nums text-sm font-semibold",
+                            row.monthlyChange > 0
+                              ? "text-danger"
+                              : row.monthlyChange < 0
+                                ? "text-success"
+                                : ""
+                          )}
+                        >
+                          {formatAud(row.monthlyChange, 2)}/mo
+                        </span>
+                      </div>
+                      <input
+                        type="range"
+                        min={0}
+                        max={max}
+                        step={question.id === "travel" ? 50 : 10}
+                        value={stored}
+                        aria-label={`${question.short} spending`}
+                        onChange={(event) =>
+                          onSpending?.(question.id, Number(event.target.value))
+                        }
+                        className="w-full accent-primary"
+                      />
+                      <p className="text-xs text-muted-foreground tabular-nums">
+                        ${stored.toLocaleString("en-AU")}
+                        {question.id === "travel" ? " / year" : " / month"}
+                      </p>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </CardContent>
@@ -290,6 +259,14 @@ const BasketResults: React.FC<BasketResultsProps> = ({
             contributions={contributions}
             windowLabel={windowLabel}
             total={yours}
+            onItemClick={
+              onEditQuestion
+                ? (item) => {
+                    const index = questionIndexForItem(item);
+                    if (index >= 0) onEditQuestion(index);
+                  }
+                : undefined
+            }
           />
         </div>
 

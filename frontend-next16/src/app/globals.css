@@ -228,3 +228,33 @@
 .flip-in-prev {
   animation: flip-in-reverse 0.3s ease-out forwards;
 }
+
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 8px;
+  height: 14px;
+  border-radius: 1px;
+  animation: confetti-fall 0.9s ease-in forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .confetti-piece,
+  .flip-out-next,
+  .flip-in-next,
+  .flip-out-prev,
+  .flip-in-prev {
+    animation: none;
+  }
+}
