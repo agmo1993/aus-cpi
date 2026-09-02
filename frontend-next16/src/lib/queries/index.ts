@@ -28,6 +28,9 @@ export {
 // Weighting pattern queries
 export { getBasketInputs } from './weights';
 
+// Industry GVA queries
+export { getGvaSeries, getGvaTimeSeries } from './gva';
+
 // Statistics queries
 export {
   getTopMonthlyIncreases,
