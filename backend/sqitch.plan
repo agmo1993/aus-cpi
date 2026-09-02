@@ -9,3 +9,4 @@
 05-add-wpi 2023-07-22T03:44:54Z Abdul Mohammad <mohammad.abdul@ABC-F6T3WNYXW5> # added wage price index to the database
 06-create-weights-tables 2026-01-19T00:00:00Z Claude <noreply@anthropic.com> # CPI and housing weights tables
 07-add-weights-by-city 2026-08-14T03:22:59Z Abdul Rehman Mohammad <agmo@agmo-Latitude-7410> # CPI weighting pattern by capital city
+08-add-industry-gva 2026-08-31T22:45:00Z Abdul Rehman <abdulrehmanm93@gmail.com> # ABS 5206.0 industry GVA quarterly
