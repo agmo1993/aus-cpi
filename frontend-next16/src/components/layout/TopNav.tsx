@@ -19,7 +19,6 @@ const NAV_ITEMS = [
   { href: "/", label: "Overview" },
   { href: "/category", label: "Categories" },
   { href: "/basket", label: "Your basket" },
-  { href: "/compare", label: "CPI vs GVA" },
   { href: "/about", label: "About" },
 ];
 
