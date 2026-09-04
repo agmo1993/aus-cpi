@@ -112,12 +112,46 @@ export default function ChatPage() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ messages: history }),
         });
-        const data = (await res.json()) as {
+        const raw = await res.text();
+        let data: {
           prose?: string;
           parts?: AnswerPart[];
           asOfMonth?: string;
           error?: string;
-        };
+        } | null = null;
+        try {
+          data = JSON.parse(raw) as {
+            prose?: string;
+            parts?: AnswerPart[];
+            asOfMonth?: string;
+            error?: string;
+          };
+        } catch {
+          const timeoutLike =
+            res.status === 504 ||
+            raw.includes("FUNCTION_INVOCATION_TIMEOUT") ||
+            raw.includes("An error occurred");
+          const msg = timeoutLike
+            ? "That question took too long on the server. Try a simpler ask (one city or one series), or try again."
+            : !res.ok
+              ? res.status === 503
+                ? "Chat is not configured. Add Cloudflare credentials to .env.local."
+                : res.status === 502
+                  ? "Workers AI error — daily quota may be exhausted."
+                  : "Chat request failed."
+              : "Chat returned an unexpected response.";
+          setErrorBanner(msg);
+          setTurns((prev) => [
+            ...prev,
+            {
+              id: newId(),
+              role: "assistant",
+              content: msg,
+              error: true,
+            },
+          ]);
+          return;
+        }
 
         if (!res.ok) {
           const msg =

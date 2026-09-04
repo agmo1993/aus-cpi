@@ -20,6 +20,7 @@ import { toCloudflareTools } from '@/lib/chat/cloudflare-tools';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60;
 
 const MAX_ROUNDS = 4;
 
@@ -40,6 +41,7 @@ Rules:
 - Refuse Reserve Bank (RBA) forecasts, cash-rate speculation, and non-CPI topics. Politely redirect to ABS CPI.
 - Keep a factual, ABS-accurate tone; short prose is best.
 - Prefer get_headline_cpi for headline questions; get_top_movers for movers; for a named item/city use search_cpi_series → resolve_series → get_cpi_timeseries.
+- When comparing cities or series (e.g. Sydney vs Melbourne), issue multiple tool calls in the SAME round for all cities together (search/resolve/timeseries for each). Do not fetch one city per round.
 - After tools return, summarise clearly for a general audience. Do not dump raw JSON.`;
 
 interface ToolTraceEntry {
@@ -128,9 +130,14 @@ export async function POST(request: NextRequest) {
           tool_calls: openAiCalls,
         });
 
+        // Run all tool calls in this round in parallel; append parts/messages in call order
+        const results = await Promise.all(
+          ai.tool_calls.map((call) => runChatTool(call.name, call.arguments))
+        );
+
         for (let i = 0; i < ai.tool_calls.length; i++) {
           const call = ai.tool_calls[i];
-          const result = await runChatTool(call.name, call.arguments);
+          const result = results[i];
           for (const part of result.ui) {
             parts.push(part);
           }
