@@ -11,11 +11,16 @@
  * Every card carries the weight of what it is asking about, because the weight
  * is the whole reason the question is worth asking: dropping tobacco moves the
  * basket, dropping postal services does not.
+ *
+ * Full-viewport overlay while immersive chrome is active, with Close /
+ * Back available at every step. Site header/footer animate away around it.
  */
 
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { ArrowLeft, ArrowRight, Check, X } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { QUESTIONS, type BasketAnswers, type BasketSpending } from "./questions";
 import { formatAud, isZeroSpendAnswer, monthlySpending } from "./dollarImpact";
@@ -30,6 +35,8 @@ interface BasketFormProps {
   weights: Record<string, number>;
   coverage: number;
   onDone: () => void;
+  /** Leave the questionnaire without finishing (back to intro or results). */
+  onClose: () => void;
 }
 
 const BasketForm: React.FC<BasketFormProps> = ({
@@ -42,6 +49,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
   weights,
   coverage,
   onDone,
+  onClose,
 }) => {
   const question = QUESTIONS[step];
   const picked = answers[question.id] ?? [];
@@ -106,9 +114,6 @@ const BasketForm: React.FC<BasketFormProps> = ({
       ? picked.filter((id) => id !== optionId)
       : [...picked, optionId];
     onAnswer(question.id, next);
-    if (isZeroSpendAnswer(question.id, next) || next.length === 0) {
-      // Multi with nothing picked still has a weight to drop, but spend can stay.
-    }
   };
 
   useEffect(() => {
@@ -151,21 +156,40 @@ const BasketForm: React.FC<BasketFormProps> = ({
       : "flip-in-prev";
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-background overflow-y-auto">
+    <div className="fixed inset-0 z-30 flex flex-col overflow-hidden bg-background">
       {burst && <ConfettiBurst />}
 
-      <div className="sticky top-0 bg-background/95 backdrop-blur border-b px-4 sm:px-6 py-4 z-10">
-        <div className="mx-auto max-w-3xl w-full space-y-2">
-          <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 text-sm">
-            <span className="font-medium">
+      <div className="border-b bg-card/95 px-4 py-4 sm:px-6">
+        <div className="mx-auto w-full max-w-3xl space-y-2">
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
+            <span className="text-sm font-medium">
               Question {step + 1}
               <span className="text-muted-foreground"> of {QUESTIONS.length}</span>
             </span>
-            <span className="tabular-nums text-muted-foreground">
-              {coverage.toFixed(0)}% kept · {formatAud(spendSoFar).replace("+", "")}/mo
-            </span>
+            <div className="flex items-center gap-3">
+              <span className="tabular-nums text-sm text-muted-foreground">
+                {coverage.toFixed(0)}% kept · {formatAud(spendSoFar).replace("+", "")}/mo
+              </span>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={onClose}
+                aria-label="Close questionnaire"
+              >
+                <X className="h-4 w-4" aria-hidden="true" />
+                Close
+              </Button>
+            </div>
           </div>
-          <div className="flex gap-1.5">
+          <div
+            className="flex gap-1.5"
+            role="progressbar"
+            aria-valuemin={1}
+            aria-valuemax={QUESTIONS.length}
+            aria-valuenow={step + 1}
+            aria-label={`Question ${step + 1} of ${QUESTIONS.length}`}
+          >
             {QUESTIONS.map((entry, index) => (
               <button
                 key={entry.id}
@@ -188,16 +212,16 @@ const BasketForm: React.FC<BasketFormProps> = ({
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-8 w-full">
+      <div className="flex flex-1 items-center justify-center px-4 py-8 sm:px-6 w-full">
         <Card
           key={question.id}
-          className={cn("w-full max-w-3xl", cardAnimation)}
+          className={cn("w-full max-w-3xl border-0 shadow-none", cardAnimation)}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
           <form onSubmit={submit}>
             <fieldset>
-              <CardHeader className="space-y-2 pb-4 px-4 sm:px-6">
+              <CardHeader className="space-y-2 pb-4 px-0 sm:px-0">
                 <legend className="space-y-2">
                   <p className="text-xs font-medium uppercase tracking-wider text-primary">
                     {question.short}
@@ -211,7 +235,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
                 </legend>
               </CardHeader>
 
-              <CardContent className="space-y-4 px-4 sm:px-6">
+              <CardContent className="space-y-4 px-0 sm:px-0">
                 <div className="space-y-2">
                   <label
                     htmlFor={`spending-${question.id}`}
@@ -220,10 +244,10 @@ const BasketForm: React.FC<BasketFormProps> = ({
                     {question.spendingLabel}
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">
+                    <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" aria-hidden="true">
                       $
                     </span>
-                    <input
+                    <Input
                       id={`spending-${question.id}`}
                       type="number"
                       min="0"
@@ -233,7 +257,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
                       onChange={(e) =>
                         onSpending(question.id, parseFloat(e.target.value) || 0)
                       }
-                      className="w-full pl-8 pr-4 py-2 rounded-md border border-input bg-background text-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                      className="pl-8 tabular-nums"
                     />
                   </div>
                   <p className="text-xs text-muted-foreground">
@@ -288,6 +312,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
                                 ? "bg-primary text-primary-foreground"
                                 : "bg-muted text-muted-foreground group-hover:text-foreground"
                             )}
+                            aria-hidden="true"
                           >
                             <Icon className="h-4 w-4" strokeWidth={1.75} />
                           </span>
@@ -344,24 +369,20 @@ const BasketForm: React.FC<BasketFormProps> = ({
               </CardContent>
             </fieldset>
 
-            <div className="flex items-center justify-between gap-3 border-t px-4 sm:px-6 py-4">
-              <button
+            <div className="flex items-center justify-between gap-3 border-t px-0 py-4">
+              <Button
                 type="button"
-                onClick={() => step > 0 && goToStep(step - 1, "prev")}
-                disabled={step === 0}
-                className="inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground disabled:invisible"
+                variant="ghost"
+                onClick={() => (step > 0 ? goToStep(step - 1, "prev") : onClose())}
               >
-                <ArrowLeft className="h-4 w-4" strokeWidth={2} />
-                Back
-              </button>
+                <ArrowLeft className="h-4 w-4" aria-hidden="true" />
+                {step === 0 ? "Cancel" : "Back"}
+              </Button>
 
-              <button
-                type="submit"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-transform active:scale-[0.98] hover:opacity-90"
-              >
+              <Button type="submit">
                 {last ? "Build my index" : "Continue"}
-                <ArrowRight className="h-4 w-4" strokeWidth={2} />
-              </button>
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Button>
             </div>
           </form>
         </Card>
@@ -373,7 +394,7 @@ const BasketForm: React.FC<BasketFormProps> = ({
 function ConfettiBurst() {
   const pieces = Array.from({ length: 28 }, (_, i) => i);
   return (
-    <div className="pointer-events-none fixed inset-0 z-[60] overflow-hidden" aria-hidden="true">
+    <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden" aria-hidden="true">
       {pieces.map((i) => (
         <span
           key={i}

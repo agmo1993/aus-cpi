@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { TopNav } from "@/components/layout";
+import { AppChrome, SiteFooter } from "@/components/layout";
+import { getLatestReleaseMonth } from "@/lib/queries";
 
 const geistSans = Geist({
   subsets: ["latin"],
@@ -37,20 +38,30 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let latestMonthKey: string | null = null;
+  try {
+    latestMonthKey = await getLatestReleaseMonth();
+  } catch {
+    latestMonthKey = null;
+  }
+
   return (
     <html lang="en-AU" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className="font-sans antialiased">
-        <TopNav />
-
-        {/* 100dvh rather than 100vh, which jumps as the mobile address bar hides */}
-        <main className="min-h-[100dvh]">
-          <div className="container mx-auto p-6 max-w-7xl">{children}</div>
-        </main>
+        <a
+          href="#main-content"
+          className="absolute left-4 top-4 z-[100] -translate-y-[200%] rounded-md bg-background px-4 py-2 shadow ring-2 ring-ring transition-transform focus:translate-y-0"
+        >
+          Skip to content
+        </a>
+        <AppChrome footer={<SiteFooter latestMonthKey={latestMonthKey} />}>
+          {children}
+        </AppChrome>
       </body>
     </html>
   );

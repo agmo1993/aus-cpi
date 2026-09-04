@@ -142,3 +142,19 @@ export async function getMultipleTimeSeries(
 
   return results;
 }
+
+/**
+ * Latest published month for the headline national series, as 'mm-yyyy'.
+ * Used for site footer attribution without hardcoding a release month.
+ */
+export async function getLatestReleaseMonth(): Promise<string | null> {
+  const result = await query<{ date: string }>(
+    `SELECT TO_CHAR(publish_date, 'mm-yyyy') as date
+     FROM auscpi.cpi_index_monthly
+     WHERE item = $1 AND city = $2
+     ORDER BY publish_date DESC
+     LIMIT 1`,
+    [HEADLINE_ITEM, NATIONAL_CITY]
+  );
+  return result.rows[0]?.date ?? null;
+}

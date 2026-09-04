@@ -1,39 +1,32 @@
 "use client";
 
 /**
- * MultiLineChart Component
- * Multi-series time series chart using Highcharts (for complex visualizations)
+ * MultiLineChart
+ * Multi-series time series chart using Recharts (same stack as BasketChart).
  */
 
 import React, { useMemo } from "react";
-import Highcharts from "highcharts";
-import HighchartsReact from "highcharts-react-official";
-import { getSeriesColor } from "@/lib/colors";
-import { useColorScheme } from "@/lib/use-color-scheme";
+import {
+  CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { MAX_SERIES } from "@/lib/colors";
 import { alignOnUnion, type SeriesRow } from "@/lib/timeseries";
 import type { MultiLineChartProps } from "@/types";
 
-/**
- * Highcharts draws its own chrome and cannot read the CSS custom properties,
- * so the surrounding theme has to be handed to it as literal colours. Without
- * this it keeps its stock light-mode defaults: near-black labels and white
- * gridlines, which on the dark surface leaves the labels unreadable and the
- * grid shouting over the data.
- */
-const CHROME = {
-  light: {
-    text: "#5A625D",
-    grid: "#E2E6E3",
-    tooltipBg: "#FCFDFC",
-    tooltipText: "#0F1412",
-  },
-  dark: {
-    text: "#9AA5A0",
-    grid: "#2A302D",
-    tooltipBg: "#1B211E",
-    tooltipText: "#F0F3F1",
-  },
-} as const;
+const SERIES_STROKES = [
+  "hsl(var(--chart-1))",
+  "hsl(var(--chart-2))",
+  "hsl(var(--chart-3))",
+  "hsl(var(--chart-4))",
+  "hsl(var(--chart-5))",
+] as const;
 
 const MultiLineChart: React.FC<MultiLineChartProps> = ({
   data,
@@ -45,110 +38,119 @@ const MultiLineChart: React.FC<MultiLineChartProps> = ({
   className = "",
   seriesNames,
 }) => {
-  const scheme = useColorScheme();
-
-  const options = useMemo<Highcharts.Options>(() => {
+  const { chartData, names } = useMemo(() => {
     if (!data || data.length === 0) {
-      return {} as Highcharts.Options;
+      return { chartData: [] as Record<string, string | number | null>[], names: [] as string[] };
     }
 
-    const chrome = CHROME[scheme];
+    const capped = data.slice(0, MAX_SERIES) as unknown as SeriesRow[][];
+    const { months, values } = alignOnUnion(capped, xaxis, yaxis);
 
-    // Series start on different dates, so plot every one against a shared
-    // axis of all months covered rather than against the first series'.
-    const { months, values } = alignOnUnion(
-      data as unknown as SeriesRow[][],
-      xaxis,
-      yaxis
+    const labels = capped.map(
+      (seriesData, index) =>
+        seriesNames?.[index] ||
+        String(seriesData[0]?.item || `Series ${index + 1}`)
     );
 
-    return {
-      title: {
-        text: chartTitle || undefined,
-        useHTML: true,
-        align: "left",
-      },
-      chart: {
-        backgroundColor: "transparent",
-        marginTop,
-        height,
-      },
-      // Identity must never be carried by color alone. With several series on
-      // one axis the legend is the only thing naming them outside a hover.
-      legend: {
-        enabled: data.length > 1,
-        align: "left",
-        verticalAlign: "bottom",
-        itemStyle: { fontWeight: "400", color: chrome.text },
-        itemHoverStyle: { color: chrome.tooltipText },
-      },
-      exporting: {
-        enabled: false,
-      },
-      credits: {
-        enabled: false,
-      },
-      tooltip: {
-        backgroundColor: chrome.tooltipBg,
-        borderColor: chrome.grid,
-        style: { color: chrome.tooltipText },
-        formatter: function (this: any) {
-          return `Index of ${this.series.name} on ${this.x}: <b>${this.y}</b>`;
-        },
-      },
-      yAxis: {
-        // `yaxis` is the data key ("cpi_value"), not a label. Printing it put a
-        // database column name on the axis.
-        title: {
-          text: "Index",
-          style: { color: chrome.text },
-        },
-        gridLineColor: chrome.grid,
-        lineColor: chrome.grid,
-        tickColor: chrome.grid,
-        labels: { style: { color: chrome.text } },
-      },
-      xAxis: {
-        categories: months,
-        gridLineColor: chrome.grid,
-        lineColor: chrome.grid,
-        tickColor: chrome.grid,
-        labels: { style: { color: chrome.text } },
-      },
-      plotOptions: {
-        line: {
-          marker: {
-            lineWidth: 1,
-            radius: 2,
-          },
-        },
-      },
-      series: data.map((seriesData, index) => ({
-        type: "line" as const,
-        data: values[index],
-        color: getSeriesColor(index, scheme),
-        name:
-          seriesNames?.[index] ||
-          String(seriesData[0]?.item || `Series ${index + 1}`),
-      })),
-    };
-  }, [data, xaxis, yaxis, chartTitle, height, marginTop, scheme, seriesNames]);
+    const rows = months.map((month, monthIndex) => {
+      const row: Record<string, string | number | null> = { month };
+      labels.forEach((label, seriesIndex) => {
+        row[label] = values[seriesIndex][monthIndex];
+      });
+      return row;
+    });
 
-  if (!data || data.length === 0) {
+    return { chartData: rows, names: labels };
+  }, [data, xaxis, yaxis, seriesNames]);
+
+  if (!data || data.length === 0 || chartData.length === 0) {
     return (
-      <div className={`flex items-center justify-center ${className}`} style={{ height: `${height}px` }}>
+      <div
+        className={`flex items-center justify-center ${className}`}
+        style={{ height: `${height}px` }}
+      >
         <p className="text-muted-foreground">No data available</p>
       </div>
     );
   }
 
+  const formatValue = (value: number) =>
+    Number.isFinite(value) ? value.toFixed(1) : "n/a";
+
   return (
-    <div className={`relative ${className}`} style={{ height: `${height}px` }}>
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        containerProps={{ style: { height: "100%", width: "100%" } }}
-      />
+    <div className={`w-full ${className}`} style={{ height: `${height}px` }}>
+      {chartTitle && (
+        <p className="mb-2 text-sm font-medium text-foreground">{chartTitle}</p>
+      )}
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart
+          data={chartData}
+          margin={{ top: marginTop, right: 16, left: 8, bottom: 4 }}
+        >
+          <CartesianGrid
+            strokeDasharray="3 3"
+            className="stroke-muted"
+            vertical={false}
+          />
+          <XAxis
+            dataKey="month"
+            tickLine={false}
+            axisLine={false}
+            minTickGap={24}
+            className="text-xs"
+          />
+          <YAxis
+            domain={["dataMin - 1", "dataMax + 1"]}
+            tickLine={false}
+            axisLine={false}
+            width={48}
+            tickFormatter={(value: number) => formatValue(value)}
+            className="text-xs"
+            label={{
+              value: "Index",
+              angle: -90,
+              position: "insideLeft",
+              style: { textAnchor: "middle", fontSize: 12 },
+            }}
+          />
+          <Tooltip
+            contentStyle={{
+              background: "hsl(var(--popover))",
+              border: "1px solid hsl(var(--border))",
+              borderRadius: "0.5rem",
+              fontSize: "0.8125rem",
+              color: "hsl(var(--popover-foreground))",
+            }}
+            labelStyle={{ color: "hsl(var(--muted-foreground))" }}
+            formatter={(value: number, name: string) => [
+              formatValue(value),
+              name,
+            ]}
+          />
+          {names.length > 1 && (
+            <Legend
+              verticalAlign="bottom"
+              align="left"
+              iconType="plainline"
+              wrapperStyle={{ fontSize: "0.8125rem", paddingTop: 8 }}
+            />
+          )}
+          {names.map((name, index) => (
+            <Line
+              key={name}
+              name={name}
+              type="monotone"
+              dataKey={name}
+              stroke={SERIES_STROKES[index]}
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 4 }}
+              connectNulls={false}
+              isAnimationActive={false}
+            />
+          ))}
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 };

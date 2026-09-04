@@ -16,9 +16,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PeriodPills, periodPillClass } from "@/components/ui/period-pills";
 import { LineChart } from "@/components/charts";
 import { formatMonth } from "@/lib/format";
-import { cn } from "@/lib/utils";
 
 /** Monthly data, so a range is just a count of trailing points. */
 const RANGES = [
@@ -56,11 +56,7 @@ const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
             </CardDescription>
           </div>
 
-          <div
-            className="flex items-center gap-1 text-sm"
-            role="group"
-            aria-label="Time range"
-          >
+          <PeriodPills aria-label="Time range">
             {RANGES.map((option) => {
               const isActive = option.id === range;
               return (
@@ -69,19 +65,13 @@ const TrendChart: React.FC<TrendChartProps> = ({ data }) => {
                   type="button"
                   onClick={() => setRange(option.id)}
                   aria-pressed={isActive}
-                  className={cn(
-                    "rounded-lg px-3 py-1.5 font-medium transition-colors",
-                    "active:scale-[0.98]",
-                    isActive
-                      ? "bg-accent text-accent-foreground"
-                      : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
-                  )}
+                  className={periodPillClass(isActive)}
                 >
                   {option.label}
                 </button>
               );
             })}
-          </div>
+          </PeriodPills>
         </div>
       </CardHeader>
 

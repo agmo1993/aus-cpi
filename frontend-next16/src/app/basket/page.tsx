@@ -40,7 +40,7 @@ export default async function Basket({ searchParams }: BasketPageProps) {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <h1 className="text-4xl font-semibold tracking-tight">Your basket</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">Your basket</h1>
         <p className="max-w-[70ch] text-muted-foreground">
           The published CPI prices a basket averaged over every household in the
           country: one that rents and owns, drives and takes the bus, smokes a

@@ -45,34 +45,6 @@ export interface MultiLineChartProps {
 }
 
 /**
- * Bar Chart Props
- */
-export interface BarChartProps {
-  data: CorrelationData[] | ChartDataPoint[];
-  scale?: 'linear' | 'logarithmic';
-  height?: number;
-  className?: string;
-}
-
-/**
- * Heatmap Chart Data
- */
-export interface HeatmapData {
-  data: CorrelationData[];
-  categories: string[];
-}
-
-/**
- * Heatmap Chart Props
- */
-export interface HeatmapChartProps {
-  chartData: HeatmapData;
-  width?: number;
-  height?: number;
-  className?: string;
-}
-
-/**
  * Sparkline Chart Props (Inline mini charts)
  */
 export interface SparklineChartProps {
@@ -103,15 +75,6 @@ export interface RechartsDataPoint {
   name: string;
   value: number;
   [key: string]: string | number;
-}
-
-/**
- * Highcharts Series Data
- */
-export interface HighchartsSeriesData {
-  name: string;
-  data: Array<[string | number, number]>;
-  color?: string;
 }
 
 /**

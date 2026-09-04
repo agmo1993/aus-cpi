@@ -2,14 +2,23 @@
 
 /**
  * Top Navigation
- * Brand plus the primary sections.
+ * Brand plus the primary sections. Sticky header; mobile menu is a dialog
+ * drawer with Escape and focus trap (Radix Dialog).
  */
 
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useChrome } from "./chrome-context";
 
 interface TopNavProps {
   className?: string;
@@ -25,18 +34,32 @@ const NAV_ITEMS = [
 const TopNav: React.FC<TopNavProps> = ({ className }) => {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { immersive } = useChrome();
 
-  const closeMobile = () => setMobileOpen(false);
+  const linkClass = (href: string, mobile = false) => {
+    const isActive =
+      href === "/" ? pathname === "/" : pathname.startsWith(href);
+    return cn(
+      mobile
+        ? "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors"
+        : "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+      isActive
+        ? "bg-accent text-accent-foreground"
+        : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
+    );
+  };
 
   return (
     <header
       className={cn(
-        "border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        "sticky top-0 z-40 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60",
+        "transition-transform duration-500 ease-in-out motion-reduce:transition-none",
+        immersive && "-translate-y-full pointer-events-none",
         className
       )}
+      aria-hidden={immersive || undefined}
     >
       <div className="container mx-auto flex h-[72px] max-w-7xl items-center justify-between px-4 sm:px-6">
-        {/* Brand – always visible */}
         <Link href="/" className="flex items-center gap-3 shrink-0">
           <Image
             src="/images/logo.png"
@@ -51,23 +74,18 @@ const TopNav: React.FC<TopNavProps> = ({ className }) => {
           </span>
         </Link>
 
-        {/* Desktop nav – hidden on mobile */}
         <nav className="hidden md:flex items-center gap-1" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
             const isActive =
-              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href);
             return (
               <Link
                 key={item.href}
                 href={item.href}
                 aria-current={isActive ? "page" : undefined}
-                className={cn(
-                  "rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
-                )}
+                className={linkClass(item.href)}
               >
                 {item.label}
               </Link>
@@ -75,59 +93,59 @@ const TopNav: React.FC<TopNavProps> = ({ className }) => {
           })}
         </nav>
 
-        {/* Mobile hamburger button – visible only on mobile */}
-        <button
-          className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg hover:bg-accent/60 transition-colors"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="md:hidden"
+          onClick={() => setMobileOpen(true)}
+          aria-label="Open menu"
           aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
         >
-          {mobileOpen ? (
-            /* X icon */
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="18" y1="6" x2="6" y2="18" />
-              <line x1="6" y1="6" x2="18" y2="18" />
-            </svg>
-          ) : (
-            /* Hamburger icon */
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="4" y1="6" x2="20" y2="6" />
-              <line x1="4" y1="12" x2="20" y2="12" />
-              <line x1="4" y1="18" x2="20" y2="18" />
-            </svg>
-          )}
-        </button>
+          <Menu className="h-5 w-5" aria-hidden="true" />
+        </Button>
       </div>
 
-      {/* Mobile dropdown menu */}
-      {mobileOpen && (
-        <nav
-          className="md:hidden border-t bg-background px-4 pb-4 pt-2"
-          aria-label="Primary"
+      <Dialog open={mobileOpen} onOpenChange={setMobileOpen}>
+        <DialogContent
+          id="mobile-nav"
+          showCloseButton={false}
+          className="fixed inset-y-0 left-0 top-0 z-50 flex h-dvh w-[min(100%,20rem)] max-w-none translate-x-0 translate-y-0 flex-col gap-0 rounded-none border-y-0 border-l-0 border-r p-0 data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-none sm:rounded-none"
         >
-          {NAV_ITEMS.map((item) => {
-            const isActive =
-              item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={closeMobile}
-                aria-current={isActive ? "page" : undefined}
-                className={cn(
-                  "block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
-                  isActive
-                    ? "bg-accent text-accent-foreground"
-                    : "text-muted-foreground hover:bg-accent/60 hover:text-foreground"
-                )}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
-      )}
+          <div className="flex h-[72px] items-center justify-between border-b px-4">
+            <DialogTitle className="text-base font-semibold">Menu</DialogTitle>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              onClick={() => setMobileOpen(false)}
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" aria-hidden="true" />
+            </Button>
+          </div>
+          <nav className="flex flex-col gap-1 p-4" aria-label="Primary">
+            {NAV_ITEMS.map((item) => {
+              const isActive =
+                item.href === "/"
+                  ? pathname === "/"
+                  : pathname.startsWith(item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileOpen(false)}
+                  aria-current={isActive ? "page" : undefined}
+                  className={linkClass(item.href, true)}
+                >
+                  {item.label}
+                </Link>
+              );
+            })}
+          </nav>
+        </DialogContent>
+      </Dialog>
     </header>
   );
 };

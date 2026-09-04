@@ -56,7 +56,7 @@ const StatCard = React.forwardRef<HTMLDivElement, StatCardProps>(
               {title}
             </p>
             {Icon && (
-              <div className={cn("p-2 rounded-lg", iconBgColor || "bg-primary/10")}>
+              <div className={cn("p-2 rounded-lg", iconBgColor || "bg-primary/10")} aria-hidden="true">
                 <Icon
                   className={cn("h-5 w-5", iconColor || "text-primary")}
                   strokeWidth={1.75}

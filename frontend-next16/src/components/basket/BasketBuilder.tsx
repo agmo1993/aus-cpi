@@ -14,7 +14,7 @@
  * rather than making a round trip. It is 87 multiplications per month.
  */
 
-import React, { useState, useSyncExternalStore } from "react";
+import React, { useEffect, useState, useSyncExternalStore } from "react";
 import {
   ArrowRight,
   Check,
@@ -26,6 +26,7 @@ import {
   Wallet,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -33,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { cn } from "@/lib/utils";
+import { PeriodPills, periodPillClass } from "@/components/ui/period-pills";
 import {
   allLeaves,
   computeBasket,
@@ -55,6 +56,7 @@ import BasketForm from "./BasketForm";
 import BasketResults from "./BasketResults";
 import CategoryTree from "./CategoryTree";
 import { computeDollarImpact, formatAud } from "./dollarImpact";
+import { useChrome } from "@/components/layout";
 
 interface BasketBuilderProps {
   inputs: BasketInputs;
@@ -154,10 +156,16 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   const [tuning, setTuning] = useState(false);
   const [step, setStep] = useState(0);
 
-  // Always start with the form to show the interactive card flow.
-  // Previous answers are pre-filled so returning users can review/modify.
+  // Default: open the questionnaire immediately unless this is a share link
+  // (?b=), which lands on results with chrome still visible.
   const [phase, setPhase] = useState<"intro" | "form" | "results" | null>(null);
-  const showing = phase ?? "intro";
+  const showing = phase ?? (sharedCode ? "results" : "form");
+  const { setImmersive } = useChrome();
+
+  useEffect(() => {
+    setImmersive(showing === "form");
+    return () => setImmersive(false);
+  }, [showing, setImmersive]);
 
   const manual = decodeSelection(state.manual, leaves);
   const selected = new Set(manual ?? selectionFromAnswers(state.answers, leaves));
@@ -187,7 +195,7 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
   const restart = () => {
     commit({ answers: DEFAULT_ANSWERS, manual: null, spending: DEFAULT_SPENDING });
     setStep(0);
-    setPhase("intro");
+    setPhase("form");
   };
 
   /** Back to a single question, with the form's controls matching what is shown. */
@@ -242,24 +250,16 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
 
   if (showing === "intro") {
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center text-center">
-        <div className="space-y-6 max-w-2xl">
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-            Your Personal CPI
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Answer 8 quick questions about your household to calculate how inflation
-            affects you personally, not the average Australian.
-          </p>
-          <button
-            type="button"
-            onClick={() => setPhase("form")}
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-6 py-3 text-base font-medium text-primary-foreground shadow-lg transition-all hover:shadow-xl hover:scale-105"
-          >
-            Start the questionnaire
-            <ArrowRight className="h-5 w-5" strokeWidth={2} />
-          </button>
-        </div>
+      <div className="flex flex-col items-start gap-4 rounded-xl border bg-card p-6 sm:p-8">
+        <p className="max-w-[62ch] text-muted-foreground">
+          Eight questions about your household. Categories you do not use are
+          dropped and the rest are renormalised, so the index prices your basket
+          rather than the average one.
+        </p>
+        <Button type="button" size="lg" onClick={() => setPhase("form")}>
+          Start the questionnaire
+          <ArrowRight className="h-5 w-5" aria-hidden="true" />
+        </Button>
       </div>
     );
   }
@@ -276,6 +276,7 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
         weights={inputs.weights[city] ?? {}}
         coverage={result.coverage}
         onDone={() => setPhase("results")}
+        onClose={() => setPhase(edited || shared || stored ? "results" : "intro")}
       />
     );
   }
@@ -299,7 +300,7 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
           </SelectContent>
         </Select>
 
-        <div className="flex flex-wrap rounded-lg border p-0.5" role="group" aria-label="Period">
+        <PeriodPills aria-label="Period">
           {(
             [
               ["annual", "Last 12 months"],
@@ -316,30 +317,27 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
                 (value === "link" && !linkAvailable)
               }
               aria-pressed={period === value}
-              className={cn(
-                "rounded-md px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-40",
-                period === value
-                  ? "bg-primary text-primary-foreground"
-                  : "text-muted-foreground hover:text-foreground"
-              )}
+              className={periodPillClass(period === value)}
             >
               {label}
             </button>
           ))}
-        </div>
+        </PeriodPills>
 
-        <button
+        <Button
           type="button"
+          variant="outline"
+          size="sm"
           onClick={share}
-          className="ml-auto inline-flex items-center gap-2 rounded-lg border px-3 py-1.5 text-sm font-medium hover:bg-accent/60"
+          className="ml-auto"
         >
           {copied ? (
-            <Check className="h-4 w-4 text-success" strokeWidth={2} />
+            <Check className="h-4 w-4 text-success" aria-hidden="true" />
           ) : (
-            <Copy className="h-4 w-4" strokeWidth={1.75} />
+            <Copy className="h-4 w-4" aria-hidden="true" />
           )}
           {copied ? "Copied headline" : "Copy link to this basket"}
-        </button>
+        </Button>
       </div>
 
       {/* The answers, as given, and each one a way back to its card. */}
@@ -360,22 +358,14 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
             </p>
           </div>
           <div className="flex shrink-0 gap-2">
-            <button
-              type="button"
-              onClick={() => editQuestion(0)}
-              className="inline-flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-sm font-medium hover:bg-accent/60"
-            >
-              <Pencil className="h-3.5 w-3.5" strokeWidth={1.75} />
+            <Button type="button" variant="outline" size="sm" onClick={() => editQuestion(0)}>
+              <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
               Edit answers
-            </button>
-            <button
-              type="button"
-              onClick={restart}
-              className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground"
-            >
-              <RotateCcw className="h-3.5 w-3.5" strokeWidth={1.75} />
+            </Button>
+            <Button type="button" variant="ghost" size="sm" onClick={restart}>
+              <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
               Start over
-            </button>
+            </Button>
           </div>
         </CardHeader>
 
@@ -408,7 +398,14 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
             })}
           </div>
 
-          <div className="h-2 w-full overflow-hidden rounded-full bg-muted">
+          <div
+            className="h-2 w-full overflow-hidden rounded-full bg-muted"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(Math.min(result.coverage, 100))}
+            aria-label="Share of the published basket kept by weight"
+          >
             <div
               className="h-full rounded-full bg-primary transition-[width] duration-300"
               style={{ width: `${Math.min(result.coverage, 100)}%` }}
@@ -420,7 +417,7 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
       {empty ? (
         <Card>
           <CardContent className="flex min-h-[280px] flex-col items-center justify-center gap-2 p-10 text-center">
-            <Wallet className="h-8 w-8 text-muted-foreground" strokeWidth={1.5} />
+            <Wallet className="h-8 w-8 text-muted-foreground" strokeWidth={1.5} aria-hidden="true" />
             <p className="font-medium">Nothing selected</p>
             <p className="max-w-[42ch] text-sm text-muted-foreground">
               Every category has been unticked, so there is no basket to price.
@@ -444,27 +441,26 @@ const BasketBuilder: React.FC<BasketBuilderProps> = ({
 
       {/* The tree, for anyone whose basket the eight questions do not describe. */}
       <Card>
-        <CardHeader className="pb-3">
-          <button
+        <CardHeader className="flex-row flex-wrap items-start justify-between gap-3 space-y-0 pb-3">
+          <div className="space-y-1">
+            <CardTitle className="flex items-center gap-2 text-base">
+              <SlidersHorizontal className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} aria-hidden="true" />
+              Fine-tune every category
+            </CardTitle>
+            <p className="text-sm text-muted-foreground">
+              All {leaves.length} expenditure classes, with the weight the ABS
+              gives each one in {city === "Australia" ? "Australia" : city}.
+            </p>
+          </div>
+          <Button
             type="button"
+            variant="ghost"
+            size="sm"
             onClick={() => setTuning((open) => !open)}
             aria-expanded={tuning}
-            className="flex w-full items-center justify-between gap-3 text-left"
           >
-            <div className="space-y-1">
-              <CardTitle className="flex items-center gap-2 text-base">
-                <SlidersHorizontal className="h-4 w-4 text-muted-foreground" strokeWidth={1.75} />
-                Fine-tune every category
-              </CardTitle>
-              <p className="text-sm text-muted-foreground">
-                All {leaves.length} expenditure classes, with the weight the ABS
-                gives each one in {city === "Australia" ? "Australia" : city}.
-              </p>
-            </div>
-            <span className="shrink-0 text-sm font-medium text-muted-foreground">
-              {tuning ? "Hide" : "Show"}
-            </span>
-          </button>
+            {tuning ? "Hide" : "Show"}
+          </Button>
         </CardHeader>
         {tuning && (
           <CardContent className="pt-0">

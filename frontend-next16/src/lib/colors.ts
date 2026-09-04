@@ -2,9 +2,8 @@
  * AusCPI chart colors.
  *
  * These are the same five categorical slots defined as CSS custom properties
- * in globals.css, repeated here as literal hex for the chart libraries that
- * cannot resolve a CSS variable (Highcharts serialises colors into its own
- * options object, and d3 writes them into SVG attributes).
+ * in globals.css, repeated here as literal hex for libraries that cannot
+ * resolve a CSS variable (d3 writes them into SVG attributes).
  *
  * The set was validated with the dataviz skill's validate_palette.js against
  * both surfaces. Do not add, reorder, or substitute a slot without re-running

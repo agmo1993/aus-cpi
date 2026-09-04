@@ -12,6 +12,7 @@ import React, { useState } from "react";
 import { TrendingUp, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { StatCard } from "@/components/ui/stat-card";
+import { PeriodPills, periodPillClass } from "@/components/ui/period-pills";
 import { cn } from "@/lib/utils";
 import {
   change,
@@ -214,11 +215,7 @@ const BasketResults: React.FC<BasketResultsProps> = ({
               , {formatBasketMonth(months[from])} to {formatBasketMonth(months[last])}
             </p>
           </div>
-          <div
-            className="flex shrink-0 rounded-lg border p-0.5"
-            role="group"
-            aria-label="Chart view"
-          >
+          <PeriodPills aria-label="Chart view" className="shrink-0">
             {(
               [
                 ["change", "Change"],
@@ -230,17 +227,12 @@ const BasketResults: React.FC<BasketResultsProps> = ({
                 type="button"
                 onClick={() => setMode(value)}
                 aria-pressed={mode === value}
-                className={cn(
-                  "rounded-md px-2.5 py-1 text-xs font-medium transition-colors",
-                  mode === value
-                    ? "bg-secondary text-secondary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                )}
+                className={periodPillClass(mode === value, "px-2.5 py-1 text-xs")}
               >
                 {label}
               </button>
             ))}
-          </div>
+          </PeriodPills>
         </CardHeader>
         <CardContent>
           <BasketChart

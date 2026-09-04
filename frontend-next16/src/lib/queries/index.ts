@@ -11,6 +11,7 @@ export {
   getMonthlyCPIByDate,
   getQuarterlyCPIByDate,
   getMultipleTimeSeries,
+  getLatestReleaseMonth,
   HEADLINE_ITEM,
   NATIONAL_CITY,
 } from './cpi';

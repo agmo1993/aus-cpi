@@ -11,9 +11,18 @@ import {
   getTopMonthlyIncreases,
   getTopYearlyIncreases,
   getAnnualChangeByItem,
+  NATIONAL_CITY,
 } from "@/lib/queries";
 import { formatMonth, formatPct } from "@/lib/format";
-import { TrendingUp, Activity, BarChart3, Zap, Home as HomeIcon, ShoppingCart } from "lucide-react";
+import {
+  TrendingUp,
+  Activity,
+  BarChart3,
+  Hash,
+  Zap,
+  Home as HomeIcon,
+  ShoppingCart,
+} from "lucide-react";
 
 // Force dynamic rendering
 export const dynamic = 'force-dynamic';
@@ -51,15 +60,21 @@ export default async function Home() {
   const latestCPI = mainSeries[mainSeries.length - 1] || { cpi: '0' };
   const previousCPI = mainSeries[mainSeries.length - 2] || { cpi: '0' };
   const quarterAgo = mainSeries[mainSeries.length - 4] || { cpi: '0' };
+  const priorQuarterAgo = mainSeries[mainSeries.length - 7] || { cpi: '0' };
   const yearAgo = mainSeries[mainSeries.length - 13] || { cpi: '0' };
 
   const latestVal = parseFloat(latestCPI.cpi);
   const prevVal = parseFloat(previousCPI.cpi);
   const quarterVal = parseFloat(quarterAgo.cpi);
+  const priorQuarterVal = parseFloat(priorQuarterAgo.cpi);
   const yearVal = parseFloat(yearAgo.cpi);
 
   const monthlyChange = prevVal ? ((latestVal - prevVal) / prevVal * 100).toFixed(1) : '0.0';
   const quarterlyChange = quarterVal ? ((latestVal - quarterVal) / quarterVal * 100).toFixed(1) : '0.0';
+  const priorQuarterlyChange = priorQuarterVal && quarterVal
+    ? ((quarterVal - priorQuarterVal) / priorQuarterVal) * 100
+    : 0;
+  const quarterlyDelta = parseFloat(quarterlyChange) - priorQuarterlyChange;
   const annualChange = yearVal ? ((latestVal - yearVal) / yearVal * 100).toFixed(1) : '0.0';
 
   // The annual change a month earlier, to say which way the headline is moving.
@@ -76,7 +91,7 @@ export default async function Home() {
     <div className="space-y-8">
       {/* Page Header */}
       <div className="space-y-2">
-        <h1 className="text-4xl font-semibold tracking-tight">Inflation Monitor</h1>
+        <h1 className="text-3xl font-semibold tracking-tight">Inflation Monitor</h1>
         <p className="max-w-[65ch] text-muted-foreground">
           Consumer price movements for the weighted average of eight capital
           cities{latestMonth ? `, to ${latestMonth}` : ""}.
@@ -105,9 +120,9 @@ export default async function Home() {
           iconColor="text-chart-4"
           iconBgColor="bg-chart-4/10"
           trend={{
-            value: "3 months",
-            label: "rolling",
-            direction: "neutral"
+            value: `${Math.abs(quarterlyDelta).toFixed(1)}pp`,
+            label: "vs prior quarter",
+            direction: quarterlyDelta > 0 ? "up" : quarterlyDelta < 0 ? "down" : "neutral"
           }}
         />
 
@@ -127,7 +142,7 @@ export default async function Home() {
         <StatCard
           title="Index value"
           value={latestVal ? latestVal.toFixed(1) : "n/a"}
-          icon={TrendingUp}
+          icon={Hash}
           iconColor="text-primary"
           iconBgColor="bg-primary/10"
         />
@@ -144,7 +159,7 @@ export default async function Home() {
             <p className="text-sm text-muted-foreground mt-1">Annual percentage change by category</p>
           </div>
           <Link
-            href="/category"
+            href={`/category?item=${encodeURIComponent("All groups CPI")}&city=${encodeURIComponent(NATIONAL_CITY)}`}
             className="text-sm font-medium text-primary underline-offset-4 hover:underline"
           >
             Compare all categories
@@ -159,6 +174,7 @@ export default async function Home() {
             return (
               <CategoryCard
                 key={group.item}
+                href={`/category?item=${encodeURIComponent(group.item)}&city=${encodeURIComponent(NATIONAL_CITY)}`}
                 title={group.title}
                 subtitle={group.subtitle}
                 value={pct === null ? "n/a" : formatPct(pct)}

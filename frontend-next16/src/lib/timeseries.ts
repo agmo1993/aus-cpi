@@ -51,8 +51,8 @@ function sortMonths(months: Iterable<string>): string[] {
 /**
  * Align series onto every month any of them covers.
  *
- * Months a series does not reach are null, which Highcharts renders as a gap
- * rather than plotting the value at the wrong date.
+ * Months a series does not reach are null, which Recharts leaves as a gap
+ * when connectNulls is false, rather than plotting the value at the wrong date.
  */
 export function alignOnUnion(
   data: SeriesRow[][],

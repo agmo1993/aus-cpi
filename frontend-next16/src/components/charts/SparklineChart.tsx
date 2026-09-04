@@ -66,6 +66,8 @@ const SparklineChart: React.FC<SparklineChartProps> = ({
       width={width}
       height={height}
       className={className}
+      aria-hidden="true"
+      focusable="false"
     />
   );
 };
