@@ -28,6 +28,7 @@ const NAV_ITEMS = [
   { href: "/", label: "Overview" },
   { href: "/category", label: "Categories" },
   { href: "/basket", label: "Your basket" },
+  { href: "/chat", label: "Chat" },
   { href: "/about", label: "About" },
 ];
 

@@ -28,3 +28,7 @@ jest.json
 
 applications/load-tester/logs/*
 applications/integration/.localstack/logs/localstack_infra.err
+
+# Keep Next.js src/lib trackable (**/lib/* is for build artifacts)
+!**/src/lib/
+!**/src/lib/**
