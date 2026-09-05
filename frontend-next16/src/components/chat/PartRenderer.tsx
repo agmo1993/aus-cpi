@@ -45,6 +45,20 @@ const CHAT_STROKES = [
   "hsl(0 0% 45%)",
 ] as const;
 
+function formatPct(v: string | number | null | undefined): string {
+  if (v == null || v === "") return "—";
+  const n = typeof v === "number" ? v : parseFloat(String(v));
+  if (!Number.isFinite(n)) return String(v);
+  return `${n.toFixed(1)}%`;
+}
+
+function formatIndex(v: string | number | null | undefined): string {
+  if (v == null || v === "") return "—";
+  const n = typeof v === "number" ? v : parseFloat(String(v));
+  if (!Number.isFinite(n)) return String(v);
+  return n.toFixed(1);
+}
+
 function ChatMultiLineChart({
   series,
 }: {
@@ -239,7 +253,7 @@ function TimeseriesPart({
 export function AnswerParts({ parts }: { parts: AnswerPart[] }) {
   if (!parts.length) return null;
   return (
-    <div className="mt-4 space-y-4">
+    <div className="space-y-4">
       {parts.map((part, idx) => (
         <PartRenderer key={`${part.type}-${idx}`} part={part} />
       ))}
@@ -313,10 +327,10 @@ export function PartRenderer({ part }: { part: AnswerPart }) {
                   </TableCell>
                   <TableCell>{row.city}</TableCell>
                   <TableCell className="text-right tabular-nums">
-                    {row.pct_change}
+                    {formatPct(row.pct_change)}
                   </TableCell>
                   <TableCell className="text-right tabular-nums">
-                    {row.current_value}
+                    {formatIndex(row.current_value)}
                   </TableCell>
                 </TableRow>
               ))}

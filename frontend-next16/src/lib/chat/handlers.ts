@@ -442,9 +442,20 @@ async function handleGetTopMovers(args: GetTopMoversArgs): Promise<ToolResult> {
     ),
   }));
 
+  // Formatted copy for UI; keep raw numbers in data for the model
+  const uiRows = rows.map((r) => {
+    const pct = parseFloat(String(r.pct_change));
+    const idx = parseFloat(String(r.current_value));
+    return {
+      ...r,
+      pct_change: Number.isFinite(pct) ? pct.toFixed(1) : r.pct_change,
+      current_value: Number.isFinite(idx) ? idx.toFixed(1) : r.current_value,
+    };
+  });
+
   return {
     data: { period: args.period, rows },
-    ui: [{ type: 'top_movers', period: args.period, rows }],
+    ui: [{ type: 'top_movers', period: args.period, rows: uiRows }],
   };
 }
 

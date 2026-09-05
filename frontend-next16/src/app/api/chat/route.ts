@@ -42,7 +42,11 @@ Rules:
 - Keep a factual, ABS-accurate tone; short prose is best.
 - Prefer get_headline_cpi for headline questions; get_top_movers for movers; for a named item in one city use search_cpi_series → resolve_series → get_cpi_timeseries.
 - When the user compares an item across cities/capitals (e.g. food prices across all capital cities), prefer compare_item_across_cities with the canonical ABS item name (search_cpi_series first if unsure). Do not fetch one city at a time.
-- After tools return, summarise clearly for a general audience. Do not dump raw JSON.`;
+- After tools return, summarise clearly for a general audience. Do not dump raw JSON.
+- When tool results include UI parts (tables/charts/cards), your final reply must be **brief highlights only** (2–4 short sentences or a short bullet list of insights).
+- **Never** output markdown tables, CSV, or a full row-by-row restatement of tool UI data.
+- Do not re-list every mover/city/index the UI already shows; pick 1–2 notable callouts and the as-of month.
+- Numbers in prose: one decimal for % and index (e.g. 11.5%, 110.2).`;
 
 interface ToolTraceEntry {
   name: string;
@@ -51,6 +55,52 @@ interface ToolTraceEntry {
   asOfMonth?: string;
 }
 
+
+
+/** Strip markdown tables / fenced table dumps the model sometimes restates. */
+function sanitizeAssistantProse(prose: string): string {
+  let s = prose;
+
+  // Fenced code blocks that look like tables (pipes or CSV-ish header rows)
+  s = s.replace(/```[\w]*\n([\s\S]*?)```/g, (block, body: string) => {
+    const lines = body.split('\n').filter((l) => l.trim().length > 0);
+    const tableish =
+      lines.length > 0 &&
+      lines.filter((l) => l.includes('|') || /^\s*[\w .%-]+(,\s*[\w .%-]+)+\s*$/.test(l))
+        .length >= Math.ceil(lines.length * 0.5);
+    return tableish ? '' : block;
+  });
+
+  // Markdown table blocks: consecutive | ... | lines (incl. |---|)
+  const lines = s.split('\n');
+  const out: string[] = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i];
+    const trimmed = line.trim();
+    const isTableLine =
+      /^\|/.test(trimmed) &&
+      (trimmed.includes('|', 1) || /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(trimmed));
+    if (isTableLine) {
+      while (i < lines.length) {
+        const t = lines[i].trim();
+        const stillTable =
+          /^\|/.test(t) &&
+          (t.includes('|', 1) || /^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$/.test(t));
+        if (!stillTable) break;
+        i++;
+      }
+      continue;
+    }
+    out.push(line);
+    i++;
+  }
+  s = out.join('\n');
+
+  // Collapse excessive blank lines
+  s = s.replace(/\n{3,}/g, '\n\n').trim();
+  return s;
+}
 
 function isToolPlumbingErrorText(part: AnswerPart): boolean {
   if (part.type !== 'text') return false;
@@ -220,11 +270,12 @@ export async function POST(request: NextRequest) {
 
       // Final text response (no tools)
       const parts = coalesceAnswerParts(collectedParts);
-      const prose =
+      const prose = sanitizeAssistantProse(
         (ai.response && ai.response.trim()) ||
-        (parts.length > 0
-          ? 'Here is what the ABS data shows.'
-          : 'I could not produce an answer. Try rephrasing your question.');
+          (parts.length > 0
+            ? 'Here is what the ABS data shows.'
+            : 'I could not produce an answer. Try rephrasing your question.')
+      );
 
       return NextResponse.json({
         prose,
@@ -237,8 +288,9 @@ export async function POST(request: NextRequest) {
     // Hit round limit with pending tools — return what we have
     const parts = coalesceAnswerParts(collectedParts);
     return NextResponse.json({
-      prose:
-        'I gathered some data but hit the tool-call limit before a final summary. See the figures below.',
+      prose: sanitizeAssistantProse(
+        'I gathered some data but hit the tool-call limit before a final summary. See the figures below.'
+      ),
       parts,
       asOfMonth,
       toolTrace: toolTrace.length > 0 ? toolTrace : undefined,

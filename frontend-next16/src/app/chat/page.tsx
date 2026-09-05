@@ -291,23 +291,28 @@ export default function ChatPage() {
                     )}
                   >
                     <AusCpiMark className="mt-0.5" />
-                    <div className="min-w-0 flex-1">
+                    <div className="min-w-0 flex-1 space-y-3">
                       {turn.asOfMonth && !turn.error && (
-                        <p className="mb-1.5 text-xs text-muted-foreground">
+                        <p className="text-xs text-muted-foreground">
                           As of {turn.asOfMonth}
                         </p>
+                      )}
+                      {turn.parts && turn.parts.length > 0 && (
+                        <AnswerParts parts={turn.parts} />
                       )}
                       {turn.content && (
                         <div
                           className={cn(
-                            "prose prose-sm max-w-none whitespace-pre-wrap leading-relaxed text-foreground",
+                            "max-w-none leading-relaxed",
+                            turn.parts && turn.parts.length > 0
+                              ? "text-sm text-muted-foreground"
+                              : "prose prose-sm whitespace-pre-wrap text-foreground",
                             turn.error && "text-destructive"
                           )}
                         >
                           {turn.content}
                         </div>
                       )}
-                      {turn.parts && <AnswerParts parts={turn.parts} />}
                     </div>
                   </div>
                 )
