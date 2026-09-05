@@ -216,6 +216,24 @@ const TOOL_PARAMETER_SCHEMAS: Record<ChatToolName, CloudflareToolParameterSchema
     },
     required: ['item'],
   },
+  get_oecd_inflation: {
+    type: 'object',
+    properties: {
+      country_codes: {
+        type: 'array',
+        items: { type: 'string', minLength: 1 },
+        maxItems: 12,
+        description:
+          'OECD REF_AREA codes (e.g. AUS, USA, GBR, DEU, CAN, OECD). Default AUS,USA,GBR,DEU,CAN,OECD.',
+      },
+      include_chart: {
+        type: 'boolean',
+        default: true,
+        description: 'Include multi-country YoY timeseries chart (default true)',
+      },
+    },
+    required: [],
+  },
 };
 
 export function toCloudflareTools(): CloudflareToolDef[] {

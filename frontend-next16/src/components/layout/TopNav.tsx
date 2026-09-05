@@ -29,6 +29,7 @@ const NAV_ITEMS = [
   { href: "/category", label: "Categories" },
   { href: "/basket", label: "Your basket" },
   { href: "/chat", label: "Chat" },
+  { href: "/oecd", label: "OECD" },
   { href: "/about", label: "About" },
 ];
 

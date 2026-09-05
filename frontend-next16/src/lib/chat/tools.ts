@@ -14,6 +14,7 @@ import {
   getAnnualChangeArgsSchema,
   getSeriesStatsArgsSchema,
   correlateSeriesArgsSchema,
+  getOecdInflationArgsSchema,
   type AnswerPart,
 } from './schema';
 
@@ -118,6 +119,15 @@ export const CHAT_TOOLS = {
     resultPartTypes: ['correlation_matrix', 'text'],
     uiComponents: { correlation_matrix: 'CorrelationMatrix', text: 'Markdown' },
   },
+  get_oecd_inflation: {
+    name: 'get_oecd_inflation',
+    description:
+      'OECD monthly headline CPI year-on-year across countries (SDMX). Use for international / cross-country inflation comparisons — not ABS capital-city detail. Defaults to AUS, USA, GBR, DEU, CAN, OECD.',
+    argsSchema: getOecdInflationArgsSchema,
+    resultPartTypes: ['stat_cards', 'timeseries'],
+    uiComponents: { stat_cards: 'StatCard', timeseries: 'MultiLineChart' },
+  },
+
 } as const satisfies Record<string, ChatToolDef>;
 
 export type ChatToolName = keyof typeof CHAT_TOOLS;

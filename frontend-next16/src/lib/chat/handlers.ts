@@ -19,6 +19,8 @@ import {
   getPercentageChanges,
   getSeriesStatistics,
   NATIONAL_CITY,
+  getOecdLatestYoy,
+  getOecdYoyTimeseries,
 } from '@/lib/queries';
 import { alignOnIntersection, monthOrdinal, type SeriesRow } from '@/lib/timeseries';
 import type {
@@ -29,6 +31,7 @@ import type {
   GetCpiTimeseriesArgs,
   GetSeriesStatsArgs,
   GetTopMoversArgs,
+  GetOecdInflationArgs,
   ResolveSeriesArgs,
   SearchCpiSeriesArgs,
   SeriesListItem,
@@ -621,6 +624,77 @@ async function handleCorrelateSeries(args: CorrelateSeriesArgs): Promise<ToolRes
   };
 }
 
+
+async function handleGetOecdInflation(args: GetOecdInflationArgs): Promise<ToolResult> {
+  const codes = (args.country_codes ?? []).slice(0, 12);
+  if (codes.length === 0) {
+    return {
+      data: { countries: [] },
+      ui: [{ type: 'text', markdown: 'No country codes provided.' }],
+      error: 'Empty country_codes',
+    };
+  }
+
+  const latest = await getOecdLatestYoy(codes);
+  if (latest.length === 0) {
+    return {
+      data: { countries: codes },
+      ui: [
+        {
+          type: 'text',
+          markdown:
+            'No OECD YoY CPI rows found for the requested codes. Check REF_AREA codes (e.g. AUS, USA, OECD).',
+        },
+      ],
+      error: 'No OECD data',
+    };
+  }
+
+  // Preserve request order
+  const byCode = new Map(latest.map((r) => [r.country_code, r]));
+  const ordered = codes.map((c) => byCode.get(c)).filter((r): r is NonNullable<typeof r> => r != null);
+
+  const cards = ordered.map((row) => ({
+    title: row.country_name,
+    value: `${row.value.toFixed(1)}%`,
+    trend: {
+      value: 'as of',
+      label: row.period,
+      direction: 'neutral' as const,
+    },
+  }));
+
+  const asOfMonth = ordered.reduce<string | undefined>((max, row) => {
+    if (!max) return row.period;
+    return monthOrdinal(row.period) > monthOrdinal(max) ? row.period : max;
+  }, undefined);
+
+  const ui: AnswerPart[] = [{ type: 'stat_cards', cards }];
+
+  let timeseriesData: unknown = null;
+  if (args.include_chart !== false) {
+    const seriesRows = await getOecdYoyTimeseries(ordered.map((r) => r.country_code));
+    const series = seriesRows.map((s) => ({
+      label: s.country_name,
+      points: s.points,
+    }));
+    if (series.length) {
+      ui.unshift({ type: 'timeseries', series });
+      timeseriesData = series;
+    }
+  }
+
+  return {
+    data: {
+      latest: ordered,
+      timeseries: timeseriesData,
+      country_codes: ordered.map((r) => r.country_code),
+    },
+    ui,
+    asOfMonth,
+  };
+}
+
 type HandlerMap = {
   [K in ChatToolName]: (args: unknown) => Promise<ToolResult>;
 };
@@ -640,4 +714,6 @@ export const chatHandlers: HandlerMap = {
   get_series_stats: (args) => handleGetSeriesStats(args as GetSeriesStatsArgs),
   correlate_series: (args) =>
     handleCorrelateSeries(args as CorrelateSeriesArgs),
+  get_oecd_inflation: (args) =>
+    handleGetOecdInflation(args as GetOecdInflationArgs),
 };

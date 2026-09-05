@@ -37,3 +37,14 @@ export {
   getPercentageChanges,
   getSeriesStatistics,
 } from './stats';
+
+// OECD CPI queries
+export {
+  listOecdCountries,
+  getOecdLatestYoy,
+  getOecdYoyTimeseries,
+  type OecdCountry,
+  type OecdLatestYoy,
+  type OecdYoyPoint,
+  type OecdYoySeries,
+} from './oecd';

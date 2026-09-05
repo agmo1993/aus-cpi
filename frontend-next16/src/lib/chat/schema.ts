@@ -110,6 +110,15 @@ export const getSeriesStatsArgsSchema = z.object({
   pctPeriod: pctPeriodSchema.default('yearly'),
 });
 
+
+export const getOecdInflationArgsSchema = z.object({
+  country_codes: z
+    .array(z.string().min(1))
+    .max(12)
+    .default(["AUS", "USA", "GBR", "DEU", "CAN", "OECD"]),
+  include_chart: z.boolean().default(true),
+});
+
 export const correlateSeriesArgsSchema = z.object({
   seriesids: z.array(z.string().min(1)).min(2).max(12),
   frequency: frequencySchema.default('monthly'),
@@ -230,6 +239,7 @@ export type GetHeadlineCpiArgs = z.infer<typeof getHeadlineCpiArgsSchema>;
 export type GetTopMoversArgs = z.infer<typeof getTopMoversArgsSchema>;
 export type GetAnnualChangeArgs = z.infer<typeof getAnnualChangeArgsSchema>;
 export type GetSeriesStatsArgs = z.infer<typeof getSeriesStatsArgsSchema>;
+export type GetOecdInflationArgs = z.infer<typeof getOecdInflationArgsSchema>;
 export type CorrelateSeriesArgs = z.infer<typeof correlateSeriesArgsSchema>;
 
 export type StatCard = z.infer<typeof statCardSchema>;

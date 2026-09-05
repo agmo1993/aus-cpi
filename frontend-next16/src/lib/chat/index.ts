@@ -25,6 +25,7 @@ export {
   getAnnualChangeArgsSchema,
   getSeriesStatsArgsSchema,
   correlateSeriesArgsSchema,
+  getOecdInflationArgsSchema,
   type Answer,
   type AnswerPart,
   type ToolResult,
