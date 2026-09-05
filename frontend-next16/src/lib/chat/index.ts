@@ -19,6 +19,7 @@ export {
   searchCpiSeriesArgsSchema,
   resolveSeriesArgsSchema,
   getCpiTimeseriesArgsSchema,
+  compareItemAcrossCitiesArgsSchema,
   getHeadlineCpiArgsSchema,
   getTopMoversArgsSchema,
   getAnnualChangeArgsSchema,
@@ -42,7 +43,7 @@ export async function runChatTool(
   if (!(name in CHAT_TOOLS)) {
     return {
       data: null,
-      ui: [{ type: 'text', markdown: `Unknown tool: \`${name}\`.` }],
+      ui: [],
       error: `Unknown tool: ${name}`,
     };
   }
@@ -57,7 +58,7 @@ export async function runChatTool(
       .join('; ');
     return {
       data: { issues: parsed.error.issues },
-      ui: [{ type: 'text', markdown: `Invalid arguments for \`${name}\`: ${message}` }],
+      ui: [],
       error: message,
     };
   }

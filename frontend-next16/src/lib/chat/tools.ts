@@ -8,6 +8,7 @@ import {
   searchCpiSeriesArgsSchema,
   resolveSeriesArgsSchema,
   getCpiTimeseriesArgsSchema,
+  compareItemAcrossCitiesArgsSchema,
   getHeadlineCpiArgsSchema,
   getTopMoversArgsSchema,
   getAnnualChangeArgsSchema,
@@ -60,6 +61,18 @@ export const CHAT_TOOLS = {
     argsSchema: getCpiTimeseriesArgsSchema,
     resultPartTypes: ['timeseries'],
     uiComponents: { timeseries: 'MultiLineChart' },
+  },
+  compare_item_across_cities: {
+    name: 'compare_item_across_cities',
+    description:
+      'Compare one ABS CPI item across capital cities (and Australia when available) on a single multi-series chart. Prefer this when the user compares food/housing/etc. across cities or capitals. Pass the canonical ABS item name (use search_cpi_series first if unsure).',
+    argsSchema: compareItemAcrossCitiesArgsSchema,
+    resultPartTypes: ['timeseries', 'stat_cards', 'text'],
+    uiComponents: {
+      timeseries: 'MultiLineChart',
+      stat_cards: 'StatCard',
+      text: 'Markdown',
+    },
   },
   get_headline_cpi: {
     name: 'get_headline_cpi',

@@ -23,6 +23,7 @@ import {
 import { alignOnIntersection, monthOrdinal, type SeriesRow } from '@/lib/timeseries';
 import type {
   AnswerPart,
+  CompareItemAcrossCitiesArgs,
   CorrelateSeriesArgs,
   GetAnnualChangeArgs,
   GetCpiTimeseriesArgs,
@@ -37,6 +38,26 @@ import type { ChatToolName } from './tools';
 
 /** Same floor as /api/correlate — a year of shared months before Pearson's r. */
 const MIN_OVERLAP = 12;
+
+/** Capitals + national average used for cross-city compares. */
+const COMPARE_CITIES = [
+  'Australia',
+  'Sydney',
+  'Melbourne',
+  'Brisbane',
+  'Adelaide',
+  'Perth',
+  'Hobart',
+  'Darwin',
+  'Canberra',
+] as const;
+
+function timeseriesLabel(item: string | undefined, city: string | undefined, seriesid: string): string {
+  if (item && city) return `${item} — ${city}`;
+  if (item) return item;
+  if (city) return city;
+  return seriesid;
+}
 
 function seriesLabel(city: string, item: string): string {
   return `${city} - ${item}`;
@@ -195,7 +216,9 @@ async function handleGetCpiTimeseries(args: GetCpiTimeseriesArgs): Promise<ToolR
       : await getMonthlyTimeSeries(args.seriesid);
 
   const sliced = sliceByMonth(raw, args.from, args.to, 'publish_date');
-  const label = sliced[0]?.item ?? args.seriesid;
+  const item = sliced[0]?.item;
+  const city = sliced[0]?.city;
+  const label = timeseriesLabel(item, city, args.seriesid);
   const points = sliced.map((p) => ({
     date: p.publish_date,
     value: parseFloat(p.cpi_value),
@@ -212,11 +235,118 @@ async function handleGetCpiTimeseries(args: GetCpiTimeseriesArgs): Promise<ToolR
     data: {
       seriesid: args.seriesid,
       frequency: args.frequency,
-      item: label,
+      item: item ?? label,
+      city,
       points: sliced,
     },
     ui,
     asOfMonth: points.length ? points[points.length - 1].date : undefined,
+  };
+}
+
+async function handleCompareItemAcrossCities(
+  args: CompareItemAcrossCitiesArgs
+): Promise<ToolResult> {
+  const absFreq = args.frequency === 'quarterly' ? 'Quarterly' : 'Monthly';
+  const rows = await getSeriesByItem(args.item, absFreq);
+
+  const wanted = new Set(
+    (args.cities?.length ? args.cities : [...COMPARE_CITIES]).map((c) =>
+      c.trim()
+    )
+  );
+
+  // Prefer COMPARE_CITIES order; dedupe by city.
+  const byCity = new Map<string, (typeof rows)[number]>();
+  for (const row of rows) {
+    if (!wanted.has(row.city)) continue;
+    if (!byCity.has(row.city)) byCity.set(row.city, row);
+  }
+
+  const orderedCities = [
+    ...COMPARE_CITIES.filter((c) => byCity.has(c)),
+    ...[...byCity.keys()].filter(
+      (c) => !(COMPARE_CITIES as readonly string[]).includes(c)
+    ),
+  ];
+  const selected = orderedCities
+    .map((c) => byCity.get(c)!)
+    .filter(Boolean);
+
+  if (selected.length === 0) {
+    return {
+      data: { found: false, item: args.item, frequency: args.frequency },
+      ui: [
+        {
+          type: 'text',
+          markdown:
+            'No capital-city series found for item `' +
+            args.item +
+            '` (' +
+            absFreq +
+            '). Try search_cpi_series for the exact ABS name.',
+        },
+      ],
+      error: 'No matching city series',
+    };
+  }
+
+  const fetched = await Promise.all(
+    selected.map(async (row) => {
+      const raw =
+        args.frequency === 'quarterly'
+          ? await getQuarterlyTimeSeries(row.seriesid)
+          : await getMonthlyTimeSeries(row.seriesid);
+      const points = raw.map((p) => ({
+        date: p.publish_date,
+        value: parseFloat(p.cpi_value),
+      }));
+      const label = timeseriesLabel(row.item || args.item, row.city, row.seriesid);
+      return {
+        row,
+        label,
+        points,
+        series: { label, seriesid: row.seriesid, points },
+      };
+    })
+  );
+
+  const series = fetched.map((f) => f.series);
+  const cards = fetched
+    .map((f) => {
+      const last = f.points[f.points.length - 1];
+      if (!last) return null;
+      return {
+        title: f.row.city,
+        value: last.value.toFixed(1),
+        trend: {
+          value: last.date,
+          label: 'latest index',
+          direction: 'neutral' as const,
+        },
+      };
+    })
+    .filter((c): c is NonNullable<typeof c> => c != null);
+
+  const asOfMonth = cards[0]?.trend?.value;
+
+  return {
+    data: {
+      item: args.item,
+      frequency: args.frequency,
+      cities: selected.map((r) => r.city),
+      seriesids: selected.map((r) => r.seriesid),
+      latest: fetched.map((f) => ({
+        city: f.row.city,
+        seriesid: f.row.seriesid,
+        last: f.points[f.points.length - 1] ?? null,
+      })),
+    },
+    ui: [
+      { type: 'timeseries', series },
+      ...(cards.length ? [{ type: 'stat_cards' as const, cards }] : []),
+    ],
+    asOfMonth,
   };
 }
 
@@ -490,6 +620,8 @@ export const chatHandlers: HandlerMap = {
   resolve_series: (args) => handleResolveSeries(args as ResolveSeriesArgs),
   get_cpi_timeseries: (args) =>
     handleGetCpiTimeseries(args as GetCpiTimeseriesArgs),
+  compare_item_across_cities: (args) =>
+    handleCompareItemAcrossCities(args as CompareItemAcrossCitiesArgs),
   get_headline_cpi: () => handleGetHeadlineCpi(),
   get_top_movers: (args) => handleGetTopMovers(args as GetTopMoversArgs),
   get_annual_change: (args) =>

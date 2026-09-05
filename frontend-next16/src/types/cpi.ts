@@ -10,6 +10,7 @@ export interface TimeSeriesDataPoint {
   publish_date: string; // Format: 'mm-yyyy'
   cpi_value: string;
   item: string;
+  city?: string;
 }
 
 /**
@@ -19,6 +20,7 @@ export interface TimeSeriesQuarterlyDataPoint {
   publish_date: string; // Format: 'mm-yyyy'
   cpi_value: string;
   item: string;
+  city?: string;
 }
 
 /**

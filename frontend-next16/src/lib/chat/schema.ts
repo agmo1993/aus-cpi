@@ -10,7 +10,48 @@ export const monthKeySchema = z
   .string()
   .regex(/^\d{2}-\d{4}$/, 'Month must be mm-yyyy');
 
-export const frequencySchema = z.enum(['monthly', 'quarterly']);
+/** Raw frequency strings the model may pass (any casing). */
+export const FREQUENCY_ENUM_BOTH = [
+  'monthly',
+  'quarterly',
+  'Monthly',
+  'Quarterly',
+] as const;
+
+/**
+ * Accept monthly|Monthly|quarterly|Quarterly (case-insensitive) and normalize
+ * to lowercase for query-layer timeseries/stats/correlate calls.
+ */
+export function coerceFrequencyLower(val: unknown): unknown {
+  if (typeof val !== 'string') return val;
+  const lower = val.toLowerCase();
+  if (lower === 'monthly' || lower === 'quarterly') return lower;
+  return val;
+}
+
+/**
+ * Same acceptance, but normalize to Capitalized Monthly|Quarterly for
+ * lookup/search that hits auscpi.seriesid_lookup.data_frequency.
+ */
+export function coerceFrequencyCapitalized(val: unknown): unknown {
+  if (typeof val !== 'string') return val;
+  const lower = val.toLowerCase();
+  if (lower === 'monthly') return 'Monthly';
+  if (lower === 'quarterly') return 'Quarterly';
+  return val;
+}
+
+export const frequencySchema = z.preprocess(
+  coerceFrequencyLower,
+  z.enum(['monthly', 'quarterly'])
+);
+
+/** Lookup-table frequency (Capitalized) with case-insensitive input. */
+export const absFrequencySchema = z.preprocess(
+  coerceFrequencyCapitalized,
+  z.enum(['Monthly', 'Quarterly'])
+);
+
 export const topMoverPeriodSchema = z.enum(['monthly', 'yearly']);
 export const statsModeSchema = z.enum(['statistics', 'percentage_changes', 'both']);
 export const pctPeriodSchema = z.enum(['monthly', 'quarterly', 'yearly']);
@@ -19,7 +60,7 @@ export const pctPeriodSchema = z.enum(['monthly', 'quarterly', 'yearly']);
 
 export const searchCpiSeriesArgsSchema = z.object({
   query: z.string().min(1, 'Search term is required'),
-  frequency: z.enum(['Monthly', 'Quarterly']).optional(),
+  frequency: absFrequencySchema.optional(),
   limit: z.number().int().positive().max(50).default(10),
 });
 
@@ -28,7 +69,7 @@ export const resolveSeriesArgsSchema = z
     seriesid: z.string().min(1).optional(),
     item: z.string().min(1).optional(),
     city: z.string().min(1).default('Australia'),
-    frequency: z.enum(['Monthly', 'Quarterly']).optional(),
+    frequency: absFrequencySchema.optional(),
   })
   .refine((v) => Boolean(v.seriesid) || Boolean(v.item), {
     message: 'Provide seriesid, or item (with optional city)',
@@ -39,6 +80,12 @@ export const getCpiTimeseriesArgsSchema = z.object({
   frequency: frequencySchema.default('monthly'),
   from: monthKeySchema.optional(),
   to: monthKeySchema.optional(),
+});
+
+export const compareItemAcrossCitiesArgsSchema = z.object({
+  item: z.string().min(1, 'ABS item name is required'),
+  frequency: frequencySchema.default('monthly'),
+  cities: z.array(z.string().min(1)).min(1).max(12).optional(),
 });
 
 export const getHeadlineCpiArgsSchema = z.object({}).default({});
@@ -176,6 +223,9 @@ export const toolResultSchema = z.object({
 export type SearchCpiSeriesArgs = z.infer<typeof searchCpiSeriesArgsSchema>;
 export type ResolveSeriesArgs = z.infer<typeof resolveSeriesArgsSchema>;
 export type GetCpiTimeseriesArgs = z.infer<typeof getCpiTimeseriesArgsSchema>;
+export type CompareItemAcrossCitiesArgs = z.infer<
+  typeof compareItemAcrossCitiesArgsSchema
+>;
 export type GetHeadlineCpiArgs = z.infer<typeof getHeadlineCpiArgsSchema>;
 export type GetTopMoversArgs = z.infer<typeof getTopMoversArgsSchema>;
 export type GetAnnualChangeArgs = z.infer<typeof getAnnualChangeArgsSchema>;

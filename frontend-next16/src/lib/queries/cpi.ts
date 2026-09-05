@@ -18,7 +18,7 @@ export async function getMonthlyTimeSeries(
     // Ordered on t.publish_date, not the output column of the same name:
     // ORDER BY resolves output aliases first, so an unqualified reference
     // would sort the 'mm-yyyy' text and put January 2018 before September 2017.
-    `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item
+    `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item, t.city
      FROM auscpi.cpi_index_monthly t
      WHERE t.seriesid = $1
      ORDER BY t.publish_date ASC`,
@@ -37,7 +37,7 @@ export async function getQuarterlyTimeSeries(
   seriesId: string
 ): Promise<TimeSeriesDataPoint[]> {
   const result = await query<TimeSeriesDataPoint>(
-    `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item
+    `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item, t.city
      FROM auscpi.cpi_index t
      WHERE t.seriesid = $1
      ORDER BY t.publish_date ASC`,
@@ -130,7 +130,7 @@ export async function getMultipleTimeSeries(
   const results = await Promise.all(
     seriesIds.map(async (seriesId) => {
       const result = await query<TimeSeriesDataPoint>(
-        `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item
+        `SELECT TO_CHAR(t.publish_date, 'mm-yyyy') as publish_date, t.cpi_value, t.item, t.city
          FROM ${table} t
          WHERE t.seriesid = $1
          ORDER BY t.publish_date ASC`,

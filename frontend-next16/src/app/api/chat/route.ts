@@ -40,8 +40,8 @@ Rules:
 - Cite the as-of month (mm-yyyy) from tool results when stating latest figures.
 - Refuse Reserve Bank (RBA) forecasts, cash-rate speculation, and non-CPI topics. Politely redirect to ABS CPI.
 - Keep a factual, ABS-accurate tone; short prose is best.
-- Prefer get_headline_cpi for headline questions; get_top_movers for movers; for a named item/city use search_cpi_series → resolve_series → get_cpi_timeseries.
-- When comparing cities or series (e.g. Sydney vs Melbourne), issue multiple tool calls in the SAME round for all cities together (search/resolve/timeseries for each). Do not fetch one city per round.
+- Prefer get_headline_cpi for headline questions; get_top_movers for movers; for a named item in one city use search_cpi_series → resolve_series → get_cpi_timeseries.
+- When the user compares an item across cities/capitals (e.g. food prices across all capital cities), prefer compare_item_across_cities with the canonical ABS item name (search_cpi_series first if unsure). Do not fetch one city at a time.
 - After tools return, summarise clearly for a general audience. Do not dump raw JSON.`;
 
 interface ToolTraceEntry {
@@ -49,6 +49,51 @@ interface ToolTraceEntry {
   arguments: Record<string, unknown>;
   error?: string;
   asOfMonth?: string;
+}
+
+
+function isToolPlumbingErrorText(part: AnswerPart): boolean {
+  if (part.type !== 'text') return false;
+  const md = part.markdown;
+  return (
+    md.includes('Invalid arguments') ||
+    md.includes('Unknown tool')
+  );
+}
+
+/** Collect tool UI parts then coalesce for the final JSON response. */
+function coalesceAnswerParts(raw: AnswerPart[]): AnswerPart[] {
+  const timeseriesSeries: Array<
+    Extract<AnswerPart, { type: 'timeseries' }>['series'][number]
+  > = [];
+  const statCards: Array<
+    Extract<AnswerPart, { type: 'stat_cards' }>['cards'][number]
+  > = [];
+  const other: AnswerPart[] = [];
+
+  for (const part of raw) {
+    if (part.type === 'series_list') continue;
+    if (isToolPlumbingErrorText(part)) continue;
+    if (part.type === 'timeseries') {
+      timeseriesSeries.push(...part.series);
+      continue;
+    }
+    if (part.type === 'stat_cards') {
+      statCards.push(...part.cards);
+      continue;
+    }
+    other.push(part);
+  }
+
+  const out: AnswerPart[] = [];
+  if (timeseriesSeries.length > 0) {
+    out.push({ type: 'timeseries', series: timeseriesSeries });
+  }
+  if (statCards.length > 0) {
+    out.push({ type: 'stat_cards', cards: statCards });
+  }
+  out.push(...other);
+  return out;
 }
 
 function lastUserContent(
@@ -111,7 +156,7 @@ export async function POST(request: NextRequest) {
     })),
   ];
 
-  const parts: AnswerPart[] = [];
+  const collectedParts: AnswerPart[] = [];
   const toolTrace: ToolTraceEntry[] = [];
   let asOfMonth: string | undefined;
 
@@ -139,7 +184,7 @@ export async function POST(request: NextRequest) {
           const call = ai.tool_calls[i];
           const result = results[i];
           for (const part of result.ui) {
-            parts.push(part);
+            collectedParts.push(part);
           }
           if (result.asOfMonth) {
             asOfMonth = result.asOfMonth;
@@ -174,6 +219,7 @@ export async function POST(request: NextRequest) {
       }
 
       // Final text response (no tools)
+      const parts = coalesceAnswerParts(collectedParts);
       const prose =
         (ai.response && ai.response.trim()) ||
         (parts.length > 0
@@ -189,6 +235,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Hit round limit with pending tools — return what we have
+    const parts = coalesceAnswerParts(collectedParts);
     return NextResponse.json({
       prose:
         'I gathered some data but hit the tool-call limit before a final summary. See the figures below.',

@@ -41,8 +41,8 @@ const TOOL_PARAMETER_SCHEMAS: Record<ChatToolName, CloudflareToolParameterSchema
       },
       frequency: {
         type: 'string',
-        enum: ['Monthly', 'Quarterly'],
-        description: 'Optional frequency filter',
+        enum: ['monthly', 'quarterly', 'Monthly', 'Quarterly'],
+        description: 'Frequency (any casing; also accepts Monthly/Quarterly)',
       },
       limit: {
         type: 'integer',
@@ -75,7 +75,8 @@ const TOOL_PARAMETER_SCHEMAS: Record<ChatToolName, CloudflareToolParameterSchema
       },
       frequency: {
         type: 'string',
-        enum: ['Monthly', 'Quarterly'],
+        enum: ['monthly', 'quarterly', 'Monthly', 'Quarterly'],
+        description: 'Frequency (any casing; also accepts Monthly/Quarterly)',
       },
     },
     required: [],
@@ -90,8 +91,9 @@ const TOOL_PARAMETER_SCHEMAS: Record<ChatToolName, CloudflareToolParameterSchema
       },
       frequency: {
         type: 'string',
-        enum: ['monthly', 'quarterly'],
+        enum: ['monthly', 'quarterly', 'Monthly', 'Quarterly'],
         default: 'monthly',
+        description: 'Frequency (any casing; also accepts Monthly/Quarterly)',
       },
       from: MONTH_KEY,
       to: MONTH_KEY,
@@ -158,8 +160,9 @@ const TOOL_PARAMETER_SCHEMAS: Record<ChatToolName, CloudflareToolParameterSchema
       },
       frequency: {
         type: 'string',
-        enum: ['monthly', 'quarterly'],
+        enum: ['monthly', 'quarterly', 'Monthly', 'Quarterly'],
         default: 'monthly',
+        description: 'Frequency (any casing; also accepts Monthly/Quarterly)',
       },
       pctPeriod: {
         type: 'string',
@@ -181,11 +184,37 @@ const TOOL_PARAMETER_SCHEMAS: Record<ChatToolName, CloudflareToolParameterSchema
       },
       frequency: {
         type: 'string',
-        enum: ['monthly', 'quarterly'],
+        enum: ['monthly', 'quarterly', 'Monthly', 'Quarterly'],
         default: 'monthly',
+        description: 'Frequency (any casing; also accepts Monthly/Quarterly)',
       },
     },
     required: ['seriesids'],
+  },
+  compare_item_across_cities: {
+    type: 'object',
+    properties: {
+      item: {
+        type: 'string',
+        minLength: 1,
+        description: 'Canonical ABS CPI item name (e.g. Food and non-alcoholic beverages)',
+      },
+      frequency: {
+        type: 'string',
+        enum: ['monthly', 'quarterly', 'Monthly', 'Quarterly'],
+        default: 'monthly',
+        description: 'Frequency (any casing; also accepts Monthly/Quarterly)',
+      },
+      cities: {
+        type: 'array',
+        items: { type: 'string', minLength: 1 },
+        minItems: 1,
+        maxItems: 12,
+        description:
+          'Optional city filter. Defaults to all capital cities plus Australia when present in lookup.',
+      },
+    },
+    required: ['item'],
   },
 };
 
