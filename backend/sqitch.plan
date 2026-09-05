@@ -10,3 +10,5 @@
 06-create-weights-tables 2026-01-19T00:00:00Z Claude <noreply@anthropic.com> # CPI and housing weights tables
 07-add-weights-by-city 2026-08-14T03:22:59Z Abdul Rehman Mohammad <agmo@agmo-Latitude-7410> # CPI weighting pattern by capital city
 08-add-industry-gva 2026-08-31T22:45:00Z Abdul Rehman <abdulrehmanm93@gmail.com> # ABS 5206.0 industry GVA quarterly
+
+09-add-oecd-cpi 2026-09-05T04:00:00Z Abdul Mohammad <abdulrehmanm93@gmail.com> # OECD monthly headline CPI (YoY + index)
