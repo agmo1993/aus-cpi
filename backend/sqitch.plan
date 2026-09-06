@@ -12,3 +12,4 @@
 08-add-industry-gva 2026-08-31T22:45:00Z Abdul Rehman <abdulrehmanm93@gmail.com> # ABS 5206.0 industry GVA quarterly
 
 09-add-oecd-cpi 2026-09-05T04:00:00Z Abdul Mohammad <abdulrehmanm93@gmail.com> # OECD monthly headline CPI (YoY + index)
+10-add-bls-cpi 2026-09-07T00:00:00Z Abdul Mohammad <abdulrehmanm93@gmail.com> # BLS CPI-U series + ABS↔BLS category crosswalk

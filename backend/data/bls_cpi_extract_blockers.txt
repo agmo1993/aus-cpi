@@ -1,0 +1,9 @@
+BLS extract blockers / notes
+============================
+- BLS Public API returned no usable observations (rate-limit, network block, or empty Results).
+- BLS flat-file download returned no matching series (download.bls.gov may block automated clients).
+- USED FRED FALLBACK: BLS API daily quota exhausted and download.bls.gov returned 403. Smoke rows sourced from FRED CSV (CPIAUCNS→SA0, CPIUFDSL→SAF1, CPIENGNS→SA0E). Register a BLS API key or download cu.data.* manually for full allowlist.
+
+Series convention: CUUR0000{item_code} (CPI-U, NSA, US city average).
+Manual workaround: download cu.data.1.AllItems from https://download.bls.gov/pub/time.series/cu/ and re-run with --source flat,
+or register for a BLS API key if unregistered quotas are exceeded.

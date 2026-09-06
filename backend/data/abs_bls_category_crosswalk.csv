@@ -1,0 +1,24 @@
+abs_item,bls_item_code,bls_item_name,match_quality,notes
+All groups CPI,SA0,All items,exact,Headline CPI; BLS series CUUR0000SA0 = CPI-U NSA US city average
+Food and non-alcoholic beverages,SAF1,Food,close,"BLS Food (SAF1) is food at home + food away; excludes alcoholic beverages. Nonalcoholic beverages sit under SAF114 within food at home — not a 1:1 ABS F&NAB basket"
+Alcoholic beverages,SAF116,Alcoholic beverages,exact,Display level 2 under Food and beverages
+Tobacco,SEGA,Tobacco and smoking products,close,BLS includes smoking products beyond cigarettes (SEGA01 cigarettes available if needed later)
+Clothing and footwear,SAA,Apparel,close,BLS Apparel includes jewelry/watches (SEAG); footwear is SEAE under Apparel
+Housing,SAH,Housing,broader,"BLS Housing = shelter + fuels/utilities + furnishings/ops. ABS Housing includes new dwelling purchase by OO — not OER; see SEHC for owners' equivalent rent gap"
+Rents,SEHA,Rent of primary residence,close,Prefer SEHA over SAS2RS (Rent of shelter special aggregate) for ABS Rents; area still US city average
+Electricity,SEHF01,Electricity,exact,Under Energy services (SEHF); display_level 4 but high-value ABS monthly item
+Gas and other household fuels,SEHF02,Utility (piped) gas service,narrower,BLS is piped utility gas only; ABS includes other household fuels
+Health,SAM,Medical care,close,BLS Medical care = commodities + services; ABS Health COICOP mix differs (PBS/Medicare vs US private insurance weight)
+Transport,SAT,Transportation,close,Private + public transportation; vehicle purchase weight differs AU vs US
+Automotive fuel,SETB,Motor fuel,exact,Gasoline/diesel motor fuel aggregate
+Communication,SAE2,Communication,exact,Under Education and communication (SAE)
+Education,SAE1,Education,close,US tuition/fees/childcare mix; ABS Education is school/uni fees — childcare treatment differs
+Recreation and culture,SAR,Recreation,close,BLS Recreation ≠ ABS Recreation and culture (culture/media weighting differs)
+"Furnishings, household equipment and services",SAH3,Household furnishings and operations,close,Closest major BLS housing subaggregate; not a perfect COICOP match
+Insurance and financial services,SEME,Health insurance,narrower,Only partial overlap — BLS SEME is health insurance; ABS IFS includes general insurance + financial services. Prefer treating as weak/partial
+Insurance and financial services,SEHD,Tenants' and household insurance,narrower,Partial only; financial services remain unmapped on BLS CU item list
+Holiday travel and accommodation,SEHB,Lodging away from home,narrower,Lodging only; ABS holiday travel includes airfares/package tours
+New dwelling purchase by owner-occupiers,_UNMAPPED,No BLS CU analogue,unmapped,No BLS CU analogue — BLS uses owners' equivalent rent (SEHC) instead of new dwelling purchase price
+Alcohol and tobacco,SAF116,Alcoholic beverages,narrower,ABS group combines alcohol+tobacco; map components separately (SAF116 + SEGA) for analysis
+Energy (BLS special),SA0E,Energy,exact,Not an ABS headline group; included as smoke/compare series (motor fuel + household energy)
+Household energy,SAH21,Household energy,close,Useful for electricity+gas combined; ABS publishes Electricity and Gas separately
