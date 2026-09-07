@@ -42,6 +42,10 @@ export interface MultiLineChartProps {
    * three cities produces three identically named lines.
    */
   seriesNames?: string[];
+  /** Y-axis label; default "Index". */
+  yAxisLabel?: string;
+  /** Appended in tooltip/ticks, e.g. "%". */
+  valueSuffix?: string;
 }
 
 /**

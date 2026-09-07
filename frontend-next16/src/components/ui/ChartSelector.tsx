@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Check, ChevronsUpDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { MAX_SERIES } from "@/lib/colors";
+import { toYearOverYearPercent } from "@/lib/timeseries";
 import MultiLineChart from "@/components/charts/MultiLineChart";
 import CorrelationMatrix from "@/components/charts/CorrelationMatrix";
 import type { TimeSeriesDataPoint, CorrelationData } from "@/types/cpi";
@@ -91,10 +92,19 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
     Boolean(crosswalk.bls_item_code);
 
   const displayChartData = useMemo(() => {
+    const raw =
+      usEnabled && usOverlay
+        ? [...chartData, usOverlay.data]
+        : chartData;
+    // AU vs US index bases differ; overlay mode plots YoY % for a fair compare.
     if (usEnabled && usOverlay) {
-      return [...chartData, usOverlay.data];
+      return raw.map((series) =>
+        toYearOverYearPercent(
+          series as unknown as Parameters<typeof toYearOverYearPercent>[0]
+        ) as unknown as TimeSeriesDataPoint[]
+      );
     }
-    return chartData;
+    return raw;
   }, [chartData, usEnabled, usOverlay]);
 
   const displaySeriesNames = useMemo(() => {
@@ -479,10 +489,16 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
             data={displayChartData}
             xaxis="publish_date"
             yaxis="cpi_value"
-            chartTitle={null}
+            chartTitle={
+              usEnabled && usOverlay
+                ? "Year-on-year % change (AU vs US)"
+                : null
+            }
             height={550}
             marginTop={30}
             seriesNames={displaySeriesNames}
+            yAxisLabel={usEnabled && usOverlay ? "YoY %" : "Index"}
+            valueSuffix={usEnabled && usOverlay ? "%" : ""}
           />
 
           {correlateOn &&

@@ -105,3 +105,38 @@ export function alignOnIntersection(
     ),
   };
 }
+
+/**
+ * Convert an index series to year-over-year percent change.
+ * For monthly mm-yyyy keys, lag is 12 months (value_t / value_{t-12} - 1) * 100.
+ * Points without a prior observation are dropped.
+ */
+export function toYearOverYearPercent(
+  series: SeriesRow[],
+  xKey = 'publish_date',
+  yKey = 'cpi_value',
+  lagMonths = 12
+): SeriesRow[] {
+  const byOrd = new Map<number, { key: string; value: number; row: SeriesRow }>();
+  for (const row of series) {
+    const key = monthKey(row, xKey);
+    if (!key) continue;
+    const value = numericValue(row, yKey);
+    if (Number.isNaN(value)) continue;
+    byOrd.set(monthOrdinal(key), { key, value, row });
+  }
+
+  const out: SeriesRow[] = [];
+  for (const [ord, cur] of [...byOrd.entries()].sort((a, b) => a[0] - b[0])) {
+    const prior = byOrd.get(ord - lagMonths);
+    if (!prior || prior.value === 0) continue;
+    const yoy = ((cur.value / prior.value) - 1) * 100;
+    out.push({
+      ...cur.row,
+      [xKey]: cur.key,
+      [yKey]: yoy,
+    });
+  }
+  return out;
+}
+

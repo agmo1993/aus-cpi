@@ -37,6 +37,8 @@ const MultiLineChart: React.FC<MultiLineChartProps> = ({
   marginTop = 20,
   className = "",
   seriesNames,
+  yAxisLabel = "Index",
+  valueSuffix = "",
 }) => {
   const { chartData, names } = useMemo(() => {
     if (!data || data.length === 0) {
@@ -75,7 +77,9 @@ const MultiLineChart: React.FC<MultiLineChartProps> = ({
   }
 
   const formatValue = (value: number) =>
-    Number.isFinite(value) ? value.toFixed(1) : "n/a";
+    Number.isFinite(value)
+      ? `${value.toFixed(1)}${valueSuffix}`
+      : "n/a";
 
   return (
     <div className={`w-full ${className}`} style={{ height: `${height}px` }}>
@@ -107,7 +111,7 @@ const MultiLineChart: React.FC<MultiLineChartProps> = ({
             tickFormatter={(value: number) => formatValue(value)}
             className="text-xs"
             label={{
-              value: "Index",
+              value: yAxisLabel,
               angle: -90,
               position: "insideLeft",
               style: { textAnchor: "middle", fontSize: 12 },
