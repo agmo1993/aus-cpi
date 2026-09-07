@@ -3,9 +3,10 @@
 /**
  * ChartSelector Component
  * Multi-select autocomplete for CPI categories with chart visualization
+ * and optional US (BLS) overlay for mapped monthly items.
  */
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
@@ -19,9 +20,27 @@ import CorrelationMatrix from "@/components/charts/CorrelationMatrix";
 import type { TimeSeriesDataPoint, CorrelationData } from "@/types/cpi";
 import type { SeriesLookup } from "@/types/database";
 
+/** Client-side shape of GET /api/bls/crosswalk */
+interface CrosswalkWithData {
+  abs_item: string;
+  bls_item_code: string;
+  bls_item_name: string | null;
+  match_quality: string;
+  notes: string | null;
+  has_data: boolean;
+}
+
 /** The same 'city - item' wording the picker uses, so the two lists match. */
 function seriesLabel(category: SeriesLookup): string {
   return `${category.city} - ${category.item}`;
+}
+
+interface UsOverlay {
+  itemCode: string;
+  label: string;
+  data: TimeSeriesDataPoint[];
+  matchQuality: string;
+  notes: string | null;
 }
 
 interface ChartSelectorProps {
@@ -43,6 +62,7 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
   const [selectedCategories, setSelectedCategories] = useState<SeriesLookup[]>(
     seed ? [seed] : []
   );
+  /** ABS series only — parallel to selectedCategories. */
   const [chartData, setChartData] = useState<TimeSeriesDataPoint[][]>(
     seed ? [firstData] : []
   );
@@ -51,8 +71,39 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
   const [correlationError, setCorrelationError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const atCap = selectedCategories.length >= MAX_SERIES;
+  const [crosswalk, setCrosswalk] = useState<CrosswalkWithData | null>(null);
+  const [usEnabled, setUsEnabled] = useState(false);
+  const [usOverlay, setUsOverlay] = useState<UsOverlay | null>(null);
+  const [usLoading, setUsLoading] = useState(false);
+
+  const isMonthly = dataFrequency === "Monthly";
+  const primaryItem = selectedCategories[0]?.item ?? null;
+
+  const seriesCount =
+    selectedCategories.length + (usEnabled && usOverlay ? 1 : 0);
+  const atCap = seriesCount >= MAX_SERIES;
   const canRemoveFirst = selectedCategories.length > 1;
+
+  const usAvailable =
+    isMonthly &&
+    crosswalk != null &&
+    crosswalk.has_data &&
+    Boolean(crosswalk.bls_item_code);
+
+  const displayChartData = useMemo(() => {
+    if (usEnabled && usOverlay) {
+      return [...chartData, usOverlay.data];
+    }
+    return chartData;
+  }, [chartData, usEnabled, usOverlay]);
+
+  const displaySeriesNames = useMemo(() => {
+    const absNames = selectedCategories.map(seriesLabel);
+    if (usEnabled && usOverlay) {
+      return [...absNames, usOverlay.label];
+    }
+    return absNames;
+  }, [selectedCategories, usEnabled, usOverlay]);
 
   const apiEndpoint = dataFrequency === "Quarterly" ? "timeseriesqtl" : "timeseries";
 
@@ -98,17 +149,118 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
   };
 
   /** Recompute correlations for the current selection, or clear them. */
-  const refreshCorrelation = async (nextChartData: TimeSeriesDataPoint[][]) => {
-    if (nextChartData.length < 2) {
-      setCorrelateOn(false);
-      setCorrelationData([]);
-      setCorrelationError(null);
+  const refreshCorrelation = useCallback(
+    async (nextChartData: TimeSeriesDataPoint[][]) => {
+      if (nextChartData.length < 2) {
+        setCorrelateOn(false);
+        setCorrelationData([]);
+        setCorrelationError(null);
+        return;
+      }
+
+      const { pairs, error } = await fetchCorrelation(nextChartData);
+      setCorrelationData(pairs);
+      setCorrelationError(error);
+    },
+    []
+  );
+
+  const clearUsOverlay = useCallback(() => {
+    setUsEnabled(false);
+    setUsOverlay(null);
+  }, []);
+
+  // When the first selected ABS item changes, resolve crosswalk + has_data.
+  useEffect(() => {
+    if (!isMonthly || !primaryItem) {
+      setCrosswalk(null);
+      clearUsOverlay();
       return;
     }
 
-    const { pairs, error } = await fetchCorrelation(nextChartData);
-    setCorrelationData(pairs);
-    setCorrelationError(error);
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const res = await fetch(
+          `/api/bls/crosswalk?item=${encodeURIComponent(primaryItem)}`
+        );
+        if (!res.ok) {
+          if (!cancelled) {
+            setCrosswalk(null);
+            clearUsOverlay();
+          }
+          return;
+        }
+        const data: CrosswalkWithData | null = await res.json();
+        if (cancelled) return;
+
+        setCrosswalk(data);
+
+        // Clear US if the new primary item no longer maps (or has no data).
+        if (!data || !data.has_data) {
+          clearUsOverlay();
+        } else if (
+          usOverlay &&
+          usOverlay.itemCode !== data.bls_item_code
+        ) {
+          // Mapped to a different BLS series — drop the old overlay.
+          clearUsOverlay();
+        }
+      } catch (err) {
+        console.error("Error fetching BLS crosswalk:", err);
+        if (!cancelled) {
+          setCrosswalk(null);
+          clearUsOverlay();
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+    // usOverlay intentionally omitted: we only react to primary item / frequency.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [primaryItem, isMonthly, clearUsOverlay]);
+
+  // Keep correlation in sync with ABS + optional US overlay (including when US is cleared by crosswalk).
+  useEffect(() => {
+    void refreshCorrelation(displayChartData);
+  }, [displayChartData, refreshCorrelation]);
+
+  const handleToggleUs = async () => {
+    if (usEnabled) {
+      clearUsOverlay();
+      return;
+    }
+
+    if (!crosswalk || !crosswalk.has_data) return;
+    if (selectedCategories.length >= MAX_SERIES) return;
+
+    setUsLoading(true);
+    try {
+      const res = await fetch(
+        `/api/bls/timeseries/${encodeURIComponent(crosswalk.bls_item_code)}`
+      );
+      if (!res.ok) {
+        throw new Error("Failed to fetch BLS time series");
+      }
+      const data: TimeSeriesDataPoint[] = await res.json();
+      const blsName = crosswalk.bls_item_name ?? crosswalk.bls_item_code;
+      const overlay: UsOverlay = {
+        itemCode: crosswalk.bls_item_code,
+        label: `US — ${blsName}`,
+        data,
+        matchQuality: crosswalk.match_quality,
+        notes: crosswalk.notes,
+      };
+      setUsOverlay(overlay);
+      setUsEnabled(true);
+    } catch (error) {
+      console.error("Error fetching BLS data:", error);
+    } finally {
+      setUsLoading(false);
+    }
   };
 
   const handleSelect = async (category: SeriesLookup) => {
@@ -129,7 +281,6 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
 
       setSelectedCategories(newSelected);
       setChartData(newChartData);
-      await refreshCorrelation(newChartData);
     } else {
       if (atCap) return;
 
@@ -141,7 +292,6 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
 
         setSelectedCategories(newSelected);
         setChartData(newChartData);
-        await refreshCorrelation(newChartData);
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -159,8 +309,19 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
 
     setSelectedCategories(newSelected);
     setChartData(newChartData);
-    await refreshCorrelation(newChartData);
   };
+
+  const truncateNotes = (notes: string | null | undefined, max = 80) => {
+    if (!notes) return null;
+    if (notes.length <= max) return notes;
+    return `${notes.slice(0, max - 1)}…`;
+  };
+
+  const canAddUs =
+    usAvailable &&
+    !usEnabled &&
+    selectedCategories.length < MAX_SERIES &&
+    !usLoading;
 
   return (
     <div className="space-y-4">
@@ -249,7 +410,49 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
                   </Badge>
                 );
               })}
+              {usEnabled && usOverlay && (
+                <Badge variant="outline" className="px-3 py-1">
+                  {usOverlay.label}
+                  <button
+                    type="button"
+                    onClick={() => handleToggleUs()}
+                    className="ml-2 hover:text-destructive"
+                    aria-label={`Remove ${usOverlay.label}`}
+                  >
+                    <X className="h-3 w-3" aria-hidden="true" />
+                  </button>
+                </Badge>
+              )}
             </div>
+
+            {usAvailable && (
+              <div className="flex flex-wrap items-center gap-2 pt-1">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant={usEnabled ? "secondary" : "outline"}
+                  onClick={handleToggleUs}
+                  disabled={usLoading || (!usEnabled && !canAddUs)}
+                  aria-pressed={usEnabled}
+                >
+                  {usLoading
+                    ? "Loading US…"
+                    : usEnabled
+                      ? "Remove US"
+                      : "Add US (BLS)"}
+                </Button>
+                <p className="text-xs text-muted-foreground">
+                  US city average · match: {crosswalk?.match_quality}
+                  {truncateNotes(crosswalk?.notes)
+                    ? ` · ${truncateNotes(crosswalk?.notes)}`
+                    : ""}
+                  {!usEnabled && selectedCategories.length >= MAX_SERIES
+                    ? " · remove an ABS series to free a slot"
+                    : ""}
+                </p>
+              </div>
+            )}
+
             <p className="text-xs text-muted-foreground">
               Compare up to {MAX_SERIES} series. At least one series must stay
               selected so the chart has something to plot.
@@ -258,7 +461,7 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
         )}
       </div>
 
-      {selectedCategories.length > 1 && (
+      {displayChartData.length > 1 && (
         <div className="flex justify-end">
           <Button
             variant={correlateOn ? "default" : "secondary"}
@@ -270,16 +473,16 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
         </div>
       )}
 
-      {chartData.length > 0 && (
+      {displayChartData.length > 0 && (
         <div className="space-y-4">
           <MultiLineChart
-            data={chartData}
+            data={displayChartData}
             xaxis="publish_date"
             yaxis="cpi_value"
             chartTitle={null}
             height={550}
             marginTop={30}
-            seriesNames={selectedCategories.map(seriesLabel)}
+            seriesNames={displaySeriesNames}
           />
 
           {correlateOn &&
@@ -294,7 +497,7 @@ const ChartSelector: React.FC<ChartSelectorProps> = ({
             ) : correlationData.length > 0 ? (
               <CorrelationMatrix
                 pairs={correlationData}
-                labels={selectedCategories.map(seriesLabel)}
+                labels={displaySeriesNames}
               />
             ) : (
               <Card>

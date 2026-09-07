@@ -48,3 +48,13 @@ export {
   type OecdYoyPoint,
   type OecdYoySeries,
 } from './oecd';
+
+// BLS CPI + ABS↔BLS crosswalk
+export {
+  getCrosswalkForAbsItem,
+  getBlsTimeSeriesByItemCode,
+  hasBlsDataForItemCode,
+  getCrosswalkWithDataForAbsItem,
+  type CrosswalkRow,
+  type CrosswalkWithData,
+} from './bls';

@@ -52,6 +52,10 @@ export default async function Category({ searchParams }: CategoryPageProps) {
           weighted average can be compared against each other. Select up to five
           series; the chart updates as you add or remove them.
         </p>
+        <p className="max-w-[65ch] text-sm text-muted-foreground">
+          When a mapped monthly item is selected (for example All groups CPI or
+          Food), you can overlay the matching US city-average series from the BLS.
+        </p>
       </div>
 
       <ChartSelector
